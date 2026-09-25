@@ -1,3 +1,45 @@
+# ==== Secrets / environment ====
+# JANGAN commit .env (berisi API key). .env.example TETAP di-commit sebagai template.
 .env
+.env.*
+!.env.example
+
+# ==== Python ====
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ==== Model / cache besar (opsional, hemat repo) ====
+# Index FAISS bisa dibangun ulang dari dataset -> tidak wajib di-commit.
+# Hapus baris ini kalau ingin ikut menyimpan index.
+dataset/faiss_index.bin
+dataset/faiss_meta.json
+
+# Cache model sentence-transformers / HuggingFace bila terunduh ke folder proyek
+.cache/
+*.pt
+*.onnx
+
+# ==== Editor / OS ====
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ==== Berkas sementara aplikasi ====
+# File lock sementara Word saat konteks .docx sedang dibuka
+konteks/~$*

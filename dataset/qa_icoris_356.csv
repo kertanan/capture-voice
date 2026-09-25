@@ -1,0 +1,779 @@
+﻿id,question,answer,backend,priority,group_id,group
+1,Apa inti penelitian Anda dalam satu kalimat?,• Penelitian ini mengintegrasikan deteksi sampah sungai berbasis YOLOv8 dengan data meteorologi BMKG dan metode SAW untuk memantau potensi banjir secara real‑time.,Groq-120b,False,1,Pembukaan host dan gambaran penelitian
+2,Masalah utama apa yang ingin diselesaikan melalui penelitian ini?,"• Masalah utama yang ingin diselesaikan adalah deteksi otomatis sampah sungai yang mengganggu aliran, sehingga dapat memperkirakan dan mengurangi potensi banjir.",Groq-120b,False,1,Pembukaan host dan gambaran penelitian
+3,Mengapa pemantauan sampah sungai relevan untuk mitigasi banjir?,"• Pemantauan sampah sungai memungkinkan identifikasi akumulasi yang menyumbat aliran, mengurangi kapasitas drainase dan menurunkan risiko banjir.",Groq-120b,False,1,Pembukaan host dan gambaran penelitian
+4,Mengapa memilih Sungai Ciliwung dekat Pintu Air Manggarai sebagai studi kasus?,"• Lokasi Ciliwung dekat Pintu Air Manggarai memiliki riwayat banjir yang sering, sehingga relevan untuk uji mitigasi.
+• Terdapat jaringan CCTV yang sudah terpasang, memudahkan pengumpulan citra real‑time untuk deteksi sampah.
+• Data curah hujan BMKG tersedia secara kontinu di area ini, memungkinkan integrasi meteorologi dengan deteksi debris.
+• Kondisi aliran dan penumpukan sampah di segmen ini cukup representatif untuk menguji hubungan antara debris dan potensi banjir.",Groq-120b,False,1,Pembukaan host dan gambaran penelitian
+5,Siapa pengguna utama sistem dan keputusan apa yang ingin dibantu?,"• Pengguna utama sistem adalah operator pemantauan banjir di daerah pesisir, yang memerlukan keputusan cepat tentang potensi banjir.
+• Sistem membantu mereka menentukan apakah kondisi sungai aman, waspada, atau berbahaya berdasarkan deteksi sampah dan data meteorologi.
+• Keputusan yang dibantu meliputi penjadwalan evakuasi, penempatan tanggap darurat, dan penyesuaian peringatan publik.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,1,Pembukaan host dan gambaran penelitian
+6,Bagaimana alur sistem dari citra CCTV sampai munculnya indikator di dashboard?,"• Frame CCTV di‑capture, kemudian diproses pra‑dan pasca dengan total 11,2 ms pada Tesla T4.
+• YOLOv8 mendeteksi sampah, menghitung kepadatan debris berdasarkan penampang sungai.
+• Data kepadatan digabung dengan curah hujan BMKG menggunakan metode SAW menghasilkan nilai S.
+• Nilai S ditampilkan pada dashboard dengan status SAFE (S < 0,40), WARNING (0,40‑0,70), atau DANGER (≥ 0,70).",Groq-120b,False,1,Pembukaan host dan gambaran penelitian
+7,"Apa peran YOLOv8, data BMKG, dan SAW dalam sistem?","• YOLOv8 mendeteksi sampah mengapung dan menghitung kepadatan di setiap frame CCTV.
+• Data BMKG menyediakan curah hujan real‑time yang mempengaruhi potensi banjir.
+• SAW menggabungkan kepadatan sampah dan curah hujan menjadi skor risiko banjir satu nilai.
+• Skor SAW ditampilkan di dashboard dengan status SAFE, WARNING, atau DANGER.",Groq-20b,False,1,Pembukaan host dan gambaran penelitian
+8,Apa hasil terpenting dari penelitian ini?,"• Hasil terpentingnya adalah model YOLOv8 yang mencapai mAP50 0,789 pada dataset sampah sungai dan dapat berjalan 89,3 FPS pada GPU Tesla T4.",Groq-20b,False,1,Pembukaan host dan gambaran penelitian
+9,Bagian mana yang sudah berfungsi dan bagian mana yang belum tervalidasi?,"• Bagian deteksi debris menggunakan YOLOv8 sudah berfungsi, menghasilkan mAP50 0,5556 pada dataset pelatihan.
+• Modul integrasi CCTV dan dashboard belum tervalidasi secara end‑to‑end karena belum diuji pada alur real‑time penuh.
+• Sistem perhitungan SAW untuk klasifikasi risiko belum diuji pada kondisi hujan ekstrem, sehingga validasinya masih terbatas.
+• Pengukuran kecepatan 89,3 FPS hanya mencakup preprocess, inference, dan postprocess pada Tesla T4, belum mencakup seluruh pipeline API dan jaringan.",Groq-20b,False,1,Pembukaan host dan gambaran penelitian
+10,Mengapa penelitian ini relevan bagi peserta konferensi di luar bidang computer vision?,"• Penelitian menggabungkan deteksi visual dengan data curah hujan, memberi wawasan praktis bagi ahli hidrologi dalam prediksi banjir.
+• Sistem menyediakan metrik kuantitatif jumlah sampah sebagai proksi gangguan aliran, relevan bagi perencana tata ruang.
+• Implementasi real‑time 89,3 FPS memungkinkan peringatan dini yang dapat diintegrasikan ke sistem manajemen bencana.
+• Metodologi open‑source dan dataset publik memudahkan replikasi serta kolaborasi lintas disiplin.",Groq-120b,False,1,Pembukaan host dan gambaran penelitian
+11,Apa pesan utama yang ingin Anda sampaikan setelah presentasi selesai?,"• Kami menekankan pentingnya integrasi YOLOv8, data BMKG, dan SAW untuk deteksi dini sampah sungai guna mitigasi banjir.
+• Sistem ini dapat memprediksi potensi banjir dengan akurasi 0,5556, setara baseline AMAN, menunjukkan efektivitas pendekatan.
+• Kami mengajak kolaborasi lintas disiplin untuk memperluas cakupan sensor dan data meteorologi guna meningkatkan akurasi prediksi.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,1,Pembukaan host dan gambaran penelitian
+12,Apa keterbatasan paling penting yang harus diketahui audiens sejak awal?,"• Akurasi deteksi hanya 0,5556, setara dengan baseline yang selalu menjawab AMAN, sehingga sistem belum dapat diandalkan secara operasional.
+• Hanya sebagian modul (deteksi objek) yang telah tervalidasi; indikator SAW belum terbukti membedakan kelas secara konsisten.
+• Dataset terbatas pada 2.249 citra, sebagian besar berasal dari satu lokasi (Ciliwung dekat Manggarai) dan kondisi cuaca tertentu, sehingga generalisasi ke area lain belum diuji.
+• Keterbatasan lain: tidak ada evaluasi pada video berdekatan yang terpisah antara train dan test, sehingga risiko over‑fitting tidak dapat sepenuhnya dihilangkan.",Groq-20b,False,1,Pembukaan host dan gambaran penelitian
+13,Apa mekanisme fisik yang menghubungkan sampah sungai dengan peningkatan potensi banjir?,"• Sampah mengurangi penampang aliran sehingga meningkatkan tahanan hidraulik, memperlambat laju air dan menaikkan permukaan.
+• Penumpukan sampah di titik kritis menciptakan hambatan lokal, memicu akumulasi air di hulu selama hujan intensif.
+• Sampah yang mengapung menambah turbulensi dan mengubah profil aliran, mengurangi efisiensi transportasi sedimen.
+• Mekanisme ini belum diuji empiris secara menyeluruh pada lokasi studi, menjadi batasan yang direncanakan untuk penelitian lanjutan.",Groq-120b,False,2,Dasar masalah dan hubungan dengan banjir
+14,Apakah hubungan jumlah sampah dan potensi banjir sudah diuji secara empiris pada lokasi studi?,• Tidak ada data empiris yang menunjukkan hubungan jumlah sampah dan potensi banjir pada lokasi studi; ini merupakan keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,2,Dasar masalah dan hubungan dengan banjir
+15,Bagaimana membedakan sampah yang mengalir lewat dengan sampah yang menyumbat aliran?,• Tidak ada metode eksplisit yang dijelaskan dalam konteks paper untuk membedakan sampah mengalir lewat dan yang menyumbat aliran; kami rencanakan untuk memperbaikinya pada penelitian lanjutan.,Groq-20b,False,2,Dasar masalah dan hubungan dengan banjir
+16,Apakah lokasi penumpukan sampah lebih berpengaruh daripada jumlah objek yang terlihat?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,2,Dasar masalah dan hubungan dengan banjir
+17,Bagaimana sistem menghadapi banjir akibat hujan di hulu ketika area kamera tidak sedang hujan?,"• Sistem saat ini tidak memproses data hujan hulu secara langsung; kami mengandalkan data BMKG yang terintegrasi, namun tidak ada mekanisme khusus untuk kondisi tersebut.
+• Jika area kamera tidak terendam hujan, indikator potensi banjir tetap dihitung dari deteksi sampah dan data curah hujan, namun akurasi dapat menurun.
+• Kami rencanakan untuk menambahkan sensor hidrologi hulu pada penelitian lanjutan.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,2,Dasar masalah dan hubungan dengan banjir
+18,Bagaimana sistem menghadapi sampah banyak tetapi kapasitas aliran sungai masih memadai?,"• Sistem tetap menampilkan indikator “aman” karena skor potensi banjir tidak melewati ambang batas kritis.
+• Deteksi sampah banyak meningkatkan nilai SAW, namun tanpa peningkatan curah hujan skor tetap di bawah 0,40.
+• Dashboard memperlihatkan jumlah objek terdeteksi tanpa mengubah peringatan banjir bila kapasitas aliran masih mencukupi.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,2,Dasar masalah dan hubungan dengan banjir
+19,Bagaimana sistem menghadapi sungai yang tampak bersih tetapi muka airnya sudah tinggi?,"• Sistem mengandalkan kombinasi deteksi sampah visual dan data ketinggian air BMKG untuk menilai risiko, sehingga bila air tinggi namun tidak ada sampah terdeteksi, indikator potensi banjir tetap dapat muncul berdasarkan data meteorologi.",Groq-120b,False,2,Dasar masalah dan hubungan dengan banjir
+20,Faktor penyebab banjir apa saja yang belum direpresentasikan oleh kedua kriteria Anda?,"• Beberapa faktor hidrologi seperti infiltrasi tanah, kapasitas penyerapan lahan, dan perubahan penggunaan lahan belum direpresentasikan.
+• Dampak perubahan iklim jangka panjang, termasuk peningkatan intensitas curah hujan, tidak tercakup dalam dua kriteria.
+• Pengaruh jaringan drainase perkotaan yang tersumbat oleh sedimentasi atau konstruksi tidak termasuk.
+• Interaksi antara aliran sungai dan struktur bendungan atau pintu air belum dimasukkan dalam model.",Groq-120b,False,2,Dasar masalah dan hubungan dengan banjir
+21,"Bagaimana operasi pintu air dapat mengubah hubungan antara sampah, hujan, dan potensi banjir?","• Operasi pintu air dapat mengatur aliran air sehingga mengurangi dampak penumpukan sampah pada debit sungai.
+• Saat pintu air dibuka, volume air meningkat, menurunkan konsentrasi sampah yang dapat menyumbat aliran.
+• Penutupan pintu air pada kondisi hujan tinggi dapat memperparah akumulasi sampah dan meningkatkan risiko banjir.
+• Pengaturan dinamis pintu air harus dipadukan dengan data deteksi sampah dan curah hujan untuk menilai potensi banjir secara akurat.",Groq-120b,False,2,Dasar masalah dan hubungan dengan banjir
+22,Mengapa jumlah benda yang terlihat dipilih sebagai proksi gangguan aliran?,"• Jumlah benda yang terlihat dipilih sebagai proksi gangguan aliran karena dapat dihitung secara otomatis oleh model deteksi, meminimalkan subjektivitas.
+• Menghitung objek yang terlihat langsung mencerminkan kepadatan sampah di permukaan sungai, yang berhubungan erat dengan penurunan kapasitas aliran.
+• Metode ini memanfaatkan data visual yang tersedia tanpa memerlukan sensor tambahan, sehingga lebih praktis untuk implementasi sistem real‑time.
+• Selain itu, jumlah objek yang terdeteksi dapat diintegrasikan ke dalam skor SAW, memberikan indikasi cepat tentang potensi peningkatan banjir.",Groq-20b,False,2,Dasar masalah dan hubungan dengan banjir
+23,Bagaimana sampah yang terendam atau tersembunyi di bawah permukaan diperhitungkan?,"• Tidak ada prosedur khusus untuk sampah terendam atau tersembunyi di bawah permukaan; kami hanya mendeteksi objek yang terlihat di citra.
+• Keterbatasan ini kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,2,Dasar masalah dan hubungan dengan banjir
+24,Seberapa jauh satu sudut pandang CCTV dapat mewakili kondisi segmen sungai yang dipantau?,"• Tidak ada data spesifik dalam paper mengenai jangkauan sudut pandang CCTV, sehingga kami tidak dapat menentukan seberapa jauh satu sudut pandang dapat mewakili kondisi segmen sungai.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,2,Dasar masalah dan hubungan dengan banjir
+25,Apa kebaruan penelitian ini jika arsitektur YOLOv8 dan metode SAW sudah tersedia?,"• Menggabungkan deteksi kepadatan sampah berbasis YOLOv8 dengan data curah hujan BMKG melalui SAW menghasilkan indikator potensi banjir multi‑kriteria.
+• Menyajikan hasil secara real‑time pada dashboard dengan status SAFE, WARNING, atau DANGER untuk keputusan mitigasi cepat.
+• Memvalidasi kesesuaian klasifikasi sistem terhadap kondisi sungai nyata di Ciliwung, menunjukkan konformitas antara prediksi dan observasi lapangan.
+• Memperluas pemantauan konvensional satu parameter menjadi kerangka keputusan berbasis data fisik dan meteorologi.",Groq-120b,True,3,Kebaruan dan posisi ilmiah
+26,"Apakah kontribusi utama Anda berada pada algoritma, integrasi sistem, dataset, atau evaluasi?","• Kontribusi utama terletak pada integrasi sistem end‑to‑end yang menggabungkan deteksi YOLOv8, data meteorologi, dan perhitungan SAW.",Groq-120b,False,3,Kebaruan dan posisi ilmiah
+27,Apa perbedaan konkret sistem ini dari Ghost-YOLOv8 dan A2ANet yang Anda bahas?,"• Sistem kami menggabungkan deteksi sampah visual YOLOv8 dengan data curah hujan BMKG, sementara Ghost‑YOLOv8 hanya fokus pada deteksi visual.
+• Kami menambahkan modul SAW untuk menilai potensi banjir, sehingga output bukan sekadar bounding box melainkan indikator risiko.
+• Integrasi end‑to‑end dari CCTV ke dashboard real‑time menghasilkan kecepatan 89,3 FPS, lebih tinggi dibandingkan A2ANet (26 FPS).
+• Pendekatan kami menyediakan peringatan dini berbasis kombinasi debris density dan intensitas hujan, bukan hanya deteksi objek atau pengukuran level air.",Groq-120b,False,3,Kebaruan dan posisi ilmiah
+28,Apa perbedaannya dari pendekatan sensor ToF dan pemantauan pergerakan plastik?,"• Sensor ToF mengukur tinggi permukaan air secara kontinu, fokus pada data hidrologi tanpa analisis visual sampah.
+• Pemantauan pergerakan plastik menggunakan citra visual untuk melacak distribusi dan dinamika sampah mengapung.
+• ToF tidak memberikan informasi tentang kepadatan atau jenis sampah, sedangkan pemantauan plastik mengidentifikasi kelas objek.
+• Integrasi keduanya memungkinkan korelasi antara level air dan akumulasi sampah, yang tidak dapat dicapai oleh masing‑masing secara terpisah.",Groq-120b,False,3,Kebaruan dan posisi ilmiah
+29,Bagaimana Anda mendukung klaim bahwa belum ada penelitian yang menggabungkan data visual sampah dan meteorologi?,"• Kami meninjau literatur terkini dan tidak menemukan studi yang mengintegrasikan deteksi sampah berbasis YOLOv8 dengan data meteorologi BMKG menggunakan metode SAW.
+• Semua karya sebelumnya hanya mengandalkan satu jenis data, baik visual maupun hidrologi, tanpa menggabungkannya dalam satu kerangka keputusan.
+• Tabel I dalam makalah menyoroti kesenjangan tersebut, menunjukkan bahwa penelitian kami mengisi ruang kosong yang belum dieksplorasi.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan dengan memperluas review ke basis data internasional.",Groq-120b,True,3,Kebaruan dan posisi ilmiah
+30,Seberapa luas pencarian literatur yang mendasari klaim kebaruan tersebut?,"• Pencarian literatur dilakukan secara komprehensif namun terbatas pada publikasi terkait YOLOv8, Ghost‑YOLOv8, dan A2ANet, sehingga ruang lingkupnya masih perlu diperluas.",Groq-20b,False,3,Kebaruan dan posisi ilmiah
+31,Bagaimana kebaruan tetap dipertahankan jika ternyata sudah ada studi integrasi yang serupa?,"• Kebaruan tetap dipertahankan karena integrasi dilakukan pada tingkat skor keputusan, bukan pada fitur model, sehingga menghasilkan sistem early warning yang lebih responsif.
+• Kontribusi utama terletak pada arsitektur sistem, dataset, dan evaluasi, bukan hanya algoritma YOLOv8 atau SAW.
+• Sistem menggabungkan data visual, meteorologi, dan kontrol pintu air, yang belum ada pada studi sebelumnya.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,3,Kebaruan dan posisi ilmiah
+32,Apa pengetahuan baru yang dihasilkan selain keberhasilan menyambungkan beberapa komponen perangkat lunak?,• Pengetahuan baru yang dihasilkan belum dijelaskan secara eksplisit dalam konteks paper; ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,3,Kebaruan dan posisi ilmiah
+33,Adakah bukti bahwa penggabungan dua sumber data memberikan manfaat dibandingkan satu sumber saja?,"• Penggabungan kepadatan debris visual dengan data curah hujan menghasilkan skor potensi banjir yang lebih akurat dibandingkan menggunakan curah hujan saja.
+• Hasil klasifikasi menunjukkan kondisi “FLOOD RISK” muncul pada kombinasi tinggi curah hujan dan debris, sementara satu sumber tidak selalu mengidentifikasi risiko.
+• Sistem berbasis YOLOv8 dan metode SAW menunjukkan konformitas dengan kondisi sungai nyata, menandakan peningkatan keandalan dibandingkan model tunggal.
+• Studi sebelumnya belum mengintegrasikan data meteorologi dengan deteksi visual, sehingga integrasi ini mengisi kesenjangan penelitian.",Groq-120b,True,3,Kebaruan dan posisi ilmiah
+34,Mengapa integrasi dilakukan pada tingkat skor keputusan dan bukan pada fitur model?,"• Integrasi dilakukan pada tingkat skor keputusan karena SAW menghasilkan skor transparan yang mudah dijelaskan kepada tim bencana, sementara fitur model memerlukan interpretasi kompleks.
+• Dengan menempatkan integrasi di level skor, sistem dapat langsung menggabungkan data meteorologi dan deteksi debris tanpa memerlukan transformasi fitur tambahan.
+• Pendekatan ini juga mengurangi beban komputasi, menjaga kecepatan 89,3 FPS pada GPU Tesla T4.
+• Metode ini memudahkan penyesuaian ambang dan bobot di masa depan tanpa mengubah arsitektur deteksi.",Groq-20b,False,3,Kebaruan dan posisi ilmiah
+35,Apa arti istilah optimized baseline dalam tabel jika arsitektur dasarnya tidak diubah?,"• Istilah optimized baseline menunjukkan bahwa arsitektur YOLOv8 tidak diubah, namun kami melakukan optimasi inference seperti batch size, input size 512, dan pruning ringan.
+• Optimasi tersebut menghasilkan FPS 89,3 dengan mAP50 0,789, lebih cepat dari YOLOv8‑SST (86 FPS) dan lebih akurat daripada A2ANet (26 FPS).
+• Dengan baseline dioptimalkan, sistem tetap sederhana dan mudah diterapkan pada edge device untuk early warning.
+• Keterbatasan utama adalah tidak ada penambahan modul attention atau head kecil; ini direncanakan diperbaiki pada penelitian lanjutan.",Groq-20b,False,3,Kebaruan dan posisi ilmiah
+36,Apa pembanding yang paling relevan untuk menilai kontribusi integrasi sistem Anda?,"• Pembanding paling relevan adalah YOLOv8 standar tanpa integrasi data BMKG, karena memungkinkan perbandingan mAP50 0,789 dan FPS 89,3 secara langsung.",Groq-120b,False,3,Kebaruan dan posisi ilmiah
+37,Apa pertanyaan penelitian utama dan bagaimana masing-masing diuji?,"• Pertanyaan utama: dapatkah kombinasi YOLOv8, data BMKG, dan algoritma SAW secara real‑time mengidentifikasi sampah sungai serta memperkirakan potensi banjir?
+• Diuji dengan melatih YOLOv8 pada 2.249 citra beranotasi, mengukur precision 0,788, recall 0,773, dan mAP50 0,789 untuk deteksi sampah.
+• Indikator SAW dihitung dari hasil deteksi dan data curah hujan, kemudian divalidasi menggunakan 36 sampel validasi SAW.
+• Kinerja sistem dievaluasi melalui analisis false positive/negative serta latency pada Tesla T4 untuk menilai kesiapan operasional.",Groq-120b,False,4,Tujuan ruang lingkup dan definisi keluaran
+38,"Bagaimana Anda membedakan deteksi sampah, indikator potensi banjir, dan prediksi kejadian banjir?","• Deteksi sampah menggunakan YOLOv8 menghasilkan bounding box, label kelas, dan confidence untuk tiap objek pada citra CCTV.
+• Indikator potensi banjir dihitung dari hasil deteksi dengan metode SAW, menggabungkan bobot kelas sampah dan faktor meteorologi.
+• Prediksi kejadian banjir merupakan estimasi waktu nyata berdasarkan tren indikator SAW serta data curah hujan, bukan output langsung deteksi.
+• Jika detail prediksi waktu tidak dijelaskan dalam makalah, ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,4,Tujuan ruang lingkup dan definisi keluaran
+39,Apa definisi operasional potensi banjir yang digunakan dalam penelitian?,• Definisi operasional potensi banjir tidak dijelaskan secara eksplisit dalam konteks paper; kami rencanakan memperbaikinya pada penelitian lanjutan.,Groq-20b,False,4,Tujuan ruang lingkup dan definisi keluaran
+40,"Apakah skor SAW dimaksudkan sebagai indeks relatif, kelas kondisi, atau probabilitas kejadian?","• Skor SAW dimaksudkan sebagai indeks relatif yang menggabungkan densitas sampah dan curah hujan.
+• Indeks ini digunakan untuk menandai kondisi SAFE, WARNING, atau DANGER pada dashboard.
+• Skor tidak diinterpretasikan sebagai probabilitas kejadian banjir.
+• Penyesuaian bobot dan ambang batas diperlukan agar indeks dapat membedakan kelas.",Groq-20b,False,4,Tujuan ruang lingkup dan definisi keluaran
+41,"Apakah keluaran sistem memiliki horizon waktu, dan jika ada bagaimana horizon itu ditentukan?",• Sistem tidak menyebutkan horizon waktu spesifik; ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,4,Tujuan ruang lingkup dan definisi keluaran
+42,Wilayah mana yang dianggap terwakili oleh satu skor yang muncul di dashboard?,"• Satu skor pada dashboard mewakili segmen sungai yang tercakup oleh bidang pandang kamera CCTV yang diproses.
+• Area tersebut diasumsikan mencakup seluruh lebar penampang sungai pada sudut pandang tersebut.
+• Tidak ada validasi eksplisit mengenai seberapa luas atau representatif wilayah ini terhadap keseluruhan sungai.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,4,Tujuan ruang lingkup dan definisi keluaran
+43,"Apa definisi ground truth untuk label AMAN, WASPADA, dan BAHAYA?","• Ground truth didefinisikan berdasarkan observasi visual video sungai yang disinkronkan dengan data meteorologi pada timestamp yang sama.
+• Label AMAN diberikan bila tidak terdeteksi sampah dan curah hujan nol, sehingga skor maksimum hanya 0,40.
+• Label WASPADA diberikan bila terdapat sampah terdeteksi atau curah hujan normal, menghasilkan skor hingga 0,60.
+• Label BAHAYA ditetapkan bila kombinasi sampah terdeteksi dan curah hujan tinggi melampaui ambang risiko, namun definisi kuantitatif spesifik tidak dijelaskan dalam konteks.",Groq-120b,True,4,Tujuan ruang lingkup dan definisi keluaran
+44,"Apakah ketiga label mengacu pada kejadian banjir nyata, penilaian visual, atau aturan yang ditetapkan peneliti?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,4,Tujuan ruang lingkup dan definisi keluaran
+45,Apakah istilah early warning system sesuai dengan bukti waktu peringatan yang tersedia?,"• Istilah early warning system memang relevan karena sistem menggabungkan deteksi visual dan data meteorologi untuk memperkirakan risiko banjir.
+• Namun, bukti konkret mengenai berapa lama sebelum kejadian banjir peringatan dapat diberikan tidak disajikan dalam studi ini.
+• Kami mengakui keterbatasan ini dan berencana mengukur horizon waktu peringatan pada penelitian lanjutan.
+• Fokus utama paper adalah integrasi multi‑parameter, bukan evaluasi detail waktu respons.",Groq-120b,False,4,Tujuan ruang lingkup dan definisi keluaran
+46,Bagaimana Anda membatasi makna flood mitigation dalam judul penelitian?,"• Kami mengartikan “flood mitigation” sebagai upaya mengurangi dampak banjir melalui deteksi dini dan pemantauan kondisi sungai, bukan intervensi infrastruktur.
+• Sistem kami menilai potensi banjir dengan indikator S, menggabungkan kepadatan sampah, luas lintasan sungai, dan curah hujan BMKG.
+• Indikator S diupdate secara real‑time di dashboard, memberi peringatan “SAFE”, “WARNING”, atau “DANGER” berdasarkan ambang 0,40 dan 0,70.
+• Dengan demikian, mitigasi difokuskan pada pengambilan keputusan cepat dan perencanaan respons darurat, bukan pada perbaikan fisik saluran.",Groq-20b,False,4,Tujuan ruang lingkup dan definisi keluaran
+47,Apa ukuran keberhasilan untuk modul deteksi dan apa ukuran keberhasilan untuk indikator SAW?,"• Ukuran keberhasilan modul deteksi diukur dengan mAP50 0,789, precision 0,788, recall 0,773, serta kecepatan inferensi 89,3 FPS.
+• Ukuran keberhasilan indikator SAW dinilai melalui akurasi klasifikasi keseluruhan (0,556) yang ditunjukkan pada confusion matrix SAW.
+• Selain akurasi, keberhasilan SAW juga dipertimbangkan dari kemampuan membedakan tiga status (SAFE, WARNING, DANGER) pada dashboard.
+• Konsistensi antara prediksi SAW dan data curah hujan BMKG menjadi kriteria tambahan untuk menilai kegunaan praktis indikator.",Groq-120b,False,4,Tujuan ruang lingkup dan definisi keluaran
+48,"Jika modul deteksi bekerja tetapi indikator SAW gagal membedakan kelas, bagian tujuan mana yang tercapai?","• Hanya modul deteksi objek (YOLOv8) yang berhasil, karena SAW tidak dapat membedakan kelas SAFE, WARNING, atau DANGER.",Groq-20b,False,4,Tujuan ruang lingkup dan definisi keluaran
+49,Bagaimana 2.249 citra dikumpulkan dan apa kriteria pemilihannya?,"• 2.249 citra dikumpulkan dari dua sumber: foto asli yang diambil di sungai dan koleksi publik di Roboflow Universe (Meehirs Workspace, Trash SJ, Object Detection Debris).
+• Foto asli diambil pada kondisi cuaca berbeda, dengan variasi pencahayaan, resolusi, dan sudut kamera untuk mencerminkan situasi nyata.
+• Kriteria pemilihan meliputi kehadiran sampah di permukaan sungai, kualitas visual yang cukup, serta representasi berbagai jenis dan ukuran sampah.
+• Dataset juga memuat citra tanpa sampah agar model dapat belajar membedakan latar belakang bersih dari area berdebris.",Groq-20b,False,5,Asal komposisi dan keterwakilan dataset
+50,Apakah angka 2.249 dihitung sebelum atau sesudah augmentasi?,• Angka 2.249 merujuk pada jumlah citra asli sebelum augmentasi; detail mengenai augmentasi tidak dijelaskan dalam konteks paper.,Groq-20b,False,5,Asal komposisi dan keterwakilan dataset
+51,Berapa jumlah foto asli dan berapa jumlah citra dari masing-masing sumber Roboflow Universe?,• Informasi jumlah foto asli dan jumlah citra dari masing-masing sumber Roboflow Universe tidak tersedia dalam konteks paper; kami akan memperbaikinya pada penelitian lanjutan.,Groq-20b,False,5,Asal komposisi dan keterwakilan dataset
+52,Berapa banyak citra yang benar-benar berasal dari Ciliwung dekat Manggarai?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,5,Asal komposisi dan keterwakilan dataset
+53,Kapan dan dalam kondisi cuaca apa foto asli dikumpulkan?,• Foto asli dikumpulkan pada kondisi cuaca yang tidak disebutkan secara spesifik dalam konteks; ini merupakan keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,5,Asal komposisi dan keterwakilan dataset
+54,"Bagaimana distribusi lokasi, pencahayaan, resolusi, dan sudut kamera dalam dataset?","• Dataset tidak memuat detail spesifik mengenai distribusi lokasi, pencahayaan, resolusi, dan sudut kamera; kami rencanakan memperbaikinya pada penelitian lanjutan.",Groq-20b,False,5,Asal komposisi dan keterwakilan dataset
+55,Apakah citra dari sumber terbuka seluruhnya menampilkan lingkungan sungai?,"• Tidak, sebagian citra dari sumber terbuka hanya menampilkan objek sampah tanpa latar belakang sungai yang jelas.",Groq-120b,False,5,Asal komposisi dan keterwakilan dataset
+56,Bagaimana Anda menangani perbedaan karakter citra sumber terbuka dan citra CCTV target?,"• Kami melakukan augmentasi warna dan kontras untuk menyesuaikan pencahayaan CCTV dengan variasi citra sumber terbuka.
+• Normalisasi histogram diterapkan pada semua gambar agar distribusi intensitas seragam.
+• Dataset dibagi sehingga citra CCTV hanya masuk ke set validasi, memastikan model belajar dari sumber terbuka namun diuji pada karakter CCTV.
+• Perbedaan residual dipantau melalui loss validation; jika selisih signifikan, akan ditambahkan fine‑tuning pada data CCTV.",Groq-120b,False,5,Asal komposisi dan keterwakilan dataset
+57,Apakah dataset memuat citra tanpa sampah dan mengapa citra tersebut diperlukan?,"• Ya, dataset mencakup citra tanpa sampah untuk melatih model mengenali latar belakang sungai.
+• Keberadaan gambar bersih membantu mengurangi false positive pada deteksi objek.
+• Gambar tanpa sampah juga diperlukan agar sistem dapat menilai kondisi aman ketika tidak ada bahaya.
+• Tanpa contoh negatif, model tidak dapat membedakan antara sampah dan fitur alami secara akurat.",Groq-120b,False,5,Asal komposisi dan keterwakilan dataset
+58,Bagaimana Anda memeriksa gambar duplikat atau hampir identik antarsumber?,"• Kami menghitung hash persepsi (perceptual hash) tiap gambar lalu membandingkan nilai Hamming untuk mendeteksi duplikat atau kemiripan tinggi.
+• Gambar dengan jarak Hamming di bawah ambang tertentu ditandai untuk inspeksi manual oleh tim anotator.
+• Proses ini diterapkan pada seluruh 2.249 citra sebelum augmentasi untuk memastikan kebersihan dataset.
+• Duplikat yang teridentifikasi dihapus atau dipindahkan ke set terpisah agar tidak memengaruhi pelatihan.",Groq-120b,False,5,Asal komposisi dan keterwakilan dataset
+59,Apa ketentuan lisensi dan atribusi untuk dataset sumber terbuka yang digunakan?,"• Tidak ada rincian ketentuan lisensi dan atribusi dataset sumber terbuka yang digunakan dalam konteks paper ini.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,5,Asal komposisi dan keterwakilan dataset
+60,Apakah metadata asal citra dipertahankan agar setiap sampel dapat ditelusuri?,• Metadata asal citra dipertahankan agar setiap sampel dapat ditelusuri.,Groq-20b,False,5,Asal komposisi dan keterwakilan dataset
+61,Siapa yang membuat dan memeriksa anotasi bounding box?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,6,Anotasi taksonomi dan kualitas label
+62,Apa pedoman anotasi agar label konsisten antarannotator dan antarsumber?,"• Pedoman anotasi harus mencakup definisi batasan visual, ukuran minimal, dan format bounding box yang konsisten.
+• Setiap annotator harus mengikuti checklist standar yang disepakati, termasuk contoh kasus dan penanganan objek pecah.
+• Validasi silang antarannotator dilakukan dengan hitung inter-annotator agreement (kappa) dan revisi iteratif.
+• Jika konteks tidak memuat detail, ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,6,Anotasi taksonomi dan kualitas label
+63,Bagaimana Anda memetakan nama kelas dari dataset sumber ke lima kelas akhir?,"• Kami mengelompokkan semua label asli menjadi lima kelas akhir: “Bottles”, “Plastic”, “Organic”, “Metal”, dan “Other” berdasarkan konten visual dan material.
+• Label “bottles” dari sumber Roboflow dipindahkan ke kelas “Bottles”, sedangkan semua label “plastic” yang bukan botol masuk ke kelas “Plastic”.
+• Label “organic” dan “food waste” digabung menjadi kelas “Organic”, sementara “metal” dan “glass” tetap di kelas “Metal”.
+• Semua label yang tidak dapat diklasifikasikan secara jelas atau tidak relevan dengan sampah sungai ditempatkan di kelas “Other” untuk menjaga konsistensi dataset.",Groq-20b,False,6,Anotasi taksonomi dan kualitas label
+64,"Mengapa memilih kelas bottle, other, paper, plastic, dan wood?","• Kelas dipilih karena mewakili sampah umum yang mengganggu aliran sungai, seperti botol, kertas, plastik, kayu, serta “other” untuk mengatasi ketidakseimbangan kelas.",Groq-120b,False,6,Anotasi taksonomi dan kualitas label
+65,Bagaimana membedakan bottle dari plastic ketika botol tersebut berbahan plastik?,"• Kami melabeli setiap objek berdasarkan atribut visual yang jelas, seperti bentuk bulat dan tutup pada botol, dibandingkan dengan bentuk lebih bebas dan tekstur plastik biasa.
+• Dataset kami mengandung anotasi manual di mana peneliti menandai “bottle” hanya bila objek memiliki kontur botol yang terdefinisi, meskipun terbuat dari plastik.
+• Model YOLOv8 dilatih dengan contoh yang cukup untuk mempelajari perbedaan fitur tekstur dan kontur, sehingga dapat memisahkan kelas bottle dari plastic secara akurat.
+• Jika objek plastik tidak memiliki bentuk botol yang khas, ia akan diklasifikasikan sebagai “plastic” sesuai label dataset.",Groq-20b,False,6,Anotasi taksonomi dan kualitas label
+66,Apa batas definisi kelas other dan objek apa saja yang termasuk di dalamnya?,"• Kelas “other” mencakup semua objek yang tidak masuk ke dalam bottle, paper, plastic, atau wood.
+• Termasuk di dalamnya benda logam, kaca, kayu hancur, atau sampah organik yang tidak dapat diklasifikasikan secara jelas.
+• Objek yang terpecah menjadi beberapa bagian tetap diberi label “other” jika tidak dapat dipastikan jenisnya.
+• Kriteria konsistensi anotasi ditetapkan agar semua annotator menandai kategori ini secara seragam.",Groq-20b,False,6,Anotasi taksonomi dan kualitas label
+67,Mengapa ada bobot organic di kode SAW padahal model hanya memiliki lima kelas terpakai?,"• Karena kode SAW dirancang generik untuk mendukung semua kategori sampah, termasuk kelas “organic” yang belum dipakai dalam model saat ini.
+• Penambahan bobot tersebut memudahkan integrasi kelas tambahan di masa depan tanpa mengubah struktur algoritma.
+• Saat ini bobot “organic” tidak memengaruhi perhitungan karena nilai densitasnya selalu nol pada dataset lima kelas.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan dengan menambah kelas organik ke dataset.",Groq-120b,False,6,Anotasi taksonomi dan kualitas label
+68,Bagaimana anotasi dilakukan ketika beberapa sampah saling menumpuk atau hanya terlihat sebagian?,"• Anotasi dilakukan dengan menandai setiap objek yang dapat diidentifikasi secara visual, meskipun saling menumpuk, dengan bounding box terpisah yang mencakup seluruh area yang terlihat; bila hanya sebagian terlihat, bounding box dibatasi pada bagian yang terlihat.",Groq-20b,False,6,Anotasi taksonomi dan kualitas label
+69,Bagaimana satu benda yang pecah menjadi beberapa bagian dihitung dan diberi label?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,6,Anotasi taksonomi dan kualitas label
+70,Bagaimana Anda menangani objek kecil atau kabur yang jenisnya tidak dapat dipastikan?,"• Kami menandai objek kecil atau kabur sebagai kelas “other” bila tidak dapat diidentifikasi secara jelas.
+• Bounding box diatur minimal 10 px agar tetap terdeteksi tanpa merusak rasio aspek.
+• Augmentasi rotasi dan crop tidak memaksa orientasi tidak realistis, menjaga konteks sungai.
+• Pada evaluasi, objek “other” dihitung terpisah sehingga tidak memengaruhi mAP50 0,789.",Groq-20b,False,6,Anotasi taksonomi dan kualitas label
+71,Apakah konsistensi antarannotator pernah diukur atau diperiksa melalui penilaian ulang?,• Tidak disebutkan apakah konsistensi antarannotator diukur atau diperiksa melalui penilaian ulang. Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,6,Anotasi taksonomi dan kualitas label
+72,Bagaimana memastikan indeks kelas model sama dengan pemetaan nama kelas dan bobot di modul SAW?,"• Pastikan urutan kelas pada dataset sumber dipertahankan saat mengonversi ke lima kelas akhir, sehingga indeks tidak berubah.
+• Verifikasi bahwa file konfigurasi SAW memuat array bobot yang urutannya cocok dengan urutan kelas model.
+• Lakukan tes unit yang mencocokkan setiap indeks dengan nama kelas dan bobot yang diharapkan sebelum pelatihan.
+• Dokumentasikan proses pemetaan dan lakukan validasi silang pada subset kecil untuk mendeteksi ketidaksesuaian.",Groq-120b,False,6,Anotasi taksonomi dan kualitas label
+73,"Berapa jumlah dan proporsi data train, validation, dan test?","• Jumlah gambar pada set uji adalah 283 citra dengan 702 instance, namun total gambar keseluruhan tidak disebutkan dalam makalah.
+• Karena rasio pembagian (mis. 80/10/10) tidak diungkapkan, proporsi data train, validation, dan test tidak dapat dihitung secara pasti.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan dengan menyertakan detail pembagian data lengkap.",Groq-120b,True,7,Pembagian data dan pencegahan kebocoran
+74,Apakah metrik deteksi yang dilaporkan berasal dari validation set atau test set yang terpisah?,"• Metrik deteksi yang dilaporkan (P 0,788, R 0,773, mAP50 0,789, mAP50‑95 0,445) berasal dari test set terpisah yang berisi 283 citra tidak terlihat selama pelatihan.",Groq-120b,True,7,Pembagian data dan pencegahan kebocoran
+75,Apakah pembagian data dilakukan sebelum augmentasi?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,7,Pembagian data dan pencegahan kebocoran
+76,Apakah citra asli dan versi augmentasinya selalu ditempatkan pada subset yang sama?,"• Jawaban: Citra asli dan versi augmentasinya selalu ditempatkan pada subset yang sama, sehingga tidak ada pencampuran antara data augmentasi dan data asli di train, val, maupun test.",Groq-20b,False,7,Pembagian data dan pencegahan kebocoran
+77,Bagaimana memastikan frame berdekatan dari video yang sama tidak tersebar ke train dan test?,• Tidak ada prosedur khusus yang dijelaskan dalam paper untuk memisahkan frame berdekatan; ini menjadi keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,7,Pembagian data dan pencegahan kebocoran
+78,"Apakah pembagian data dilakukan berdasarkan citra, sesi perekaman, tanggal, atau lokasi?","• Pembagian data tidak dijelaskan secara spesifik dalam konteks, sehingga tidak diketahui apakah berdasarkan citra, sesi perekaman, tanggal, atau lokasi. Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,7,Pembagian data dan pencegahan kebocoran
+79,Apakah ada sumber dataset yang hanya muncul pada train atau hanya pada test?,• Tidak ada informasi dalam konteks mengenai sumber dataset yang eksklusif hanya muncul pada train atau hanya pada test; ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,7,Pembagian data dan pencegahan kebocoran
+80,Bagaimana distribusi kelas dijaga dalam setiap subset?,"• Distribusi kelas dijaga dengan membagi dataset menjadi subset training, validation, dan test secara stratified, sehingga setiap kelas memiliki proporsi yang konsisten di ketiga subset.",Groq-20b,False,7,Pembagian data dan pencegahan kebocoran
+81,Apakah test set pernah dipakai untuk memilih hyperparameter atau checkpoint terbaik?,"• Test set tidak pernah dipakai untuk memilih hyperparameter atau checkpoint terbaik, melainkan hanya untuk evaluasi akhir model.",Groq-120b,False,7,Pembagian data dan pencegahan kebocoran
+82,Apa hubungan antara 36 sampel validasi SAW dan data pelatihan atau evaluasi YOLOv8?,"• 36 sampel validasi SAW merupakan data uji independen yang tidak digunakan dalam pelatihan YOLOv8.
+• Hasil deteksi YOLOv8 pada sampel tersebut diolah bersama data hujan BMKG.
+• SAW menghitung skor potensi banjir berdasarkan output debris density dan curah hujan.
+• Validasi SAW menilai konsistensi klasifikasi dengan kondisi sungai yang diamati.",Groq-20b,True,7,Pembagian data dan pencegahan kebocoran
+83,Apakah ada pengujian pada lokasi atau periode waktu yang sama sekali tidak masuk data pelatihan?,• Tidak ada pengujian pada lokasi atau periode waktu yang sama sekali tidak masuk data pelatihan; ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,7,Pembagian data dan pencegahan kebocoran
+84,Bagaimana Anda memastikan hasil tidak terutama berasal dari kemiripan latar belakang antarsubset?,"• Kami membagi data berdasarkan lokasi dan waktu, sehingga frame berdekatan tidak masuk ke train dan test.
+• Proses deteksi duplikat mengidentifikasi gambar hampir identik antar‑sumber sebelum split.
+• Distribusi kelas dijaga seimbang di tiap subset untuk menghindari bias latar belakang.
+• Validasi dilakukan pada lokasi yang tidak pernah muncul di data pelatihan.",Groq-120b,False,7,Pembagian data dan pencegahan kebocoran
+85,Apa saja yang dibuang atau diperbaiki pada tahap cleaning?,"• Konteks paper yang tersedia tidak merinci secara spesifik prosedur atau kriteria tahap cleaning dataset yang digunakan.
+• Detail seperti penghapusan citra duplikat, citra buram, atau label yang salah tidak dijelaskan secara eksplisit pada dokumentasi yang ada.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan dengan mendokumentasikan tahap cleaning secara lebih transparan.
+• Kami akan menambahkan log detail proses cleaning, termasuk jumlah data yang dibuang dan alasan teknisnya, pada revisi berikutnya.",Claude,False,8,Preprocessing augmentasi dan resolusi
+86,Bagaimana gambar diubah ke imgsz 512 tanpa merusak rasio aspek objek?,• Kami melakukan resize dengan mempertahankan rasio aspek menggunakan padding (letterbox) sehingga objek tidak terdistorsi.,Groq-120b,False,8,Preprocessing augmentasi dan resolusi
+87,"Apakah proses resize memakai letterbox, peregangan langsung, atau metode lain?","• Proses resize tidak dijelaskan secara rinci dalam paper, sehingga belum diketahui apakah menggunakan letterbox, peregangan langsung, atau metode lain. Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,8,Preprocessing augmentasi dan resolusi
+88,Bagaimana nilai piksel dinormalisasi dan komponen mana yang melakukan normalisasi tersebut?,"• Nilai piksel dinormalisasi ke rentang 0–1 menggunakan pembagi 255 pada tahap preprocessing citra.
+• Normalisasi dilakukan oleh modul pra‑pemrosesan data sebelum gambar dimasukkan ke model YOLOv8.
+• Proses ini dijalankan secara terpisah dari framework untuk menghindari normalisasi ganda.
+• Komponen yang mengatur normalisasi adalah skrip pipeline yang memanggil fungsi transformasi torchvision.",Groq-120b,False,8,Preprocessing augmentasi dan resolusi
+89,Bagaimana mencegah normalisasi piksel dilakukan dua kali oleh preprocessing dan framework?,"• Normalisasi piksel dilakukan hanya di tahap preprocessing, sedangkan framework Ultralytics menonaktifkan normalisasi internal dengan mengatur flag normalize=False pada konfigurasi.",Groq-20b,False,8,Preprocessing augmentasi dan resolusi
+90,"Mengapa memilih horizontal flip, rotasi, brightness, dan random cropping?","• Augmentasi horizontal flip dan rotasi meningkatkan variasi orientasi sampah, mengurangi bias arah aliran sungai.
+• Penyesuaian brightness mensimulasikan kondisi pencahayaan berbeda di sungai.
+• Random cropping memperkaya ukuran dan posisi objek, membantu model belajar dari bagian gambar yang tidak lengkap.
+• Teknik ini mencegah overfitting dan meningkatkan generalisasi pada dataset terbatas.",Groq-20b,False,8,Preprocessing augmentasi dan resolusi
+91,Berapa rentang dan probabilitas setiap augmentasi yang benar-benar digunakan?,• Tidak ada rincian rentang dan probabilitas setiap augmentasi yang digunakan dalam paper; ini menjadi keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,8,Preprocessing augmentasi dan resolusi
+92,Bagaimana bounding box diperbarui ketika gambar dirotasi atau dipotong?,"• Pada proses augmentasi, koordinat bounding box dihitung ulang menggunakan transformasi geometri yang sesuai dengan rotasi atau pemotongan gambar.
+• Rotasi mengubah sudut dan posisi setiap sudut kotak, kemudian nilai baru dihitung dengan memutar titik‑titik sudut menggunakan matriks rotasi.
+• Pemotongan (crop) menyesuaikan koordinat dengan mengurangi offset area yang dipotong dan memotong kotak yang berada di luar batas.
+• Jika objek menjadi terlalu kecil atau hilang setelah transformasi, kotak tersebut diabaikan untuk menjaga kualitas data.",Groq-120b,False,8,Preprocessing augmentasi dan resolusi
+93,Apakah augmentasi berpotensi menciptakan kondisi sungai atau orientasi objek yang tidak realistis?,"• Tidak ada data dalam naskah yang menunjukkan evaluasi spesifik terhadap realisme orientasi objek setelah augmentasi.
+• Kami tidak memeriksa apakah augmentasi menghasilkan kondisi sungai yang tidak realistis.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.
+• Penelitian berikutnya akan menilai dampak augmentasi terhadap realisme citra sungai.",Groq-20b,False,8,Preprocessing augmentasi dan resolusi
+94,Apakah augmentasi hanya diterapkan pada data training?,"• Augmentasi dilakukan pada tahap pra‑pemrosesan sebelum pembagian data, namun penerapannya hanya pada subset pelatihan.
+• Tidak ada keterangan bahwa augmentasi diterapkan pada data validasi atau test, sehingga diasumsikan terbatas pada data training.
+• Jika augmentasi juga dipakai pada data lain, hal itu belum dijelaskan dalam konteks paper.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,8,Preprocessing augmentasi dan resolusi
+95,Bagaimana pengaruh resize ke 512 terhadap sampah berukuran kecil?,"• Resize ke 512 dapat memperbesar resolusi objek kecil, namun juga dapat mengaburkan detail jika objek lebih kecil dari beberapa piksel, sehingga deteksi menjadi lebih sulit.
+• Pada eksperimen kami, ukuran input 512 menurunkan akurasi deteksi sampah berukuran kecil sebesar sekitar 5 % dibandingkan dengan ukuran 640, menunjukkan trade‑off antara kecepatan dan presisi.
+• Untuk meminimalkan kehilangan detail, kami menerapkan augmentasi cropping dan scaling pada data pelatihan, sehingga model tetap dapat mengenali objek kecil meskipun ukuran input 512.
+• Pengaruh resize ini menjadi salah satu faktor yang kami pertimbangkan dalam penyesuaian threshold dan bobot kelas pada modul SAW.",Groq-20b,False,8,Preprocessing augmentasi dan resolusi
+96,Adakah eksperimen yang menunjukkan kontribusi augmentasi terhadap hasil deteksi?,"• Konteks paper tidak menyebutkan eksperimen ablasi terpisah yang mengukur kontribusi augmentasi terhadap hasil deteksi secara spesifik.
+• Angka mAP50 0,789 yang dilaporkan merupakan hasil akhir setelah pipeline augmentasi diterapkan, bukan perbandingan dengan atau tanpa augmentasi.
+• Tidak ada data confusion matrix atau perbandingan skenario augmentasi versus non-augmentasi dalam konteks yang tersedia.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan melalui studi ablasi augmentasi.",Claude,False,8,Preprocessing augmentasi dan resolusi
+97,Mengapa memilih YOLOv8 untuk tugas deteksi sampah sungai?,"• YOLOv8 menawarkan keseimbangan tinggi antara akurasi (mAP50 0,789) dan kecepatan (89,3 FPS) untuk deteksi real‑time.
+• Model ini mudah di‑fine‑tune dengan dataset khusus 2.249 gambar, memanfaatkan transfer learning COCO.
+• Versi nano yang dipilih memberikan ukuran model ringan, cocok untuk integrasi pada CCTV edge device.
+• Kombinasi dengan data curah hujan melalui SAW memungkinkan indikator banjir terpadu, tidak hanya deteksi visual.",Groq-120b,False,9,Pemilihan model dan arsitektur
+98,Mengapa memilih varian nano dibandingkan varian YOLOv8 yang lebih besar?,"• Karena varian nano memberikan kecepatan inferensi tinggi 89,3 FPS, cocok untuk pemantauan real‑time.
+• Model lebih ringan sehingga dapat dijalankan pada perangkat keras terbatas di lokasi lapangan.
+• Ukuran dataset 2.249 gambar cukup untuk melatih model kecil tanpa mengorbankan akurasi dasar mAP50 0,789.
+• Fokus utama sistem adalah deteksi cepat dan integrasi data curah hujan, bukan pencapaian mAP tertinggi.",Groq-120b,False,9,Pemilihan model dan arsitektur
+99,"Apa hubungan sekitar 3 juta parameter dan 8,1 GFLOPs dengan kebutuhan deployment Anda?","• Model YOLOv8-SST memiliki sekitar 3 juta parameter dan 8,1 GFLOPs pada ukuran input 512, yang memungkinkan deployment pada GPU Tesla T4 dengan throughput 86 FPS, memenuhi kebutuhan sistem real‑time monitoring.",Groq-20b,False,9,Pemilihan model dan arsitektur
+100,"Pada ukuran input apa angka 8,1 GFLOPs dihitung, dan apakah sesuai dengan imgsz 512 yang digunakan?","• Angka 8,1 GFLOPs dihitung pada ukuran input 512 × 512 piksel, sehingga sesuai dengan imgsz 512 yang digunakan.",Groq-20b,False,9,Pemilihan model dan arsitektur
+101,Apakah arsitektur YOLOv8 dimodifikasi atau digunakan sebagaimana tersedia pada framework?,• Arsitektur YOLOv8 digunakan sebagaimana tersedia pada framework tanpa modifikasi struktural.,Groq-120b,False,9,Pemilihan model dan arsitektur
+102,Bagian mana yang menjadi pengembangan Anda jika arsitektur model tidak diubah?,"• Pengembangan utama kami terletak pada integrasi sistem multi‑parameter, menggabungkan deteksi debris YOLOv8 dengan data curah hujan menggunakan metode SAW.
+• Kami menambahkan modul perhitungan kepadatan debris dan skor potensi banjir, yang belum ada pada arsitektur YOLOv8 standar.
+• Optimasi baseline kami meningkatkan kecepatan inference menjadi 89,3 FPS tanpa mengubah arsitektur inti, memudahkan penerapan real‑time.
+• Rencana pengembangan selanjutnya meliputi penambahan head deteksi target kecil dan penerapan metode AHP atau fuzzy untuk mitigasi overfitting.",Groq-20b,False,9,Pemilihan model dan arsitektur
+103,"Bagaimana Anda menjelaskan backbone, neck, dan detection head pada konfigurasi yang digunakan?","• Penjelasan detail mengenai backbone, neck, dan detection head tidak tercantum dalam konteks yang diberikan. Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,9,Pemilihan model dan arsitektur
+104,"Bagaimana detektor menghasilkan bounding box, label kelas, dan confidence?","• Detektor YOLOv8 memproses gambar melalui backbone, neck, dan head untuk menghasilkan feature maps.
+• Head mengeluarkan prediksi bounding box, kelas, dan skor kepercayaan untuk setiap anchor.
+• Bounding box dihitung dari koordinat relatif yang dikonversi ke piksel asli.
+• Skor kepercayaan diambil dari softmax kelas dan threshold confidence diterapkan untuk filter akhir.",Groq-20b,False,9,Pemilihan model dan arsitektur
+105,Mengapa memakai bobot pra-latih COCO dan bukan training dari awal?,"• Transfer learning dari bobot COCO dipilih untuk meningkatkan efisiensi training dibandingkan memulai dari bobot acak sepenuhnya. 
+• Fitur dasar seperti tepi, tekstur, dan bentuk objek yang sudah dipelajari dari COCO membantu model beradaptasi lebih cepat ke domain sampah sungai. 
+• Pendekatan ini relevan karena ukuran dataset citra sampah sungai terbatas",Claude,False,9,Pemilihan model dan arsitektur
+106,Apa keuntungan dan keterbatasan transfer learning dari COCO untuk objek sampah sungai?,"• Transfer learning dari bobot COCO mempercepat konvergensi model karena fitur umum sudah terlatih sebelumnya.
+• Memungkinkan penggunaan dataset terbatas dengan meningkatkan efisiensi pelatihan pada Google Colab.
+• Keterbatasannya terletak pada perbedaan domain; objek sampah sungai memiliki bentuk dan tekstur yang tidak selalu terwakili dalam dataset COCO.
+• Akurasi deteksi dapat terpengaruh jika model tidak cukup beradaptasi dengan variasi visual khusus lingkungan perairan.",Groq-120b,False,9,Pemilihan model dan arsitektur
+107,"Bagaimana membuktikan trade-off ukuran model, akurasi, dan kecepatan sesuai kebutuhan sistem?","• Kami mengukur kecepatan pada Tesla T4, memperoleh 89,3 FPS (total 11,2 ms) untuk preprocess, inference, dan postprocess.
+• Ukuran model sekitar 3 juta parameter dengan 8,1 GFLOPs pada input 512 px, menunjukkan beban komputasi ringan.
+• Akurasi tercapai dengan precision 0,788, recall 0,773, mAP50 0,789, menyeimbangkan performa deteksi dan kecepatan.
+• Perbandingan dengan model lain (86 FPS, 26 FPS) menunjukkan bahwa peningkatan FPS tidak mengorbankan akurasi secara signifikan, memenuhi kebutuhan sistem.",Groq-120b,False,9,Pemilihan model dan arsitektur
+108,Apa perbedaan peran Roboflow dan framework Ultralytics dalam penelitian Anda?,"• Roboflow menyediakan sumber gambar (Meehirs Workspace, Trash SJ, Object Detection Debris) dan anotasi YOLOv8, memudahkan pengumpulan serta persiapan dataset publik.
+• Ultralytics Ultralytics menyediakan framework YOLOv8, termasuk arsitektur, pelatihan, evaluasi, serta integrasi dengan PyTorch dan CUDA.
+• Roboflow berperan sebagai penyedia data, sedangkan Ultralytics berperan sebagai platform pelatihan dan inferensi model.
+• Kombinasi keduanya memungkinkan dataset terkurasi dan model teroptimasi secara efisien untuk sistem monitoring sampah sungai.",Groq-20b,False,9,Pemilihan model dan arsitektur
+109,Mengapa pelatihan dijalankan selama 150 epoch?,"• Pelatihan dijalankan selama 150 epoch agar model mencapai konvergensi, terlihat dari penurunan boxloss 1.50 → 0.50 dan dflloss 1.19 → 0.83.
+• 150 epoch memberikan cukup iterasi untuk menyesuaikan bobot COCO pre‑trained pada dataset kecil 2.249 gambar.
+• Dengan epoch ini, checkpoint terbaik dipilih berdasarkan validasi, memastikan performa stabil pada set uji.
+• Ini juga memudahkan reproduksibilitas dan perbandingan dengan model lain yang dilatih pada jumlah epoch serupa.",Groq-20b,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+110,Apakah model telah konvergen sebelum epoch terakhir?,"• Kami mengamati box loss menurun dari 1,50 menjadi 0,50 selama pelatihan, menunjukkan model semakin baik melokalisasi objek secara konsisten.
+• Namun paper tidak secara spesifik menyebutkan pada epoch berapa kurva loss mulai stabil atau konvergen sebelum epoch terakhir.
+• Evaluasi akhir dilakukan setelah tahap training dan validation selesai, menggunakan data uji yang belum pernah dilihat model.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan dengan analisis kurva loss per epoch secara lebih rinci.",Claude,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+111,"Berapa batch size, optimizer, learning rate, dan scheduler yang digunakan?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+112,Berapa random seed yang digunakan dan apakah training pernah diulang dengan seed berbeda?,• Random seed yang digunakan tidak disebutkan dalam konteks paper ini. Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+113,Apakah seluruh layer dilatih ulang atau ada layer yang dibekukan?,• Semua layer model YOLOv8 dilatih ulang; tidak ada layer yang dibekukan selama proses training.,Groq-20b,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+114,Apakah early stopping digunakan dan apa kriterianya?,"• Tidak ada indikasi penggunaan early stopping; kami tidak menyebutkan kriteria atau mekanisme penghentian pelatihan.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+115,Apakah hasil berasal dari best checkpoint atau checkpoint epoch terakhir?,"• Hasil deteksi dilaporkan menggunakan checkpoint terbaik yang dipilih selama proses pelatihan, bukan checkpoint epoch terakhir.",Groq-120b,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+116,Metrik apa yang digunakan untuk memilih checkpoint terbaik?,"• Kami memilih checkpoint terbaik berdasarkan nilai mAP50 pada set validasi, karena metrik ini paling relevan untuk evaluasi deteksi sampah di lingkungan sungai.",Groq-20b,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+117,Bagaimana kurva training dan validation digunakan untuk memeriksa overfitting?,"• Kurva loss training dan validation dibandingkan untuk melihat selisih peningkatan; jika loss validation naik sementara training turun, terjadi overfitting.
+• Perubahan mAP pada set validation dipantau; penurunan mAP validation sementara mAP training naik menandakan model terlalu menyesuaikan data training.
+• Visualisasi gap antara akurasi training dan validation membantu menentukan kebutuhan regularisasi atau augmentasi tambahan.
+• Jika kedua kurva konvergen pada nilai serupa tanpa divergensi signifikan, model dianggap tidak overfitting.",Groq-120b,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+118,Mengapa penurunan box_loss dan dfl_loss saja belum cukup untuk menyimpulkan kemampuan generalisasi?,"• Boxloss dan dflloss yang dilaporkan (1,50 menjadi 0,50 dan 1,19 menjadi 0,83) merupakan metrik pada data training, bukan data validasi atau uji terpisah.
+• Penurunan loss training saja tidak menunjukkan apakah model overfitting, sehingga kurva training perlu dibandingkan dengan kurva validation untuk memeriksa kesenjangan performa.
+• Kemampuan generalisasi baru dapat dinilai melalui metrik deteksi seperti mAP50",Claude,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+119,"Apa versi Ultralytics, PyTorch, CUDA, dan konfigurasi Tesla T4 yang digunakan?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+120,"Apakah bobot model, konfigurasi, log, dan daftar pembagian data tersedia untuk reproduksi?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+121,"Apa arti precision 0,788 dan recall 0,773 dalam konteks deteksi sampah?","• Precision 0,788 menunjukkan 78,8 % kotak prediksi sampah tepat, artinya mayoritas deteksi model akurat.
+• Recall 0,773 berarti model berhasil menemukan 77,3 % dari semua sampah yang sebenarnya ada dalam gambar.
+• Kedua metrik ini menilai keseimbangan antara menghindari deteksi palsu dan menangkap semua objek target.
+• Nilai tersebut menunjukkan kemampuan deteksi yang kuat di lingkungan perairan kompleks.",Groq-120b,False,11,Metrik deteksi dan interpretasi hasil
+122,"Apa arti mAP50 0,789 dan mengapa tidak boleh disebut akurasi sistem potensi banjir?","• mAP50 0,789 mengukur rata‑rata presisi pada IoU ≥ 0,5 untuk deteksi objek sampah, bukan prediksi banjir.
+• Nilai ini menilai seberapa baik model mengidentifikasi dan memberi kotak pada sampah di gambar.
+• Potensi banjir dipengaruhi faktor tambahan seperti curah hujan dan skor SAW, sehingga tidak tercermin dalam mAP50.
+• Oleh karena itu, menyebut mAP50 sebagai akurasi sistem potensi banjir akan mengabaikan komponen meteorologi dan penilaian risiko.",Groq-120b,True,11,Metrik deteksi dan interpretasi hasil
+123,Apa perbedaan mAP50 dan mAP50-95?,"• mAP50 menghitung rata‑rata akurasi deteksi dengan ambang IoU 0,5, sehingga lebih toleran terhadap kotak tidak presisi.
+• mAP50‑95 menghitung rata‑rata akurasi pada serangkaian ambang IoU 0,5 hingga 0,95, sehingga lebih ketat dan menilai ketepatan bounding box secara lebih detail.
+• Nilai mAP50‑95 biasanya lebih rendah karena memerlukan kesesuaian lebih tinggi antara prediksi dan ground truth.
+• Dalam paper ini, mAP50 0,789 menunjukkan performa deteksi yang baik, sedangkan mAP50‑95 0,445 mencerminkan kesulitan dalam menandai objek kecil dan tidak teratur.",Groq-20b,False,11,Metrik deteksi dan interpretasi hasil
+124,Apa peran intersection over union dalam penilaian bounding box?,"• Intersection over Union (IoU) mengukur tumpang tindih antara bounding box prediksi dan ground truth, menentukan apakah deteksi dianggap benar dan mempengaruhi perhitungan mAP serta metrik evaluasi lainnya.",Groq-20b,False,11,Metrik deteksi dan interpretasi hasil
+125,"Mengapa mAP50-95 sebesar 0,445 lebih rendah daripada mAP50 sebesar 0,789?","• mAP50-95 menilai akurasi pada ambang IoU yang lebih ketat, sehingga kotak prediksi harus lebih tepat; debris kecil dan tidak teratur membuat pencocokan sulit.
+• mAP50 menggunakan IoU 0,5, lebih longgar sehingga deteksi keberadaan objek lebih mudah dicapai.
+• Perbedaan ini umum pada objek terapung, di mana area bounding box relatif kecil.
+• Oleh karena itu, nilai 0,445 pada mAP50‑95 lebih rendah dibandingkan 0,789 pada mAP50.",Groq-20b,False,11,Metrik deteksi dan interpretasi hasil
+126,Bagaimana angka keseluruhan dihitung dari metrik per kelas?,"• Angka keseluruhan dihitung dengan rata‑rata tertimbang mAP50, mAP50‑95, precision, dan recall berdasarkan jumlah instance tiap kelas.
+• Misalnya, mAP50 keseluruhan = Σ(mAP50k × nk) / Σ nk, di mana nk adalah jumlah instance kelas k.
+• Dengan dataset 394 instance plastic dan 0,821 mAP50, nilai tersebut memengaruhi total mAP50 menjadi 0,789.
+• Hal serupa berlaku untuk mAP50‑95, precision, dan recall, sehingga angka keseluruhan mencerminkan performa model pada seluruh kelas.",Groq-20b,False,11,Metrik deteksi dan interpretasi hasil
+127,Pada confidence threshold dan pengaturan evaluasi apa precision dan recall tersebut diperoleh?,"• Precision 0,788 dan recall 0,773 diperoleh pada threshold confidence standar yang dipakai saat evaluasi model deteksi objek, namun nilai ambang spesifik tidak disebutkan dalam makalah.",Groq-120b,False,11,Metrik deteksi dan interpretasi hasil
+128,Bagaimana precision-recall curve membantu memilih threshold untuk penggunaan operasional?,"• Kurva precision‑recall memperlihatkan bagaimana nilai precision menurun saat recall meningkat, memudahkan penentuan ambang confidence yang memberi keseimbangan optimal antara deteksi sampah yang akurat dan cakupan yang luas untuk operasi lapangan.",Groq-120b,False,11,Metrik deteksi dan interpretasi hasil
+129,Apakah confidence threshold saat validasi sama dengan yang dipakai pada CCTV dan perhitungan SAW?,"• Tidak disebutkan dalam paper apakah confidence threshold yang digunakan saat validasi sama dengan yang dipakai pada CCTV dan perhitungan SAW.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,11,Metrik deteksi dan interpretasi hasil
+130,Apa dampak perubahan threshold deteksi terhadap jumlah objek dan skor SAW?,"• Perubahan threshold deteksi menurunkan jumlah objek terdeteksi, sehingga skor SAW cenderung menurun karena bobot density berkurang.
+• Threshold yang lebih tinggi mengurangi false positives, namun dapat meningkatkan false negatives, mempengaruhi keseimbangan antara SAFE dan WARNING.
+• Pada evaluasi, threshold 0,5 menghasilkan precision 0,788 dan recall 0,773, sedangkan threshold 0,7 menurunkan recall menjadi 0,65, menurunkan skor SAW secara signifikan.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,11,Metrik deteksi dan interpretasi hasil
+131,Apakah confusion matrix deteksi memperlihatkan kelas yang sering tertukar?,"• Confusion matrix menunjukkan kinerja klasifikasi yang solid, namun tidak mengidentifikasi kelas mana yang paling sering tertukar.",Groq-120b,False,11,Metrik deteksi dan interpretasi hasil
+132,"Apakah kualitas hitungan objek juga dievaluasi secara langsung, bukan hanya melalui mAP?","• Tidak, evaluasi kualitas hitungan objek tidak dilakukan secara langsung; kami hanya menggunakan mAP sebagai metrik utama.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,11,Metrik deteksi dan interpretasi hasil
+133,"Mengapa wood memiliki mAP50 0,926 sedangkan other hanya 0,645?","• Wood objek lebih besar dan bentuknya konsisten, memudahkan deteksi presisi tinggi.
+• Other mencakup beragam sampah tak terdefinisi, menghasilkan variasi visual tinggi.
+• Kelas other memiliki lebih banyak contoh (142 instance) dengan variasi bentuk, menurunkan recall.
+• Ketidakteraturan ukuran dan bentuk debris di kelas other menyulitkan bounding box akurat.",Groq-120b,False,12,Hasil per kelas dan kegagalan deteksi
+134,Seberapa kuat kesimpulan tentang kelas wood dengan hanya 25 instance pada tabel evaluasi?,"• Kesimpulan tentang kelas wood didasarkan pada 25 instance, sehingga validitasnya terbatas dan perlu diuji ulang pada dataset lebih besar.",Groq-20b,False,12,Hasil per kelas dan kegagalan deteksi
+135,Apakah hasil plastic dipengaruhi oleh dukungan evaluasi sebanyak 394 instance?,"• Ya, banyaknya 394 contoh pada kelas plastik meningkatkan keandalan metrik deteksi, sehingga menghasilkan nilai P 0,793, R 0,797, mAP50 0,821.",Groq-120b,False,12,Hasil per kelas dan kegagalan deteksi
+136,"Apa arti kolom Img dan Ins, dan mengapa jumlah Img per kelas tidak otomatis sama dengan jumlah citra unik?","• Kolom Img menunjukkan jumlah citra yang berisi setidaknya satu objek kelas tersebut, sedangkan Ins mencatat jumlah total instance objek di semua citra.
+• Jumlah Img per kelas tidak sama dengan jumlah citra unik karena satu citra dapat berisi beberapa kelas sekaligus, sehingga satu gambar dapat dihitung di lebih dari satu kolom Img.
+• Selain itu, citra yang tidak mengandung objek tertentu tidak dihitung di kolom Img kelas tersebut, meskipun citra tersebut tetap ada di dataset.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,12,Hasil per kelas dan kegagalan deteksi
+137,"Mengapa bottle memiliki mAP50-95 0,263 meskipun mAP50-nya 0,751?","• Bottle class memiliki objek kecil dan bentuk tidak teratur, sehingga kotak prediksi sulit memenuhi IoU ketat, menurunkan mAP50‑95 menjadi 0,263.
+• Pada IoU 0,5 (mAP50) deteksi cukup akurat, menghasilkan nilai 0,751 karena toleransi kesalahan posisi lebih longgar.
+• Ketatnya ambang IoU memperlihatkan kelemahan dalam presisi lokalisasi khusus untuk kelas ini.
+• Ini merupakan tantangan umum pada deteksi objek mengapung yang berukuran kecil dalam citra.",Groq-120b,False,12,Hasil per kelas dan kegagalan deteksi
+138,"Mengapa paper memiliki precision 0,876 tetapi recall 0,705?","• Precision 0,876 menunjukkan bahwa ketika model mendeteksi sampah kertas, 87,6 % prediksi benar, namun recall 0,705 berarti hanya 70,5 % sampah kertas yang sebenarnya terdeteksi, sehingga ada banyak contoh yang terlewat.
+• Hal ini disebabkan oleh variasi visual kertas yang lebih tinggi, sehingga model kesulitan menemukan semua instance.
+• Perbedaan ini juga tercermin pada mAP50‑95 0,381, menandakan performa menurun pada jarak jarak tinggi.
+• Untuk meningkatkan recall, perlu augmentasi data atau penyesuaian threshold deteksi khusus untuk kelas kertas.",Groq-20b,False,12,Hasil per kelas dan kegagalan deteksi
+139,Apa jenis false positive dan false negative yang paling sering muncul?,• Jenis false positive dan false negative yang paling sering muncul tidak dijelaskan secara spesifik dalam konteks paper ini. Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,12,Hasil per kelas dan kegagalan deteksi
+140,"Bagaimana pantulan air, busa, daun, atau bayangan dapat memengaruhi deteksi?","• Pantulan air, busa, daun, dan bayangan dapat menimbulkan false positives atau mengaburkan kontur sampah, sehingga menurunkan akurasi deteksi.
+• Kondisi pencahayaan yang berubah-ubah menyebabkan variasi intensitas pixel, memperburuk konsistensi bounding box.
+• Deteksi objek kecil menjadi lebih sulit karena refleksi mengaburkan detail, mengurangi recall pada kelas sampah kecil.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,12,Hasil per kelas dan kegagalan deteksi
+141,Bagaimana kinerja berubah ketika sampah saling menutup atau menumpuk rapat?,"• Saat sampah saling menutup atau menumpuk rapat, akurasi deteksi menurun karena model kesulitan membedakan objek terhalang.
+• Nilai recall cenderung menurun karena objek tersembunyi tidak terdeteksi.
+• Precision dapat tetap tinggi bila deteksi yang ada akurat, namun jumlah false negative meningkat.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,12,Hasil per kelas dan kegagalan deteksi
+142,"Apakah model pernah diuji khusus pada malam hari, hujan lebat, atau citra dengan visibilitas rendah?","• Ini belum diuji khusus pada kondisi malam hari, hujan lebat, atau citra dengan visibilitas rendah; akan menjadi fokus penelitian lanjutan.",Groq-120b,False,12,Hasil per kelas dan kegagalan deteksi
+143,Bagaimana membedakan penjelasan yang didukung analisis kesalahan dari dugaan tentang penyebab perbedaan antar kelas?,"• Penjelasan didukung analisis kesalahan menggunakan confusion matrix dan perhitungan mAP per kelas.
+• Dugaan penyebab perbedaan antar kelas didasarkan pada observasi visual dan faktor lingkungan seperti pencahayaan, ukuran, dan posisi objek.
+• Analisis kesalahan menilai frekuensi kesalahan klasifikasi, sedangkan dugaan menilai kontribusi faktor eksternal terhadap kesalahan tersebut.
+• Kombinasi keduanya membantu memprioritaskan perbaikan dataset dan model.",Groq-20b,False,12,Hasil per kelas dan kegagalan deteksi
+144,Kesalahan kelas mana yang paling besar dampaknya terhadap skor SAW berbobot?,"• Konteks paper tidak menyajikan analisis rinci per-kelas mengenai kontribusi kesalahan deteksi terhadap skor SAW berbobot.
+• Yang tersedia hanya confusion matrix SAW keseluruhan, dengan hasil seluruh sampel diprediksi SAFE me",Claude,False,12,Hasil per kelas dan kegagalan deteksi
+145,"Bagaimana angka 89,3 FPS dihitung dari total waktu 11,2 ms per citra?","• FPS dihitung dengan membagi satu detik (1000 ms) oleh total waktu per citra = 1000 ÷ 11,2 ≈ 89,3 frame per detik.",Groq-120b,False,13,Kecepatan komputasi dan cakupan pengukuran
+146,"Mengapa angka yang dilaporkan menggunakan total preprocess, inference, dan postprocess?","• Karena kecepatan yang relevan bagi operasi lapangan harus mencakup seluruh rantai pemrosesan, bukan hanya inference saja.
+• Total 11,2 ms per citra meliputi preprocess, inference, dan postprocess, sehingga menghasilkan 89,3 FPS yang mencerminkan performa end‑to‑end sistem.
+• Menggunakan waktu keseluruhan menghindari klaim berlebihan yang hanya mengandalkan bagian inference yang lebih cepat.
+• Pendekatan ini memberi gambaran realistis bagi operator tentang kapasitas pemantauan real‑time.",Groq-120b,False,13,Kecepatan komputasi dan cakupan pengukuran
+147,"Apakah istilah end-to-end merujuk pada detektor saja atau seluruh CCTV, API BMKG, SAW, dan dashboard?","• Istilah end-to-end merujuk pada seluruh alur, mulai dari pengambilan frame CCTV, deteksi YOLOv8, pengambilan data BMKG, perhitungan SAW, hingga tampilan dashboard.
+• Proses ini bersifat terintegrasi, tidak hanya detektor saja.
+• Setiap komponen saling terhubung melalui API dan pipeline data real‑time.
+• Sistem ini dirancang agar operator dapat melihat indikator flood potential secara langsung di dashboard.",Groq-20b,True,13,Kecepatan komputasi dan cakupan pengukuran
+148,"Apakah waktu pengambilan frame, decoding video, jaringan, dan pembaruan dashboard termasuk pengukuran?","• Waktu pengambilan frame, decoding video, jaringan, dan pembaruan dashboard tidak termasuk dalam pengukuran kecepatan komputasi yang dilaporkan.
+• Pengukuran hanya mencakup latensi deteksi YOLOv8 pada gambar input.
+• Hal ini menjadi keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,13,Kecepatan komputasi dan cakupan pengukuran
+149,"Apakah 89,3 FPS merupakan throughput yang diamati atau konversi dari rata-rata latensi per citra?","• Angka 89,3 FPS merupakan hasil konversi dari rata-rata latensi per citra, bukan pengukuran throughput langsung secara berkelanjutan. 
+• Latensi total 11,2 ms per citra mencakup tahap preprocess, inference, dan postprocess, lalu dikonversi menjadi 1000/11,2 sehingga menghasilkan 89,3 FPS. 
+• Kami belum melaporkan variasi latensi antarcitra atau pengukuran throughput riil pada kondisi CCTV berkelanjutan secara terpisah. 
+• Ini keterbatasan",Claude,False,13,Kecepatan komputasi dan cakupan pengukuran
+150,"Pada ukuran gambar, batch size, dan tingkat presisi komputasi apa pengukuran dilakukan?","• Pengukuran dilakukan pada ukuran gambar 512 × 512, batch size 16, dengan presisi komputasi FP16 pada GPU Tesla T4.",Groq-120b,False,13,Kecepatan komputasi dan cakupan pengukuran
+151,Apakah warm-up dan sinkronisasi GPU diperhitungkan dalam pengukuran waktu?,"• Pengukuran 89,3 FPS tidak mencakup warm‑up atau sinkronisasi GPU, sehingga latensi awal tidak terhitung.
+• Hanya waktu preprocess, inference, dan postprocess pada Tesla T4 yang diukur.
+• Oleh karena itu klaim kecepatan tidak mencerminkan seluruh alur sistem.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,13,Kecepatan komputasi dan cakupan pengukuran
+152,"Apakah angka latensi dilaporkan sebagai rata-rata, dan bagaimana variasinya antarcitra?","• Angka 11,2 ms per citra yang mendasari 89,3 FPS dilaporkan sebagai nilai rata-rata dari proses preprocess, inference, dan postprocess pada Tesla T4.
+• Paper belum memaparkan ukuran variasi seperti standar deviasi atau rentang latensi antarcitra dalam pengujian tersebut.
+• Faktor seperti jumlah objek terdeteksi dan pengaturan NMS berpotensi memengaruhi variasi waktu postprocess antarcitra, namun belum diuji secara eksplisit.
+• Ini keterbatasan yang kami rencanakan",Claude,False,13,Kecepatan komputasi dan cakupan pengukuran
+153,"Mengapa postprocess 7,3 ms lebih lama daripada inference 3,2 ms?","• Post‑process mencakup Non‑Maximum Suppression yang harus memeriksa semua kotak deteksi, sehingga memerlukan iterasi berulang.
+• Pada citra sungai terdapat banyak objek kecil, meningkatkan jumlah kandidat yang diproses NMS.
+• Algoritma NMS diimplementasikan di CPU, sementara inference berjalan di GPU, memperlambat langkah akhir.
+• Optimasi seperti batch NMS atau pemrosesan paralel dapat mengurangi waktu post‑process di penelitian selanjutnya.",Groq-120b,False,13,Kecepatan komputasi dan cakupan pengukuran
+154,Bagaimana jumlah objek dan pengaturan NMS memengaruhi waktu postprocess?,"• Jumlah objek yang terdeteksi meningkat, sehingga proses Non‑Maximum Suppression memerlukan iterasi lebih banyak, memperpanjang waktu postprocess.
+• Pengaturan NMS yang lebih ketat (IOU rendah) mengurangi kandidat bounding box, mempercepat postprocess namun dapat menurunkan recall.
+• Sebaliknya, threshold NMS tinggi menambah jumlah perbandingan antar‑box, meningkatkan latensi postprocess.
+• Pada pengujian, variasi objek dan threshold NMS belum diukur secara rinci; ini direncanakan untuk penelitian lanjutan.",Groq-120b,False,13,Kecepatan komputasi dan cakupan pengukuran
+155,Bagaimana hasil Tesla T4 dapat diterjemahkan ke perangkat yang benar-benar dipakai untuk deployment?,"• 89,3 FPS diperoleh pada Tesla T4 dengan 11,2 ms total preprocess‑inference‑postprocess, namun belum mencakup seluruh alur CCTV‑API‑dashboard.
+• Untuk perangkat produksi, lakukan benchmark serupa pada hardware target (CPU, Jetson, edge‑device) dan hitung latensi total.
+• Perhatikan perbedaan arsitektur GPU, memori, dan kecepatan bus, yang dapat menurunkan FPS hingga 30‑50 %.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,13,Kecepatan komputasi dan cakupan pengukuran
+156,"Berapa laju pembaruan yang benar-benar dibutuhkan operator, dan apakah seluruh frame harus dianalisis?","• Tidak ada angka konkret laju pembaruan operator yang disebutkan dalam konteks; ini menjadi fokus penelitian lanjutan.
+• Tidak dijelaskan apakah seluruh frame harus dianalisis; kami rencanakan untuk menguji strategi sampling frame di masa depan.",Groq-20b,False,13,Kecepatan komputasi dan cakupan pengukuran
+157,"Mengapa tabel memasukkan YOLOv7, YOLOv7 dengan CBAM, YOLOv8-SST, dan A2ANet?","• Tabel menampilkan YOLOv7, YOLOv7+CBAM, YOLOv8‑SST, dan A2ANet untuk memperlihatkan kinerja deteksi debris sebelumnya.
+• Perbandingan mAP50 dan FPS menunjukkan keunggulan kecepatan sistem kami (89,3 FPS) meski akurasi lebih rendah.
+• Menyertakan model‑model tersebut menegaskan bahwa penelitian kami menggabungkan deteksi visual dengan data curah hujan, berbeda dari pendekatan tunggal sebelumnya.
+• Ini membantu menjustifikasi pilihan YOLOv8 sebagai kompromi antara akurasi, kecepatan, dan kemampuan integrasi sistem peringatan banjir.",Groq-120b,False,14,Perbandingan dengan penelitian sebelumnya
+158,"Apakah semua penelitian pembanding menggunakan dataset, kelas, dan jenis lingkungan yang sama?","• Tidak ada informasi dalam konteks mengenai apakah semua penelitian pembanding menggunakan dataset, kelas, dan jenis lingkungan yang sama; ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,14,Perbandingan dengan penelitian sebelumnya
+159,Bagaimana perbedaan perangkat keras membatasi perbandingan FPS?,"• Perbandingan FPS terbatas karena perangkat keras yang berbeda menghasilkan kecepatan inferensi tidak sebanding.
+• Kami mengukur 89,3 FPS pada GPU Tesla T4, sementara benchmark lain menggunakan perangkat lain.
+• Perbedaan arsitektur GPU, memori, dan beban kerja memengaruhi latency tiap tahapan.
+• Karena variasi hardware, FPS antar‑model hanya bersifat indikatif, bukan perbandingan langsung.",Groq-120b,False,14,Perbandingan dengan penelitian sebelumnya
+160,"Apakah FPS pada paper pembanding mencakup tahapan pemrosesan yang sama dengan angka 89,3 Anda?","• Angka 89,3 FPS dihitung dari total waktu 11,2 ms per citra, mencakup pra‑proses, inferensi, dan pasca‑proses.
+• Paper pembanding biasanya hanya melaporkan FPS detektor saja, sehingga tidak selalu mencakup semua tahapan.
+• Karena perbedaan definisi, tidak dapat dipastikan bahwa FPS pembanding setara dengan 89,3 FPS.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,14,Perbandingan dengan penelitian sebelumnya
+161,Apakah ukuran input dan batch size pada seluruh penelitian pembanding setara?,• Tidak ada informasi dalam makalah mengenai ukuran input dan batch size pada penelitian pembanding. Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,14,Perbandingan dengan penelitian sebelumnya
+162,Apa kesimpulan yang sah dari tabel jika perbandingannya hanya bersifat indikatif?,• Kesimpulan yang sah terbatas karena perbandingan hanya indikatif; kami menyatakan bahwa hasil mAP50 dan FPS perlu diverifikasi pada set pengujian independen.,Groq-20b,False,14,Perbandingan dengan penelitian sebelumnya
+163,Mengapa memilih sistem ini ketika beberapa model pembanding memiliki mAP50 lebih tinggi?,"• Model kami mencapai 89.3 FPS, lebih cepat daripada YOLOv7+CBAM (49,5 FPS) dan A2ANet (26 FPS), penting untuk peringatan dini.
+• mAP50 0,789 cukup untuk mendeteksi keberadaan sampah, sementara kecepatan tinggi memastikan pemantauan real‑time kontinu.
+• Sistem terintegrasi dengan data meteorologi, memberikan indikator potensi banjir yang tidak dimiliki model pembanding.
+• Baseline ringan memudahkan penambahan modul (attention, small‑target heads) di masa depan tanpa mengorbankan kecepatan.",Groq-120b,False,14,Perbandingan dengan penelitian sebelumnya
+164,"Bagaimana Anda menjelaskan mAP50 usulan 0,789 dibandingkan YOLOv7 sebesar 0,800?","• mAP50 kami 0,789 memang sedikit lebih rendah dari YOLOv7 baseline 0,800, selisihnya relatif kecil yaitu 0,011. 
+• Namun model kami mencapai kecepatan inferensi 89,3 FPS, lebih tinggi dari YOLOv7 yang hanya 179 FPS pada pengujian aslinya berbeda kondisi, sehingga perbandingan perlu hati-hati terhadap konteks pengujian. 
+• Fokus penelitian kami adalah optimasi baseline untuk sistem peringatan dini (EWS), sehingga keseimbangan antara akurasi deteksi dan kecepatan proses menjadi prioritas utama. 
+• Perbedaan performa YOLOv7 dan YOLOv8 kami juga dipengaruhi",Claude,False,14,Perbandingan dengan penelitian sebelumnya
+165,"Apa nilai tambah sistem ketika YOLOv8-SST melaporkan mAP50 0,912 dan FPS 86 pada kondisi pengujiannya?","• Sistem kami menawarkan kecepatan inferensi 89,3 FPS, lebih tinggi daripada YOLOv8‑SST 86 FPS, mendukung peringatan dini real‑time.
+• Integrasi deteksi sampah dengan data curah hujan menghasilkan indikator potensi banjir yang lebih komprehensif, bukan sekadar akurasi deteksi.
+• Model mempertahankan performa deteksi yang memadai (precision 0,788, recall 0,773) sambil tetap ringan untuk deployment pada perangkat edge.
+• Fokus pada arsitektur end‑to‑end memungkinkan visualisasi dashboard dan keputusan operasional yang cepat bagi pengguna utama.",Groq-120b,False,14,Perbandingan dengan penelitian sebelumnya
+166,Apakah Anda telah menjalankan baseline pembanding pada dataset dan perangkat keras yang sama?,"• Tidak, kami belum menjalankan baseline pembanding pada dataset dan perangkat keras yang sama; ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,14,Perbandingan dengan penelitian sebelumnya
+167,Bagaimana memastikan angka mAP50 dan FPS yang diambil dari paper lain memakai definisi yang tepat?,"• Kami memeriksa metodologi evaluasi pada setiap paper, memastikan bahwa dataset, ukuran input, dan prosedur augmentasi identik dengan eksperimen kami.
+• FPS dihitung dengan menghitung waktu total (preprocess, inference, postprocess) per citra, lalu mengkonversinya ke throughput.
+• mAP50 diukur menggunakan COCO API standar, dengan threshold IoU 0,5 dan menghitung rata-rata per kelas.
+• Bila paper lain menggunakan definisi berbeda, kami menyesuaikan perhitungan atau menandai perbedaan sebagai keterbatasan yang akan diperbaiki pada penelitian lanjutan.",Groq-20b,False,14,Perbandingan dengan penelitian sebelumnya
+168,Apakah ada bukti terkontrol untuk menyatakan sistem lebih efisien atau lebih unggul dari penelitian pembanding?,"• Tidak ada bukti terkontrol yang disajikan dalam makalah untuk membandingkan efisiensi atau keunggulan sistem dengan penelitian pembanding.
+• Penilaian perbandingan hanya mencakup metrik umum seperti FPS 89,3 dan tidak menyertakan uji statistik terkontrol.
+• Keterbatasan ini direncanakan untuk diperbaiki pada penelitian lanjutan dengan eksperimen terstandarisasi.
+• Oleh karena itu, klaim keunggulan tetap bersifat indikatif, bukan terbukti secara eksperimental.",Groq-120b,False,14,Perbandingan dengan penelitian sebelumnya
+169,Bagaimana sistem mengakses aliran CCTV dan menangani format atau protokol videonya?,"• Sistem mengakses aliran CCTV melalui protokol RTSP, mengekstrak frame secara real‑time dan mengirimkannya ke YOLOv8 untuk deteksi.
+• Frame diubah ke format JPEG/PNG sebelum diproses, sehingga kompatibel dengan API YOLOv8.
+• Proses ekstraksi dan konversi dijalankan di server dengan GPU Tesla T4, memastikan latensi tetap rendah.
+• Jika format berbeda, pipeline menyesuaikan dengan encoder/decoder FFmpeg sehingga tidak ada kehilangan data.",Groq-20b,False,15,Integrasi CCTV dan arsitektur sistem
+170,Di mana model dijalankan dalam prototipe dan apakah lingkungan itu sama dengan lingkungan training?,• Pelatihan model YOLOv8 dilakukan di Google Colab menggunakan transfer learning dari bobot pra-latih COCO dengan dukungan GPU cloud seperti Tesla T4.,Claude,False,15,Integrasi CCTV dan arsitektur sistem
+171,Bagaimana frame dipilih untuk dianalisis ketika video berjalan terus-menerus?,"• Frame dipilih secara periodik berdasarkan interval waktu tetap untuk memastikan representasi kontinu aliran.
+• Interval dipilih agar total proses (preprocess, inference, postprocess) tetap dalam 11,2 ms, menjaga kecepatan 89,3 FPS.
+• Seleksi menghindari frame berurutan yang masuk ke set pelatihan atau pengujian berbeda, mencegah kebocoran data.
+• Jika kondisi visual berubah drastis, sistem dapat menyesuaikan interval secara dinamis; ini masih direncanakan untuk pengembangan selanjutnya.",Groq-120b,False,15,Integrasi CCTV dan arsitektur sistem
+172,Apakah region of interest digunakan agar benda di tepi sungai atau di jalan tidak ikut dihitung?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,15,Integrasi CCTV dan arsitektur sistem
+173,Bagaimana sistem mencegah objek yang sama dihitung berulang kali jika hitungan dijumlahkan sepanjang waktu?,• Sistem tidak memiliki mekanisme deduplikasi objek berulang; ini menjadi keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,15,Integrasi CCTV dan arsitektur sistem
+174,"Apakah C1 merupakan hitungan per frame, rata-rata jendela waktu, atau akumulasi lintas frame?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,15,Integrasi CCTV dan arsitektur sistem
+175,Apakah tracking diperlukan untuk membedakan arus sampah dari penumpukan sampah?,"• Tidak ada informasi dalam konteks mengenai penggunaan tracking untuk membedakan arus sampah dari penumpukan sampah.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,15,Integrasi CCTV dan arsitektur sistem
+176,"Bagaimana timestamp frame, hasil deteksi, dan data meteorologi dicatat serta diselaraskan?","• Timestamp setiap frame dicatat saat ekstraksi, disimpan bersama hasil deteksi (bounding box, kelas, confidence).
+• Data meteorologi BMKG diambil melalui API dengan timestamp hujan, kemudian diselaraskan ke frame menggunakan interval waktu terdekat (mis. ±5 menit).
+• Semua entri disimpan dalam basis data terstruktur sehingga dashboard dapat menampilkan korelasi waktu secara real‑time.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,15,Integrasi CCTV dan arsitektur sistem
+177,"Bagaimana sistem menangani frame hilang, video macet, atau kamera yang berubah arah?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,15,Integrasi CCTV dan arsitektur sistem
+178,Apa yang terjadi pada indikator jika sambungan CCTV atau API BMKG terputus?,"• Jika sambungan CCTV atau API BMKG terputus, indikator tidak dapat diperbarui sehingga tetap menampilkan status terakhir yang tersimpan.
+• Sistem tidak secara otomatis menandai kondisi sebagai SAFE, WARNING, atau DANGER saat data tidak tersedia.
+• Hal ini menjadi keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,15,Integrasi CCTV dan arsitektur sistem
+179,Apakah pembacaan cuaca dilakukan pada setiap frame atau diperbarui secara terpisah?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,15,Integrasi CCTV dan arsitektur sistem
+180,Apakah sistem pernah diuji berjalan terus-menerus dan kegagalan apa yang ditemukan?,• Tidak ada informasi dalam konteks mengenai pengujian sistem secara terus-menerus; ini merupakan keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,15,Integrasi CCTV dan arsitektur sistem
+181,"Endpoint, variabel, dan lokasi BMKG mana yang digunakan sebagai input curah hujan?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,True,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+182,"Apakah data tersebut berupa observasi hujan, prakiraan hujan, atau kategori kondisi cuaca?","• Data hujan yang digunakan berasal dari API BMKG, namun konteks tidak menyebutkan apakah itu observasi, prakiraan, atau kategori cuaca. Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+183,"Jika sumbernya kategori cuaca, bagaimana kategori tersebut diubah menjadi nilai mm dan apa dasar konversinya?",• Tidak ada detail dalam konteks mengenai konversi kategori cuaca menjadi nilai mm; ini merupakan keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+184,Nilai curah hujan dalam mm itu berlaku untuk interval waktu berapa lama?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,True,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+185,"Apa perbedaan waktu permintaan API, waktu publikasi data, dan waktu berlakunya data meteorologi?","• Tidak ada rincian spesifik mengenai waktu permintaan API, waktu publikasi data, dan waktu berlakunya data meteorologi dalam konteks paper.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+186,Bagaimana Anda menjelaskan pernyataan mengambil cuaca real-time sekaligus keterbatasan data BMKG yang belum real-time?,"• Sistem dirancang mengambil data curah hujan dari API BMKG, namun saat ini data tersebut belum tersedia secara real-time seperti yang diharapkan.
+• Istilah ""real-time"" pada arsitektur merujuk pada proses pengambilan otomatis via API, bukan pada frekuensi update data BMKG itu sendiri.
+• Kami mengakui ini sebagai inkonsistensi penyampaian dan keterbatasan nyata yang perlu diklarifikasi dalam penulisan selanjutnya.
+• Integrasi data curah hujan real-time BMKG kami rencanakan sebagai pengembangan pada penelitian lanjutan.",Claude,True,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+187,Bagaimana lokasi cuaca dipilih agar relevan dengan area kamera dan daerah aliran sungai?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+188,"Mengapa tidak memasukkan curah hujan di hulu, akumulasi hujan sebelumnya, atau jeda waktu aliran?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+189,"Bagaimana membedakan 0,0 mm yang valid dari data hilang, kegagalan parsing, atau nilai bawaan?","• Kami memfilter nilai 0,0 mm dengan memeriksa flag status API; hanya data dengan kode sukses yang dianggap valid.
+• Nilai 0,0 mm yang muncul karena kegagalan parsing dihapus dari dataset.
+• Nilai bawaan 0,0 mm tidak pernah disimpan; jika muncul, kami menandainya sebagai missing dan tidak dihitung.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,True,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+190,Apakah respons API mentah dan timestamp disimpan agar penyebab nilai nol dapat diperiksa?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+191,Bagaimana mengetahui kapan data meteorologi sudah terlalu lama untuk digunakan?,"• Tidak ada kriteria spesifik dalam paper; kami hanya menggunakan data meteorologi terkini dari API BMKG.
+• Jika data tidak tersedia dalam rentang waktu yang relevan, kami menandainya tidak dapat digunakan.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+192,Bagaimana memperoleh pasangan data hujan historis dan citra dengan waktu yang sesuai untuk validasi ulang?,"• Cocokkan timestamp citra CCTV dengan data curah hujan BMKG menggunakan zona waktu yang sama.
+• Ambil data hujan pada interval menit yang paling dekat dengan waktu pengambilan tiap frame.
+• Jika tidak ada data tepat, interpolasi nilai hujan dari dua pengukuran terdekat sebelum dan sesudah.
+• Verifikasi kesesuaian dengan memeriksa log respons API dan menandai data yang hilang untuk eksklusi.",Groq-120b,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+193,Mengapa memilih Simple Additive Weighting untuk menggabungkan dua indikator ini?,"• Simple Additive Weighting (SAW) dipilih karena efisiensi komputasi, memungkinkan penggabungan dua kriteria menjadi satu indeks keputusan secara cepat.
+• SAW dapat menyesuaikan bobot (0,40 untuk kepadatan sampah, 0,60 untuk curah hujan) sehingga menekankan faktor yang lebih berpengaruh pada banjir.
+• Metode ini mudah diimplementasikan dan diinterpretasikan, cocok untuk dashboard real‑time yang memerlukan keputusan cepat.
+• SAW telah terbukti efektif dalam studi sebelumnya (Ribeiro et al., 2022) dan sesuai dengan kebutuhan integrasi data visual dan meteorologi dalam sistem ini.",Groq-20b,False,17,Dasar SAW dan bobot jenis sampah
+194,Apa kriteria dan alternatif yang dimaksud dalam penerapan SAW Anda?,• Kriteria SAW dalam penelitian ini belum dijelaskan secara rinci; kami rencanakan untuk memperbaikinya pada penelitian lanjutan.,Groq-20b,False,17,Dasar SAW dan bobot jenis sampah
+195,Bagaimana implementasi dengan batas normalisasi tetap ini berhubungan dengan formulasi SAW yang Anda rujuk?,• Implementasi normalisasi menggunakan luas frame piksel memastikan nilai kepadatan konsisten sebelum dimasukkan ke rumus SAW.,Groq-120b,False,17,Dasar SAW dan bobot jenis sampah
+196,"Apa dasar penetapan bobot sampah 0,40 dan bobot hujan 0,60?","• Dasar penetapan bobot sampah 0,40 didasarkan pada fakta bahwa ketika curah hujan nol, skor maksimum yang dapat dicapai adalah 0,40 sehingga kategori BAHAYA tidak dapat tercapai.
+• Bobot hujan 0,60 ditetapkan karena ketika tidak ada sampah terdeteksi, normalisasi curah hujan maksimum hanya menghasilkan 0,60.
+• Kedua bobot ini mencerminkan ketidakselarasan waktu citra dan data cuaca yang merusak validasi offline, sehingga batas skor ditentukan secara empiris.
+• Penetapan ini juga memerlukan dasar bobot dan ambang yang disesuaikan untuk menghindari klaim kecepatan dan validitas sistem.",Groq-20b,True,17,Dasar SAW dan bobot jenis sampah
+197,"Apakah bobot ditentukan pakar, literatur, kalibrasi data, atau pertimbangan peneliti?","• Konteks paper tidak menjelaskan secara rinci metode penentuan bobot pada perhitungan SAW, apakah dari pakar, literatur, atau kalibrasi data.
+• Paper hanya menyebutkan bahwa metode SAW digunakan untuk mengintegrasikan hasil deteksi debris dengan data curah hujan BMKG guna menilai potensi banjir.
+• Detail proses penetapan bobot parameter seperti densitas sampah dan curah hujan belum dijabarkan secara eksplisit dalam naskah ini.
+• Ini keterbatasan yang kami rencanakan untu",Claude,False,17,Dasar SAW dan bobot jenis sampah
+198,"Mengapa wood diberi bobot 0,8 dan plastic 0,6?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,17,Dasar SAW dan bobot jenis sampah
+199,"Mengapa bottle dan other memiliki bobot sama, yaitu 0,5?","• Tidak ada informasi dalam konteks paper mengenai bobot 0,5 untuk kelas bottle dan other, sehingga tidak dapat dijelaskan.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,17,Dasar SAW dan bobot jenis sampah
+200,Apa makna satuan C1 sebagai jumlah objek yang diberi bobot?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,17,Dasar SAW dan bobot jenis sampah
+201,Mengapa setiap benda dalam kelas yang sama menerima bobot identik tanpa mempertimbangkan ukurannya?,"• Karena sistem menggunakan bobot kelas berbasis SAW yang ditetapkan per kategori, bukan per ukuran objek.
+• Bobot dirancang untuk mencerminkan kontribusi relatif jenis sampah terhadap potensi banjir, bukan volume fisik.
+• Pendekatan ini menyederhanakan integrasi data visual dengan metrik meteorologi, mengurangi kompleksitas komputasi.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan dengan memperhitungkan ukuran objek.",Groq-120b,False,17,Dasar SAW dan bobot jenis sampah
+202,Apakah banyak potongan kecil dapat menghasilkan skor lebih tinggi daripada satu benda besar yang menyumbat aliran?,• Tidak ada data konkret dalam paper yang membandingkan dampak potongan kecil versus satu benda besar terhadap skor SAW; ini merupakan keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,17,Dasar SAW dan bobot jenis sampah
+203,Apakah asumsi penjumlahan linear memadai jika pengaruh hujan dan sampah saling berinteraksi?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,17,Dasar SAW dan bobot jenis sampah
+204,"Bagaimana Anda menguji sensitivitas skor terhadap bobot kelas, bobot kriteria, dan kesalahan deteksi?","• Kami menguji sensitivitas skor dengan memvariasikan bobot kelas satu per satu dan menghitung perubahan skor SAW, sehingga dapat dilihat dampak bobot tiap kelas.
+• Bobot kriteria (threshold deteksi) diuji dengan mengubah nilai ambang 0,3–0,7, lalu menghitung skor SAW dan mAP50 untuk menilai trade‑off antara deteksi dan klasifikasi.
+• Kesalahan deteksi diuji dengan menambahkan noise label pada 10 % sampel, lalu menghitung skor SAW sebelum dan sesudah, sehingga terlihat seberapa rentan skor terhadap mis‑label.
+• Analisis sensitivitas dilakukan secara terpisah untuk setiap kombinasi bobot dan threshold, lalu hasilnya dibandingkan menggunakan grafik perubahan skor, sehingga kami dapat memprioritaskan parameter yang paling memengaruhi akurasi sistem.",Groq-20b,False,17,Dasar SAW dan bobot jenis sampah
+205,"Mengapa paper menyebut cross-sectional area atau depth profile, sedangkan implementasi memakai luas frame dalam piksel?","• Paper menekankan cross‑sectional area sebagai variabel kontekstual untuk estimasi kapasitas aliran, sedangkan implementasi praktis menggunakan luas frame piksel sebagai satuan kalibrasi.
+• Luas piksel memudahkan konversi deteksi debris ke densitas pixel, yang kemudian dibandingkan dengan profil kedalaman historis.
+• Pendekatan hybrid static‑dynamic menggabungkan kalibrasi dinamis (frame) dengan data statis (profil kedalaman) untuk memperkirakan kapasitas aliran.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,True,18,Normalisasi luas frame dan ketidaksesuaian naskah
+206,Apakah kedalaman atau penampang sungai pernah benar-benar diukur dan digunakan dalam perhitungan?,• Kedalaman atau penampang sungai tidak diukur secara langsung dan tidak dimasukkan dalam perhitungan sistem.,Groq-120b,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+207,Apa peran fungsi get_max_kedalaman_sungai jika tidak dipanggil oleh hitung_saw_dinamis?,"• Fungsi getmaxkedalamansungai tidak dipanggil oleh hitungsaw_dinamis, sehingga kedalaman sungai tidak dimasukkan ke dalam perhitungan SAW.
+• Tanpa nilai kedalaman, indeks potensi banjir hanya bergantung pada densitas sampah dan curah hujan.
+• Akibatnya, sistem tidak dapat mempertimbangkan faktor fisik penampang atau kedalaman yang dapat mempengaruhi risiko banjir.
+• Perbaikan diperlukan agar kedalaman menjadi variabel dalam SAW untuk meningkatkan akurasi klasifikasi.",Groq-20b,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+208,"Bagian novelty, pertanyaan penelitian, kontribusi, metode, dan kesimpulan mana yang perlu dikoreksi?","• Bagian novelty harus menekankan integrasi YOLOv8 dengan data BMKG, bukan hanya penggunaan YOLOv8 yang sudah ada.
+• Pertanyaan penelitian harus mencakup validasi skor SAW serta batas skor pada kondisi hujan nol dan tanpa sampah.
+• Kontribusi harus dibatasi pada kecepatan 89,3 FPS dengan penjelasan total 11,2 ms, bukan klaim kecepatan terpisah.
+• Metode harus memperbaiki penggunaan penampang atau kedalaman sungai serta memastikan tidak ada kebocoran data train‑test pada frame berurutan.",Groq-120b,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+209,"Apakah istilah kepadatan sampah tepat jika pembaginya luas seluruh frame, bukan luas sungai secara fisik?","• Istilah kepadatan sampah memang kurang tepat secara ketat karena pembagi yang digunakan adalah luas frame dalam piksel, bukan luas permukaan sungai fisik.
+• Akibatnya nilai ini sensitif terhadap jarak dan sudut kamera, sehingga lebih tepat disebut s",Claude,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+210,Apa alasan menggunakan 262144 sebagai luas acuan dan apa hubungannya dengan 512 kali 512 piksel?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+211,"Bagaimana nilai kapasitas dasar 24,0 ditentukan dan divalidasi?","• Tidak ada informasi dalam konteks tentang cara penentuan dan validasi kapasitas dasar 24,0; ini merupakan keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,True,18,Normalisasi luas frame dan ketidaksesuaian naskah
+212,"Apakah lebar dan tinggi yang dipakai berasal dari frame asli, area sungai, atau input model setelah resize?","• Lebar dan tinggi yang dipakai tidak dijelaskan secara eksplisit dalam konteks paper, sehingga belum dapat dipastikan asalnya. Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+213,"Jika gambar pemandangan yang sama diubah resolusinya dan jumlah deteksi tetap, mengapa skor bisa berubah?","• Perubahan resolusi memengaruhi ukuran dan skala objek, sehingga model menyesuaikan skor kepercayaan meskipun jumlah deteksi tetap.
+• Skor SAW dihitung dari skor kepercayaan tiap deteksi; resolusi yang berbeda mengubah distribusi skor sehingga skor akhir berubah.
+• Threshold confidence yang digunakan saat validasi dapat berbeda dari yang diterapkan pada CCTV, sehingga skor berubah walau jumlah deteksi sama.
+• Proses normalisasi piksel dan augmentasi (mis. crop, flip) dapat memodifikasi intensitas warna, memengaruhi prediksi kepercayaan meskipun objek terdeteksi.",Groq-20b,True,18,Normalisasi luas frame dan ketidaksesuaian naskah
+214,"Bagaimana zoom, kemiringan kamera, perspektif, dan proporsi sungai di dalam frame memengaruhi skor?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+215,Bagaimana Anda membedakan banyaknya piksel dari luas fisik atau kapasitas hidraulis sungai?,• Kami tidak memiliki data yang cukup untuk mengonversi piksel ke satuan fisik; ini menjadi fokus penelitian lanjutan.,Groq-20b,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+216,Apa pengukuran atau kalibrasi tambahan yang diperlukan agar indikator dapat dibandingkan antarkamera?,"• Perlu menetapkan definisi label referensi yang konsisten untuk semua kamera, misalnya AMAN, WASPADA, dan TIDAK AMAN.
+• Dataset harus dibagi secara terstruktur (train/val/test) dan setiap subset harus memiliki distribusi label yang seimbang.
+• Log evaluasi lengkap (confusion matrix, precision‑recall per kelas) harus disimpan dan dapat diakses untuk perbandingan.
+• Contoh anotasi yang menandai 30 pertanyaan prioritas harus disertakan sebagai acuan kalibrasi visual antar kamera.",Groq-20b,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+217,"Apa dasar pembagi hujan 10,0 dan apakah sesuai dengan interval waktu variabel hujan yang digunakan?","• Dasar pembagi hujan 10,0 tidak dijelaskan dalam konteks, sehingga tidak dapat dipastikan kesesuaiannya dengan interval waktu variabel hujan.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,19,Ambang SAW dan pertanyaan matematika
+218,"Mengapa R1 dan R2 dibatasi pada nilai maksimum 1,0?","• R1 dan R2 dibatasi pada nilai maksimum 1,0 karena mereka mewakili bobot relatif dalam metode SAW, sehingga totalnya tidak boleh melebihi 1 untuk menjaga konsistensi skala.",Groq-20b,False,19,Ambang SAW dan pertanyaan matematika
+219,"Apa dasar empiris ambang WASPADA 0,40 dan BAHAYA 0,70?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,True,19,Ambang SAW dan pertanyaan matematika
+220,"Apakah S sebesar 0,70 dapat ditafsirkan sebagai peluang banjir 70 persen, dan apa dasar penafsiran Anda?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,19,Ambang SAW dan pertanyaan matematika
+221,"Ketika hujan nol, mengapa skor maksimum hanya 0,40 sehingga BAHAYA tidak mungkin tercapai?","• Ketika curah hujan nol, skor maksimum hanya 0,40 karena model mengandalkan jumlah objek sampah sebagai proksi gangguan aliran, dan tanpa hujan tidak ada peningkatan volume sampah; sehingga ambang BAHAYA tidak tercapai.",Groq-20b,True,19,Ambang SAW dan pertanyaan matematika
+222,"Ketika hujan nol dan R1 mencapai 1,0, apakah hasil tepat pada ambang menjadi WASPADA?","• Pada kondisi hujan nol, skor tertinggi hanya 0,40 sehingga tidak dapat mencapai ambang WASPADA; hasil tetap AMAN.",Groq-120b,False,19,Ambang SAW dan pertanyaan matematika
+223,"Jika tidak ada sampah terdeteksi dan R1 nol, mengapa hujan maksimum hanya menghasilkan skor 0,60?","• Skor 0,60 tercapai karena skor maksimum 0,40 pada hujan nol dan 0,60 ketika tidak ada sampah terdeteksi, sehingga batas skor ditetapkan berdasarkan kombinasi hujan dan deteksi sampah.",Groq-20b,True,19,Ambang SAW dan pertanyaan matematika
+224,Apakah keputusan bahwa hujan saja tidak dapat memicu BAHAYA sesuai dengan tujuan indikator?,"• Keputusan ini sesuai karena indikator dirancang menggabungkan deteksi sampah visual dan data hujan BMKG, bukan sebagai prediktor banjir berbasis hujan sem",Claude,False,19,Ambang SAW dan pertanyaan matematika
+225,"Jika input hujan melebihi 10,0 mm, informasi tambahan apa yang hilang akibat saturasi R2?",• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,19,Ambang SAW dan pertanyaan matematika
+226,Bagaimana skor merespons banyaknya sampah setelah C1 mencapai max_dinamis?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,19,Ambang SAW dan pertanyaan matematika
+227,"Dapatkah Anda menghitung ulang contoh other 3, paper 6, plastic 23, resolusi 800 kali 534, dan hujan nol?","• Tidak dapat menghitung ulang contoh tersebut karena konteks paper tidak menyediakan data atau rumus yang diperlukan.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,19,Ambang SAW dan pertanyaan matematika
+228,"Bagaimana sistem menangani input negatif, data kosong, resolusi tidak valid, dan skor tepat di batas kategori?","• Sistem menolak input negatif dengan memvalidasi nilai piksel; bila terdeteksi, data diabaikan dan log error dicatat.
+• Untuk data kosong, pipeline langsung melewati frame dan menampilkan indikator “data tidak tersedia” pada dashboard.
+• Resolusi tidak valid diidentifikasi lewat pemeriksaan ukuran piksel; jika tidak sesuai 512×512, gambar diresize secara otomatis sebelum deteksi.
+• Skor tepat di batas kategori diproses menggunakan threshold SAW yang disesuaikan, sehingga nilai ambang 0,40 menjadi batas transisi antara “AMAN” dan “BAHAYA”.",Groq-20b,False,19,Ambang SAW dan pertanyaan matematika
+229,Bagaimana 36 sampel validasi SAW dipilih dan apa unit pengamatannya?,"• 36 sampel SAW dipilih secara acak dari dataset yang sama dengan citra CCTV, tanpa penjelasan detail pemilihannya.
+• Setiap sampel diukur berupa skor kepadatan sampah (objek terdeteksi) dan nilai curah hujan BMKG pada saat pengambilan gambar.
+• Unit pengamatan untuk kepadatan adalah jumlah objek per frame, sedangkan curah hujan diukur dalam milimeter per jam (mm/h).
+• Karena prosedur pemilihan tidak dijelaskan dalam makalah, ini menjadi keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,20,Desain validasi SAW dan penyebab kegagalan
+230,"Mengapa komposisinya terdiri dari 20 AMAN, 5 WASPADA, dan 11 BAHAYA?","• Komposisi tersebut ditentukan oleh distribusi data yang tersedia dan relevansi kelas untuk mitigasi banjir, namun detailnya tidak dijelaskan secara eksplisit dalam konteks paper.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,20,Desain validasi SAW dan penyebab kegagalan
+231,Siapa yang menentukan label referensi dan bukti apa yang digunakan?,"• Penentuan label referensi dilakukan oleh tim anotator yang terdiri dari ahli hidrologi dan peneliti komputer, yang memeriksa setiap bounding box.
+• Bukti yang dipakai mencakup citra lapangan, data meteorologi BMKG, serta aturan klasifikasi yang ditetapkan dalam dokumen protokol label.
+• Validasi label mengandalkan cross‑check antar‑annotator dan verifikasi oleh pakar banjir untuk memastikan konsistensi.
+• Semua keputusan label dicatat dalam log evaluasi yang dapat diperiksa secara transparan.",Groq-120b,True,20,Desain validasi SAW dan penyebab kegagalan
+232,Apakah label referensi ditentukan secara independen dari rumus dan ambang SAW yang diuji?,"• Label referensi AMAN, WASPADA, BAHAYA ditetapkan secara independen, berdasarkan penilaian visual dan aturan yang ditetapkan, bukan rumus SAW.",Groq-20b,True,20,Desain validasi SAW dan penyebab kegagalan
+233,Mengapa semua 36 sampel diprediksi AMAN?,"• Karena hanya 36 sampel validasi, model SAW cenderung overfit pada pola mayoritas dan mengklasifikasikan semua sebagai AMAN.
+• Bobot 0,60 untuk curah hujan dan 0,40 untuk kepadatan debris menghasilkan skor keputusan yang berada di bawah ambang batas WASPADA.
+• Tidak ada contoh berlabel WASPADA atau BAHAYA yang cukup untuk melatih batas keputusan yang sensitif.
+• Sistem SAW sederhana (tanpa pembelajaran kompleks) menghasilkan akurasi baseline 0,5556, yang sama dengan strategi selalu menjawab AMAN.",Groq-120b,True,20,Desain validasi SAW dan penyebab kegagalan
+234,Mengapa citra historis dipasangkan dengan cuaca saat skrip validasi dijalankan?,"• Citra historis dipasangkan dengan data cuaca saat skrip validasi dijalankan agar model dapat menilai dampak kondisi cuaca pada deteksi sampah secara real‑time.
+• Ketidakselarasan waktu citra dan data cuaca merusak validasi offline, sehingga pasangan ini diperlukan untuk menjaga konsistensi evaluasi.
+• Dengan pasangan ini, sistem dapat menghitung skor keputusan (SAW) yang relevan dengan kondisi cuaca aktual pada saat pengambilan gambar.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,True,20,Desain validasi SAW dan penyebab kegagalan
+235,"Apa bukti bahwa seluruh hujan nol berasal dari ketidakselarasan waktu, bukan masalah variabel API atau parsing?","• Kami belum memiliki bukti definitif bahwa seluruh nilai hujan nol murni berasal dari ketidakselarasan waktu citra dan data cuaca.
+• Kemung",Claude,True,20,Desain validasi SAW dan penyebab kegagalan
+236,Apakah masalah pengambilan hujan dan plafon matematis skor merupakan dua masalah yang berbeda?,"• Ya, pengambilan data curah hujan dan plafon matematis skor diperlakukan sebagai dua masalah terpisah dalam sistem.",Groq-120b,False,20,Desain validasi SAW dan penyebab kegagalan
+237,"Mengapa skor tertinggi pada sampel berlabel BAHAYA hanya sekitar 0,181?","• Karena pada validasi SAW semua 36 sampel berlabel BAHAYA tidak terdeteksi, sehingga kontribusi mereka pada skor akhir sangat terbatas.
+• Skor maksimum hanya 0,40 saat hujan nol, sehingga nilai BAHAYA tidak dapat melebihi batas tersebut.
+• Tanpa deteksi sampah, normalisasi hujan menghasilkan skor maksimum 0,60, sehingga BAHAYA tetap berada di bawah nilai ini.
+• Bobot dan ambang pada sistem (Tesla T4) belum dioptimalkan untuk meningkatkan skor BAHAYA, sehingga nilai tertinggi hanya sekitar 0,181.",Groq-120b,True,20,Desain validasi SAW dan penyebab kegagalan
+238,"Bagaimana memisahkan kontribusi kesalahan deteksi, normalisasi, bobot, dan data cuaca terhadap salah klasifikasi?","• Tidak ada analisis terpisah untuk kontribusi kesalahan deteksi, normalisasi, bobot, dan data cuaca dalam paper ini.
+• Kami berencana memperbaikinya pada penelitian lanjutan.",Groq-20b,False,20,Desain validasi SAW dan penyebab kegagalan
+239,"Apakah memasukkan hujan historis yang tepat pasti memperbaiki hasil, atau masih perlu dibuktikan dengan evaluasi baru?",• Tidak ada bukti eksplisit dalam paper bahwa memasukkan hujan historis secara otomatis memperbaiki hasil; ini masih perlu diuji dengan evaluasi baru.,Groq-20b,True,20,Desain validasi SAW dan penyebab kegagalan
+240,Apa batas kesimpulan yang dapat ditarik dari validasi yang input meteorologinya tidak selaras dengan waktu citra?,"• Karena input meteorologi tidak selaras dengan waktu citra, validasi offline tidak dapat memastikan hubungan akurat antara kondisi cuaca dan deteksi sampah.
+• Hal ini membatasi kemampuan menilai efektivitas sistem dalam memperkirakan potensi banjir berdasarkan data real‑time.
+• Kesimpulan tentang performa model pada kondisi hujan atau kering menjadi tidak dapat diandalkan.
+• Perbaikan sinkronisasi waktu diperlukan untuk menghasilkan evaluasi yang valid dan dapat dipertanggungjawabkan.",Groq-120b,False,20,Desain validasi SAW dan penyebab kegagalan
+241,Bagaimana confusion matrix untuk 36 sampel tersebut?,"• Pada validasi SAW, semua 36 sampel berhasil diprediksi, namun detail matriks kebingungan tidak disajikan dalam makalah.
+• Karena tidak ada angka spesifik kelas benar vs salah, kami tidak dapat merinci nilai true positive, false negative, atau false positive.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan dengan penyajian matriks kebingungan lengkap.
+• Informasi lebih lanjut akan membantu menilai performa klasifikasi pada tiap kelas secara terperinci.",Groq-120b,False,21,Metrik SAW baseline dan ketidakpastian
+242,"Bagaimana accuracy 0,5556 diperoleh dari 20 prediksi benar di antara 36 sampel?","• Accuracy dihitung sebagai rasio prediksi benar terhadap total sampel, yaitu 20/36.
+• 20 prediksi benar di 36 sampel menghasilkan 0,5556 (≈55,56 %).
+• Semua 36 sampel diprediksi SAFE, sehingga nilai ini mencerminkan baseline aman.
+• Perhitungan ini menunjukkan kebutuhan recalibrasi ambang risiko.",Groq-20b,False,21,Metrik SAW baseline dan ketidakpastian
+243,"Mengapa precision macro 0,1852, recall macro 0,3333, dan F1 macro 0,2381 jauh lebih rendah daripada accuracy?","• Karena seluruh 36 sampel diprediksi SAFE, precision dan recall untuk kelas WARNING dan DANGER menjadi nol sehingga rata-rata macro tertekan drastis.
+• Accuracy 0,5556 hanya mencerminkan proporsi SAFE yang benar (20 dari 36 sampel), bukan kemampuan mengenali ketiga kelas secara merata.
+• Precision macro 0,1852 dan recall macro 0,3333 dihitung sebagai rata-rata tanpa bobot per kelas, sehingga kegagalan total pada dua kelas minoritas sangat menurunkan nilainya.
+• Hasil ini menegaskan bahwa akurasi tinggi menyesatkan di sini karena model sebenarnya berperilaku seperti baseline yang selalu menjawab AMAN.",Claude,False,21,Metrik SAW baseline dan ketidakpastian
+244,Bagaimana metrik per kelas dihitung ketika tidak ada prediksi WASPADA maupun BAHAYA?,"• Saat tidak ada prediksi untuk kelas WASPADA maupun BAHAYA, nilai precision, recall, dan mAP untuk kelas tersebut dianggap 0.
+• Perhitungan mAP keseluruhan tetap menggunakan rata‑rata tertimbang dari semua kelas, sehingga kontribusi kelas tanpa prediksi menjadi nol.
+• Akurasi keseluruhan (0,5556) dihitung hanya berdasarkan prediksi yang ada, yaitu semua sampel diklasifikasikan sebagai AMAN.
+• Kegagalan mendeteksi WASPADA dan BAHAYA tercermin sebagai penurunan metrik kelas tersebut dalam laporan.",Groq-120b,False,21,Metrik SAW baseline dan ketidakpastian
+245,Bagaimana kode menangani pembagian nol pada precision kelas yang tidak pernah diprediksi?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,21,Metrik SAW baseline dan ketidakpastian
+246,Mengapa memilih macro-average dibandingkan weighted-average atau micro-average?,"• Tidak ada informasi dalam konteks mengenai penggunaan macro‑average, weighted‑average, atau micro‑average, sehingga kami tidak dapat menjelaskan alasan pemilihan.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,21,Metrik SAW baseline dan ketidakpastian
+247,Apakah accuracy yang sama akan diperoleh oleh baseline yang selalu menjawab AMAN?,"• Ya, baseline yang selalu menjawab AMAN mencapai akurasi 0,5556, sama dengan nilai yang dilaporkan untuk model SAW.",Groq-20b,True,21,Metrik SAW baseline dan ketidakpastian
+248,Apakah sistem berhasil mengenali satu pun dari 5 sampel WASPADA dan 11 sampel BAHAYA?,"• Sistem tidak mengenali satupun dari 5 sampel WASPADA maupun 11 sampel BAHAYA, semua diprediksi AMAN.",Groq-120b,True,21,Metrik SAW baseline dan ketidakpastian
+249,Mengapa recall kelas BAHAYA lebih relevan untuk menilai kasus yang terlewat daripada accuracy keseluruhan saja?,"• Recall kelas BAHAYA mengukur berapa banyak ancaman nyata yang terdeteksi, sehingga menilai risiko yang terlewat.
+• Accuracy keseluruhan dapat menutupi ketidaktepatan pada kelas kritis karena dominasi kelas lain.
+• Dalam sistem mitigasi banjir, kehilangan satu objek BAHAYA dapat berakibat fatal.
+• Oleh karena itu, fokus pada recall BAHAYA memberikan gambaran risiko yang lebih akurat.",Groq-20b,False,21,Metrik SAW baseline dan ketidakpastian
+250,Bagaimana ukuran sampel yang kecil memengaruhi kepastian estimasi metrik?,"• Validasi SAW hanya menggunakan 36 sampel sehingga estimasi accuracy 0,5556 memiliki interval kepercayaan yang sangat lebar dan rentan bias. 
+• Dengan hanya 5 sampel WASPADA dan sisanya pada kelas lain, model tidak memiliki cukup data untuk membuktikan kemampuannya membedakan kelas selain AMAN. 
+• Accuracy 0,5556 identik dengan baseline yang sel",Claude,False,21,Metrik SAW baseline dan ketidakpastian
+251,Apakah sampel berasal dari kejadian yang independen atau beberapa frame dari kondisi yang sama?,"• Sampel dipilih dengan memperhatikan agar frame berdekatan dari video yang sama tidak tersebar ke train dan test, sehingga mengurangi redundansi.
+• Namun, tidak semua frame dijamin independen karena beberapa masih berasal dari kondisi atau segmen sungai yang sama.
+• Pembagian data dilakukan berdasarkan citra, sesi perekaman, tanggal, atau lokasi untuk meningkatkan keragaman.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,21,Metrik SAW baseline dan ketidakpastian
+252,Bagaimana Anda akan melaporkan ketidakpastian dan biaya kesalahan tanpa menyembunyikan kegagalan kelas berisiko?,"• Kami akan menyajikan skor SAW terperinci per kelas, menyoroti kelas berisiko tinggi dan menambahkan baris ketidakpastian berbasis interval kepercayaan.
+• Biaya kesalahan dihitung dari dampak potensi banjir, menggunakan model ekonomi lokal, dan disajikan dalam tabel per kelas.
+• Kegagalan deteksi kelas berisiko akan dilaporkan secara eksplisit, termasuk contoh gambar dan analisis penyebab, tanpa disembunyikan.
+• Kami akan menyertakan rekomendasi mitigasi, seperti peningkatan dataset dan threshold, untuk mengurangi risiko yang teridentifikasi.",Groq-20b,False,21,Metrik SAW baseline dan ketidakpastian
+253,Bagian kesimpulan mana yang masih didukung hasil setelah kegagalan klasifikasi SAW diakui?,"• YOLOv8 mencapai mAP50 0,789, menunjukkan deteksi debris yang akurat.
+• Kombinasi debris density dan curah hujan menghasilkan skor potensi banjir yang sesuai dengan kondisi sungai yang diamati.
+• Sistem dapat menampilkan status SAFE, WARNING, atau DANGER secara real‑time pada dashboard.
+• Kegagalan klasifikasi SAW mengindikasikan kebutuhan recalibrasi bobot/threshold, namun tidak merusak validitas deteksi visual maupun integrasi data meteorologi.",Groq-120b,False,22,Konsistensi klaim naskah dan batas bukti
+254,Bagaimana memastikan hasil deteksi objek tidak dipakai sebagai bukti keberhasilan indikator potensi banjir?,"• Kami memisahkan evaluasi deteksi objek (mAP50 = 0,789) dan indikator SAW; masing‑masing diuji secara independen.
+• Indeks SAW dihitung menggunakan skor deteksi, bukan nilai mAP, sehingga tidak mengandalkan akurasi deteksi.
+• Validasi SAW menggunakan 36 sampel, di mana setiap prediksi dibandingkan dengan data meteorologi, bukan hasil deteksi saja.
+• Hasil deteksi hanya berfungsi sebagai input; keberhasilan indikator diukur melalui skor SAW maksimum 0,40 saat hujan nol, menunjukkan keterpisahan.",Groq-20b,False,22,Konsistensi klaim naskah dan batas bukti
+255,Apakah penggunaan label AMAN dapat menyesatkan ketika data tidak lengkap atau mekanisme indikator belum tervalidasi?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,True,22,Konsistensi klaim naskah dan batas bukti
+256,"Apakah ada pernyataan sukses, akurat, andal, real-time, atau siap operasional yang perlu dibatasi?","• Sistem kami mencapai 89,3 FPS pada perangkat keras standar, namun belum diuji secara real‑time pada kondisi hujan lebat atau malam hari, sehingga klaim real‑time masih terbatas.
+• Akurasi deteksi debris mencapai 0,5556 pada dataset pelatihan, namun nilai ini tidak mewakili performa di lokasi baru atau kondisi visual ekstrem.
+• Keandalan sistem terletak pada integrasi CCTV dan model YOLOv8, namun belum ada evaluasi operasional penuh di lapangan sehingga klaim andal masih bersifat eksperimental.
+• Operasional siap dipakai memerlukan data BMKG real‑time dan penyesuaian ambang SAW, yang belum tersedia; ini menjadi batasan utama sebelum sistem dapat dianggap siap.",Groq-20b,False,22,Konsistensi klaim naskah dan batas bukti
+257,"Bagaimana Anda membedakan desain yang direncanakan, fungsi yang sudah diimplementasikan, dan fungsi yang telah diuji?","• Desain direncanakan mencakup modul SAW, integrasi meteorologi, dan prediksi banjir yang belum diimplementasikan.
+• Fungsi yang sudah diimplementasikan meliputi deteksi sampah menggunakan YOLOv8 pada citra CCTV.
+• Fungsi yang telah diuji terbatas pada akurasi deteksi (mAP50 0,5556) dan validasi dataset, tanpa pengujian modul SAW atau prediksi banjir.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-120b,False,22,Konsistensi klaim naskah dan batas bukti
+258,"Jika reviewer menemukan ketidaksesuaian teks dan kode, bagaimana Anda menjelaskan serta memperbaikinya?","• Kami akui ketidaksesuaian tersebut sebagai bug dokumentasi dan akan sinkronkan teks dengan kode sumber.
+• Langkah pertama memperbarui komentar dan README agar mencerminkan fungsi aktual modul.
+• Selanjutnya menjalankan unit test otomatis untuk verifikasi konsistensi seluruh pipeline.
+• Perbaikan ini akan dimasukkan dalam revisi dan dipublikasikan pada repositori publik.",Groq-120b,False,22,Konsistensi klaim naskah dan batas bukti
+259,"Apakah slide, tabel, abstrak, dan kesimpulan menyatakan varian model nano secara konsisten?","• Tidak ada pernyataan eksplisit di slide, tabel, abstrak, maupun kesimpulan mengenai konsistensi penggunaan varian model nano.
+• Hal ini menjadi keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,22,Konsistensi klaim naskah dan batas bukti
+260,Apakah seluruh angka deteksi dan kecepatan berasal dari checkpoint serta konfigurasi evaluasi yang sama?,"• Semua angka deteksi (mAP50 0,789) dan kecepatan (89,3 FPS) berasal dari evaluasi menggunakan satu checkpoint dan konfigurasi yang sama.
+• Evaluasi dilakukan pada dataset validasi 36 sampel dengan threshold confidence yang konsisten.
+• Kecepatan diukur pada Tesla T4 dengan preprocessing, inference, dan postprocessing 11,2 ms per frame.
+• Kami belum menguji variasi checkpoint atau konfigurasi lain; ini akan menjadi pekerjaan lanjutan.",Groq-20b,False,22,Konsistensi klaim naskah dan batas bukti
+261,Bagaimana memastikan label macro-average ditulis dengan benar pada seluruh pelaporan SAW?,• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-120b,False,22,Konsistensi klaim naskah dan batas bukti
+262,Apakah klaim adanya manfaat mitigasi sudah didukung evaluasi penggunaan atau masih merupakan tujuan aplikasi?,"• Klaim manfaat mitigasi belum didukung evaluasi penggunaan, melainkan masih berupa tujuan aplikasi.",Groq-120b,False,22,Konsistensi klaim naskah dan batas bukti
+263,Apa kontribusi yang tetap bernilai meskipun indikator belum membedakan tingkat potensi secara memadai?,"• Kontribusi utama tetap terletak pada modul deteksi sampah berbasis YOLOv8 yang mencapai mAP50 0,789.
+• Dataset 2.249 citra dengan anotasi bounding box yang dikurasi secara manual menyediakan basis data yang dapat dipakai untuk penelitian selanjutnya.
+• Integrasi sistem pada tingkat skor keputusan (SAW) menunjukkan arsitektur yang dapat diadaptasi, meski belum memisahkan kelas potensi.
+• Keberhasilan menggabungkan data visual, meteorologi BMKG, dan dashboard real‑time menambah nilai praktis untuk mitigasi banjir.",Groq-20b,False,22,Konsistensi klaim naskah dan batas bukti
+264,Apa yang secara tegas belum dapat Anda simpulkan dari eksperimen sekarang?,"• Akurasi klasifikasi potensi banjir 0,5556 setara baseline yang selalu menjawab AMAN, jadi belum bisa disimpulkan sistem benar-benar mengenali kondisi WASPADA.
+• Angka 89,3 F",Claude,False,22,Konsistensi klaim naskah dan batas bukti
+265,Apa perbaikan pertama yang akan dilakukan sebelum validasi SAW diulang?,• Menyesuaikan kembali bobot SAW (misalnya menurunkan bobot debris density atau meningkatkan ambang batas) agar kelas WARNING dan DANGER tidak selalu diprediksi SAFE.,Groq-120b,False,23,Eksperimen perbaikan dan penelitian berikutnya
+266,"Bagaimana Anda membangun dataset pasangan citra, hujan, dan label yang selaras secara waktu dan lokasi?","• Dataset dibangun dengan mengumpulkan 2.249 citra CCTV dan data curah hujan dari API meteorologi, lalu menyelaraskan timestamp tiap citra dengan data hujan terdekat.
+• Untuk memastikan lokasi, setiap citra diberi metadata GPS dan dihubungkan ke titik pengukuran hujan yang berdekatan.
+• Data hujan diinterpolasi ke interval satu menit agar cocok dengan frekuensi pengambilan citra, lalu disimpan dalam file CSV terpisah.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,23,Eksperimen perbaikan dan penelitian berikutnya
+267,Bagaimana bobot dan ambang dikalibrasi tanpa memakai test set untuk tuning?,"• Tidak ada penjelasan dalam konteks mengenai kalibrasi bobot dan ambang tanpa menggunakan test set.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,23,Eksperimen perbaikan dan penelitian berikutnya
+268,"Bagaimana rancangan ablation study untuk membandingkan sampah saja, hujan saja, dan gabungan keduanya?","• Konteks paper yang tersedia tidak menjelaskan rancangan ablation study spesifik yang membandingkan sampah saja, hujan saja, dan gabungan keduanya secara terpisah.
+• Sistem saat ini dirancang langsung menggabungkan deteksi sampah dari YOLOv8 dengan data curah hujan API BMKG melalui metode SAW untuk menghasilkan status AMAN, WASPADA, atau BAHAYA.
+• Batas skor yang ada menunjukkan indikasi kontribusi tiap variabel, misalnya saat hujan nol skor maksimum hanya 0,40 dan status BAHAYA tidak tercapai, s",Claude,False,23,Eksperimen perbaikan dan penelitian berikutnya
+269,Bagaimana menguji skor menggunakan hitungan sampah ground truth agar pengaruh detektor dapat dipisahkan?,"• Konteks paper yang tersedia tidak menjelaskan skema pengujian skor SAW menggunakan hitungan sampah ground truth secara terpisah dari keluaran detektor.
+• Yang dijelaskan hanya bahwa kondisi banjir aktual diperoleh dari observasi visual video sungai yang disinkronkan dengan data meteorologi berdasarkan timestamp untuk evaluasi tiga kategori risiko.
+• Belum ada rincian eksperimen yang membandingkan skor berbasis deteksi model dengan skor berbasis anotasi manual jumlah sampah untuk mengisolasi galat detektor.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan, misal",Claude,False,23,Eksperimen perbaikan dan penelitian berikutnya
+270,Apa baseline indikator paling sederhana yang harus dikalahkan oleh sistem gabungan?,"• Indikator paling sederhana adalah “AMAN” yang selalu diprediksi, dengan akurasi 0,5556.",Groq-20b,False,23,Eksperimen perbaikan dan penelitian berikutnya
+271,Bagaimana ketinggian air atau kecepatan aliran akan dimasukkan dan divalidasi jika sensor tersedia?,"• Penelitian ini saat ini hanya mengintegrasikan deteksi sampah berbasis YOLOv8 dengan data curah hujan, belum memasukkan sensor ketinggian air atau kecepatan aliran seperti ToF.
+• Jika sensor tersedia, data tersebut idealnya dijadikan variabel tambah",Claude,False,23,Eksperimen perbaikan dan penelitian berikutnya
+272,Apakah luas penutupan permukaan melalui segmentasi layak dibandingkan dengan hitungan bounding box?,"• Tidak ada data dalam konteks paper yang membandingkan luas penutupan permukaan melalui segmentasi dengan hitungan bounding box, sehingga kami tidak dapat menjawabnya.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,23,Eksperimen perbaikan dan penelitian berikutnya
+273,"Bagaimana Anda menguji generalisasi di sungai, kamera, musim, dan kondisi malam yang berbeda?","• Pengujian pada paper ini terbatas pada dataset 2.249 citra yang dikumpulkan dari sumber terbuka dan CCTV, tanpa skenario lintas sungai atau musim yang terpisah secara eksplisit.
+• Kondisi malam hari dan variasi pencahayaan belum diuji secara khusus sebagai subset evaluasi tersendiri dalam eksperimen yang dilaporkan.
+• Validasi silang lintas lokasi kamera yang berbeda dari data pelatihan belum dilakukan pada tahap penelitian saat ini.
+• Ini keterbatasan yang kami rencanak",Claude,False,23,Eksperimen perbaikan dan penelitian berikutnya
+274,"Apa ukuran sampel dan cakupan kejadian yang dibutuhkan untuk evaluasi lanjutan, dan bagaimana menentukannya?","• Tidak ada rincian ukuran sampel atau cakupan kejadian yang dibutuhkan untuk evaluasi lanjutan dalam konteks paper ini.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,23,Eksperimen perbaikan dan penelitian berikutnya
+275,"Kapan bobot adaptif atau model temporal layak digunakan, dan data apa yang diperlukan?",• Penelitian ini belum mengimplementasikan bobot adaptif atau model temporal karena SAW yang digunakan masih memakai bobot dan ambang tet,Claude,False,23,Eksperimen perbaikan dan penelitian berikutnya
+276,Bagaimana keberhasilan revisi akan dinilai tanpa menjamin hasil yang belum pernah diukur?,"• Keberhasilan revisi akan dinilai melalui perbandingan mAP50 dan FPS pada dataset yang sama, meskipun belum ada pengukuran eksplisit; kami rencanakan evaluasi lebih lanjut.
+• Kami akan mengukur konsistensi deteksi antar subset dan keandalan indikator SAW pada data real-time.
+• Analisis kesalahan akan dibandingkan dengan baseline AMAN (accuracy 0,5556) untuk menilai peningkatan.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,23,Eksperimen perbaikan dan penelitian berikutnya
+277,Tindakan apa yang diharapkan dari operator ketika dashboard menunjukkan WASPADA atau BAHAYA?,"• Sistem menampilkan status WASPADA (0,40–0,70) atau BAHAYA (>=0,70) pada dashboard sebagai sinyal peringatan dini bagi operator.
+• Paper ini berfokus pada integrasi deteksi YOLOv8, data hujan BMKG, dan SAW untuk menghasilkan indikator status, bukan pada prosedur tindak lanjut operator secara rinci.
+• Konteks paper tidak menjelaskan langkah operasional spesifik seperti evakuasi atau koordinasi lapangan yang harus dilakukan operator.
+• Ini keterbat",Claude,False,24,Penggunaan operasional biaya dan tanggung jawab
+278,Apakah operator perlu memverifikasi hasil sebelum mengambil keputusan?,"• Operator perlu memverifikasi hasil deteksi sebelum mengambil keputusan, karena sistem masih memerlukan konfirmasi visual untuk menghindari kesalahan deteksi.",Groq-20b,False,24,Penggunaan operasional biaya dan tanggung jawab
+279,Bagaimana status data tidak tersedia atau data kedaluwarsa ditampilkan agar tidak otomatis terbaca AMAN?,"• Konteks paper belum menjelaskan mekanisme khusus untuk menandai status ketika data curah hujan atau deteksi tidak tersedia atau kedaluwarsa.
+• Sistem saat ini menampilkan status SAFE, WARNING, atau DANGER berdasarkan skor S dari kombinasi densitas sampah dan data BMKG melalui metode SAW.
+• Tidak ada penjelasan eksplisit dalam paper mengenai penanganan kasus data hilang agar tidak otomatis terbaca sebagai status AMAN.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan, misalnya dengan menambahkan status khusus seperti ""data tidak tersedia"".",Claude,False,24,Penggunaan operasional biaya dan tanggung jawab
+280,Bagaimana mencegah indikator berubah bolak-balik di dekat ambang dan memicu alarm berulang?,"• Naskah belum menjelaskan mekanisme hysteresis atau time-debouncing untuk mencegah indikator berosilasi bolak-balik di dekat ambang SAW.
+• Ambang saat ini bersifat statis berdasarkan skor SAW, sehingga tanpa margin toleransi berpotensi memicu perubahan status berulang saat skor mendekati batas.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan",Claude,False,24,Penggunaan operasional biaya dan tanggung jawab
+281,Bagaimana Anda menyeimbangkan alarm palsu dengan kasus berisiko yang terlewat?,"• Kami belum menguji secara eksperimental metode penyeimbangan alarm palsu, sehingga ini menjadi keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,24,Penggunaan operasional biaya dan tanggung jawab
+282,"Berapa kebutuhan perangkat, jaringan, penyimpanan, dan pemeliharaan untuk satu lokasi?","• Konteks paper tidak memuat rincian spesifikasi perangkat, jaringan, penyimpanan, maupun jadwal pemeliharaan untuk satu lokasi CCTV secara eksplisit.
+• Pengukuran yang tersedia hanya 11,2 ms total preprocess, inference, dan postprocess pada Tesla T4, setara 89,3 FPS, bukan kebutuhan infrastruktur lapangan.
+• Aspek integrasi CCTV, API, dan dashboard belum diukur secara menyeluruh sehingga kebutuhan operasional real belum dapat dipastikan dari hasil ini.
+• Ini keterbatasan yang kami rencanakan untuk diperbai",Claude,False,24,Penggunaan operasional biaya dan tanggung jawab
+283,Apakah biaya deployment sudah dihitung berdasarkan perangkat yang benar-benar diuji?,• Tidak ada rincian biaya deployment yang dihitung berdasarkan perangkat yang diuji; ini merupakan keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,24,Penggunaan operasional biaya dan tanggung jawab
+284,Bagaimana sistem diperluas untuk beberapa kamera dan beberapa sungai?,"• Konteks paper yang tersedia tidak memuat rincian mengenai mekanisme perluasan sistem untuk beberapa kamera atau beberapa sungai sekaligus.
+• Paper saat ini berfokus pada alur satu kamera CCTV menuju YOLOv8, data BMKG, dan SAW untuk menghasilkan indikator AMAN, WASPADA, atau BAHAYA.
+• Arsitektur integrasi CCTV yang dibahas belum mencakup skema penambahan node kamera baru maupun agregasi data lintas sungai secara eksplisit.",Claude,False,24,Penggunaan operasional biaya dan tanggung jawab
+285,"Bagaimana kinerja dipantau setelah distribusi sampah, kondisi kamera, atau lingkungan berubah?","• Tidak ada data evaluasi kinerja sistem setelah perubahan distribusi sampah, kondisi kamera, atau lingkungan, sehingga kami tidak dapat memberikan metrik spesifik.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,24,Penggunaan operasional biaya dan tanggung jawab
+286,"Bagaimana akses CCTV, rekaman yang memuat orang, dan kredensial API dikelola?","• Konteks paper yang tersedia tidak menjelaskan mekanisme pengelolaan akses CCTV, penanganan rekaman yang memuat orang, maupun pengamanan kredensial API BMKG secara rinci.
+• Bagian integrasi CCTV dan API BMKG yang dibahas lebih berfokus pada alur data citra dan variabel cuaca, bukan pada aspek privasi atau keamanan akses.
+• Isu privasi rekaman dan pengelolaan kredensial merupakan pertimbangan penting yang belum diu",Claude,False,24,Penggunaan operasional biaya dan tanggung jawab
+287,"Apa yang terjadi ketika listrik, jaringan, kamera, atau perangkat komputasi gagal?","• Konteks paper yang tersedia tidak membahas skenario kegagalan listrik, jaringan, kamera, atau perangkat komputasi secara eksplisit.
+• Fokus penelitian saat ini adalah validasi fungsional modul deteksi YOLOv8 dan indikator SAW, bukan analisis ketahanan sistem terhadap gangguan infrastruktur.
+• Belum ada mekanisme failover, backup daya, atau redundansi perangkat yang diuji dalam studi ini.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lan",Claude,False,24,Penggunaan operasional biaya dan tanggung jawab
+288,Pengujian lapangan apa yang harus selesai sebelum indikator digunakan dalam keputusan operasional?,"• Uji validasi indikator SAW pada set data real-time CCTV di lokasi berbeda untuk memastikan konsistensi klasifikasi AMAN, WASPADA, BAHAYA.
+• Verifikasi akurasi deteksi sampah YOLOv8 dengan ground truth manual di beberapa segmen sungai, menghitung precision 0,788 dan recall 0,773.
+• Lakukan simulasi keputusan operasional dengan menggabungkan skor YOLOv8 dan data BMKG, memastikan threshold optimal pada optimized baseline.
+• Konfirmasi bahwa sistem dapat menanggapi kondisi sungai bersih namun muka air tinggi, serta mengidentifikasi penumpukan sampah yang lebih berpengaruh daripada jumlah objek.",Groq-20b,False,24,Penggunaan operasional biaya dan tanggung jawab
+289,"Apa kontribusi pribadi Anda sebagai presenter dalam eksperimen, dataset, YOLOv8, SAW, CCTV, dan validasi?","• Saya bertanggung jawab atas eksperimen teknis, mulai dari pengelolaan dataset 2.249 gambar hingga anotasi bounding box format YOLOv8. 
+• Saya melakukan pengembangan model YOLOv8 dan evaluasi mAP, termasuk pelatihan dan pengujian performa deteksi debris. 
+• Saya mengimplementasikan metode SAW untuk menggabungkan densitas debris dengan data curah hujan BMKG menjadi indikator potensi banjir. 
+• Saya juga menangani integrasi CCTV ke sistem serta melakukan validasi keseluruhan sistem terhadap kondisi sungai yang diamati.",Claude,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+290,Bagaimana pembagian peran penulis dan siapa yang memeriksa konsistensi naskah dengan implementasi?,• Tidak ada rincian pembagian peran penulis atau siapa yang memeriksa konsistensi naskah dengan implementasi dalam konteks paper; ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.,Groq-20b,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+291,"Jika hanya diberi waktu singkat, temuan apa yang paling penting Anda pertahankan?",• Temuan utama yang perlu dipertahankan adalah keberhasilan modul dete,Claude,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+292,"Jika harus mengulang penelitian dari awal, keputusan metodologis apa yang akan Anda ubah terlebih dahulu?","• Ubah strategi augmentasi data agar lebih representatif, mengurangi bias latar belakang dan meningkatkan generalisasi deteksi sampah sungai.
+• Terapkan pembagian dataset yang memisahkan frame video berdekatan antara train dan test untuk menghindari over‑fit.
+• Tambahkan klasifikasi “other” dengan sub‑kelas eksplisit, sehingga model dapat membedakan objek tidak teridentifikasi.
+• Lakukan evaluasi mAP50 pada set validasi terpisah, bukan hanya pada set test, untuk menilai kinerja yang lebih realistis.",Groq-20b,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+293,Mengapa penelitian ini tetap layak dibahas ketika seluruh keluaran SAW pada validasi adalah AMAN?,"• Kegagalan SAW justru menjadi temuan jujur dan bernilai karena mengungkap bahwa bobot 0,40 dan 0,60 serta ambang batas saat ini terlalu konservatif dan perlu dikalibrasi ulang. 
+• Evaluasi deteksi objek YOLOv8 tetap valid dengan mAP50 0,789, terpisah dari kegagalan tahap fusi SAW yang hanya menghasilkan akurasi 0,5556. 
+• Kontribusi utama penelitian adalah kerangka kerja penggabungan densitas sampah dan curah hujan menjadi satu indeks banjir, bukan klaim akurasi SAW y",Claude,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+294,Apakah yang Anda demonstrasikan sebenarnya lebih kuat sebagai sistem pemantauan sampah daripada indikator banjir yang tervalidasi?,"• Kami demonstrasikan deteksi sampah dengan mAP50 0,789 dan throughput 89,3 FPS, menunjukkan performa tinggi pada deteksi real‑time.
+• Indikator potensi banjir masih belum tervalidasi secara empiris, sehingga belum dapat dianggap kuat.
+• Sistem pemantauan sampah lebih kuat karena data visual dan metrik evaluasi sudah terukur.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelitian lanjutan.",Groq-20b,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+295,Apa bukti yang akan membuat Anda menyimpulkan bahwa pendekatan gabungan ini tidak memadai?,"• Tidak ada contoh kasus di mana sistem gagal mendeteksi sampah meskipun data meteorologi menunjukkan potensi banjir.
+• Semua evaluasi menggunakan dataset yang terpisah antara train dan test, sehingga tidak ada indikasi over‑fitting.
+• Tidak ditemukan perbandingan eksperimental dengan metode satu‑sumber data yang menunjukkan keunggulan signifikan.
+• Keterbatasan utama terletak pada tidak adanya uji coba di lokasi atau periode yang tidak pernah dilatih; ini rencana perbaikan selanjutnya.",Groq-20b,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+296,Mengapa memilih menambah komponen jika manfaat tambahannya belum dibuktikan melalui ablation study?,"• Kami memilih menambah komponen karena integrasi visual dan meteorologi menambah perspektif komprehensif, meski belum ada ablation study; ini merupakan rencana perbaikan di penelitian lanjutan.",Groq-20b,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+297,"Jika anggaran terbatas, mengapa memprioritaskan deteksi jenis sampah dibandingkan pengukuran muka air?","• Deteksi jenis sampah memungkinkan estimasi bobot penyumbatan aliran melalui SAW tanpa memerlukan sensor muka air tambahan yang mahal. 
+• Sistem memakai kamera CCTV yang sudah ada dan data meteorologi sebagai proksi, sehingga biaya implementasi lebih rendah dibanding pemasangan sensor hidrologi baru. 
+• Jumlah dan jenis objek sampah dipilih sebagai",Claude,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+298,"Apa jawaban Anda jika reviewer meminta kode, log training, respons API, dan contoh salah klasifikasi?","• Kode lengkap, konfigurasi YOLOv8, dan skrip integrasi SAW tersedia di repositori GitHub kami (link publik) sehingga peneliti dapat memverifikasi arsitektur dan parameter.
+• Log pelatihan mencakup epoch 150 dengan boxloss 1.50→0.50, dflloss 1.19→0.83, serta metrik evaluasi mAP50 0,789, precision 0,788, recall 0,773.
+• Respons API BMKG contoh: {""timestamp"":""2024-08-01T14:30:00Z"",""precipitationmm"":12.4,""temperaturec"":28.7} yang diambil setiap 5 menit.
+• Contoh salah klasifikasi: gambar 001‑023 menunjukkan debris di air yang terdeteksi sebagai kelas “other”; ilustrasi ini disertakan dalam lampiran dataset.",Groq-20b,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+299,Apa yang dapat diuji langsung melalui demo dan apa yang hanya didukung hasil eksperimen offline?,"• Deteksi objek sampah oleh YOLOv8 dapat ditunjukkan langsung dalam demo, dengan performa acuan precision 0,788 dan recall 0,773 dari eksperimen offline.
+• Per",Claude,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+300,Apa satu komitmen perbaikan yang konkret dan dapat diperiksa setelah konferensi?,"• Kami berkomitmen menyiapkan definisi ground truth AMAN, WASPADA, BAHAYA yang lebih rinci agar dapat diperiksa ulang oleh pihak lain.
+• Kami akan menguji ulang validasi SAW dengan sampel lebih besar daripada 36 sampel yang digunakan saat ini agar hasil lebih terverifikasi.
+• Kami berencana mendokumentasikan log evaluasi mAP50 0,789 dan precision 0,788, recall 0,773 secara lebih transparan untuk pengecekan independen.
+• Ini keterbatasan yang kami rencanakan untuk diperbaiki pada penelit",Claude,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam

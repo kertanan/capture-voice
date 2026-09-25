@@ -1,0 +1,301 @@
+﻿id,question,priority,group_id,group
+1,Apa inti penelitian Anda dalam satu kalimat?,False,1,Pembukaan host dan gambaran penelitian
+2,Masalah utama apa yang ingin diselesaikan melalui penelitian ini?,False,1,Pembukaan host dan gambaran penelitian
+3,Mengapa pemantauan sampah sungai relevan untuk mitigasi banjir?,False,1,Pembukaan host dan gambaran penelitian
+4,Mengapa memilih Sungai Ciliwung dekat Pintu Air Manggarai sebagai studi kasus?,False,1,Pembukaan host dan gambaran penelitian
+5,Siapa pengguna utama sistem dan keputusan apa yang ingin dibantu?,False,1,Pembukaan host dan gambaran penelitian
+6,Bagaimana alur sistem dari citra CCTV sampai munculnya indikator di dashboard?,False,1,Pembukaan host dan gambaran penelitian
+7,"Apa peran YOLOv8, data BMKG, dan SAW dalam sistem?",False,1,Pembukaan host dan gambaran penelitian
+8,Apa hasil terpenting dari penelitian ini?,False,1,Pembukaan host dan gambaran penelitian
+9,Bagian mana yang sudah berfungsi dan bagian mana yang belum tervalidasi?,False,1,Pembukaan host dan gambaran penelitian
+10,Mengapa penelitian ini relevan bagi peserta konferensi di luar bidang computer vision?,False,1,Pembukaan host dan gambaran penelitian
+11,Apa pesan utama yang ingin Anda sampaikan setelah presentasi selesai?,False,1,Pembukaan host dan gambaran penelitian
+12,Apa keterbatasan paling penting yang harus diketahui audiens sejak awal?,False,1,Pembukaan host dan gambaran penelitian
+13,Apa mekanisme fisik yang menghubungkan sampah sungai dengan peningkatan potensi banjir?,False,2,Dasar masalah dan hubungan dengan banjir
+14,Apakah hubungan jumlah sampah dan potensi banjir sudah diuji secara empiris pada lokasi studi?,False,2,Dasar masalah dan hubungan dengan banjir
+15,Bagaimana membedakan sampah yang mengalir lewat dengan sampah yang menyumbat aliran?,False,2,Dasar masalah dan hubungan dengan banjir
+16,Apakah lokasi penumpukan sampah lebih berpengaruh daripada jumlah objek yang terlihat?,False,2,Dasar masalah dan hubungan dengan banjir
+17,Bagaimana sistem menghadapi banjir akibat hujan di hulu ketika area kamera tidak sedang hujan?,False,2,Dasar masalah dan hubungan dengan banjir
+18,Bagaimana sistem menghadapi sampah banyak tetapi kapasitas aliran sungai masih memadai?,False,2,Dasar masalah dan hubungan dengan banjir
+19,Bagaimana sistem menghadapi sungai yang tampak bersih tetapi muka airnya sudah tinggi?,False,2,Dasar masalah dan hubungan dengan banjir
+20,Faktor penyebab banjir apa saja yang belum direpresentasikan oleh kedua kriteria Anda?,False,2,Dasar masalah dan hubungan dengan banjir
+21,"Bagaimana operasi pintu air dapat mengubah hubungan antara sampah, hujan, dan potensi banjir?",False,2,Dasar masalah dan hubungan dengan banjir
+22,Mengapa jumlah benda yang terlihat dipilih sebagai proksi gangguan aliran?,False,2,Dasar masalah dan hubungan dengan banjir
+23,Bagaimana sampah yang terendam atau tersembunyi di bawah permukaan diperhitungkan?,False,2,Dasar masalah dan hubungan dengan banjir
+24,Seberapa jauh satu sudut pandang CCTV dapat mewakili kondisi segmen sungai yang dipantau?,False,2,Dasar masalah dan hubungan dengan banjir
+25,Apa kebaruan penelitian ini jika arsitektur YOLOv8 dan metode SAW sudah tersedia?,True,3,Kebaruan dan posisi ilmiah
+26,"Apakah kontribusi utama Anda berada pada algoritma, integrasi sistem, dataset, atau evaluasi?",False,3,Kebaruan dan posisi ilmiah
+27,Apa perbedaan konkret sistem ini dari Ghost-YOLOv8 dan A2ANet yang Anda bahas?,False,3,Kebaruan dan posisi ilmiah
+28,Apa perbedaannya dari pendekatan sensor ToF dan pemantauan pergerakan plastik?,False,3,Kebaruan dan posisi ilmiah
+29,Bagaimana Anda mendukung klaim bahwa belum ada penelitian yang menggabungkan data visual sampah dan meteorologi?,True,3,Kebaruan dan posisi ilmiah
+30,Seberapa luas pencarian literatur yang mendasari klaim kebaruan tersebut?,False,3,Kebaruan dan posisi ilmiah
+31,Bagaimana kebaruan tetap dipertahankan jika ternyata sudah ada studi integrasi yang serupa?,False,3,Kebaruan dan posisi ilmiah
+32,Apa pengetahuan baru yang dihasilkan selain keberhasilan menyambungkan beberapa komponen perangkat lunak?,False,3,Kebaruan dan posisi ilmiah
+33,Adakah bukti bahwa penggabungan dua sumber data memberikan manfaat dibandingkan satu sumber saja?,True,3,Kebaruan dan posisi ilmiah
+34,Mengapa integrasi dilakukan pada tingkat skor keputusan dan bukan pada fitur model?,False,3,Kebaruan dan posisi ilmiah
+35,Apa arti istilah optimized baseline dalam tabel jika arsitektur dasarnya tidak diubah?,False,3,Kebaruan dan posisi ilmiah
+36,Apa pembanding yang paling relevan untuk menilai kontribusi integrasi sistem Anda?,False,3,Kebaruan dan posisi ilmiah
+37,Apa pertanyaan penelitian utama dan bagaimana masing-masing diuji?,False,4,Tujuan ruang lingkup dan definisi keluaran
+38,"Bagaimana Anda membedakan deteksi sampah, indikator potensi banjir, dan prediksi kejadian banjir?",False,4,Tujuan ruang lingkup dan definisi keluaran
+39,Apa definisi operasional potensi banjir yang digunakan dalam penelitian?,False,4,Tujuan ruang lingkup dan definisi keluaran
+40,"Apakah skor SAW dimaksudkan sebagai indeks relatif, kelas kondisi, atau probabilitas kejadian?",False,4,Tujuan ruang lingkup dan definisi keluaran
+41,"Apakah keluaran sistem memiliki horizon waktu, dan jika ada bagaimana horizon itu ditentukan?",False,4,Tujuan ruang lingkup dan definisi keluaran
+42,Wilayah mana yang dianggap terwakili oleh satu skor yang muncul di dashboard?,False,4,Tujuan ruang lingkup dan definisi keluaran
+43,"Apa definisi ground truth untuk label AMAN, WASPADA, dan BAHAYA?",True,4,Tujuan ruang lingkup dan definisi keluaran
+44,"Apakah ketiga label mengacu pada kejadian banjir nyata, penilaian visual, atau aturan yang ditetapkan peneliti?",False,4,Tujuan ruang lingkup dan definisi keluaran
+45,Apakah istilah early warning system sesuai dengan bukti waktu peringatan yang tersedia?,False,4,Tujuan ruang lingkup dan definisi keluaran
+46,Bagaimana Anda membatasi makna flood mitigation dalam judul penelitian?,False,4,Tujuan ruang lingkup dan definisi keluaran
+47,Apa ukuran keberhasilan untuk modul deteksi dan apa ukuran keberhasilan untuk indikator SAW?,False,4,Tujuan ruang lingkup dan definisi keluaran
+48,"Jika modul deteksi bekerja tetapi indikator SAW gagal membedakan kelas, bagian tujuan mana yang tercapai?",False,4,Tujuan ruang lingkup dan definisi keluaran
+49,Bagaimana 2.249 citra dikumpulkan dan apa kriteria pemilihannya?,False,5,Asal komposisi dan keterwakilan dataset
+50,Apakah angka 2.249 dihitung sebelum atau sesudah augmentasi?,False,5,Asal komposisi dan keterwakilan dataset
+51,Berapa jumlah foto asli dan berapa jumlah citra dari masing-masing sumber Roboflow Universe?,False,5,Asal komposisi dan keterwakilan dataset
+52,Berapa banyak citra yang benar-benar berasal dari Ciliwung dekat Manggarai?,False,5,Asal komposisi dan keterwakilan dataset
+53,Kapan dan dalam kondisi cuaca apa foto asli dikumpulkan?,False,5,Asal komposisi dan keterwakilan dataset
+54,"Bagaimana distribusi lokasi, pencahayaan, resolusi, dan sudut kamera dalam dataset?",False,5,Asal komposisi dan keterwakilan dataset
+55,Apakah citra dari sumber terbuka seluruhnya menampilkan lingkungan sungai?,False,5,Asal komposisi dan keterwakilan dataset
+56,Bagaimana Anda menangani perbedaan karakter citra sumber terbuka dan citra CCTV target?,False,5,Asal komposisi dan keterwakilan dataset
+57,Apakah dataset memuat citra tanpa sampah dan mengapa citra tersebut diperlukan?,False,5,Asal komposisi dan keterwakilan dataset
+58,Bagaimana Anda memeriksa gambar duplikat atau hampir identik antarsumber?,False,5,Asal komposisi dan keterwakilan dataset
+59,Apa ketentuan lisensi dan atribusi untuk dataset sumber terbuka yang digunakan?,False,5,Asal komposisi dan keterwakilan dataset
+60,Apakah metadata asal citra dipertahankan agar setiap sampel dapat ditelusuri?,False,5,Asal komposisi dan keterwakilan dataset
+61,Siapa yang membuat dan memeriksa anotasi bounding box?,False,6,Anotasi taksonomi dan kualitas label
+62,Apa pedoman anotasi agar label konsisten antarannotator dan antarsumber?,False,6,Anotasi taksonomi dan kualitas label
+63,Bagaimana Anda memetakan nama kelas dari dataset sumber ke lima kelas akhir?,False,6,Anotasi taksonomi dan kualitas label
+64,"Mengapa memilih kelas bottle, other, paper, plastic, dan wood?",False,6,Anotasi taksonomi dan kualitas label
+65,Bagaimana membedakan bottle dari plastic ketika botol tersebut berbahan plastik?,False,6,Anotasi taksonomi dan kualitas label
+66,Apa batas definisi kelas other dan objek apa saja yang termasuk di dalamnya?,False,6,Anotasi taksonomi dan kualitas label
+67,Mengapa ada bobot organic di kode SAW padahal model hanya memiliki lima kelas terpakai?,False,6,Anotasi taksonomi dan kualitas label
+68,Bagaimana anotasi dilakukan ketika beberapa sampah saling menumpuk atau hanya terlihat sebagian?,False,6,Anotasi taksonomi dan kualitas label
+69,Bagaimana satu benda yang pecah menjadi beberapa bagian dihitung dan diberi label?,False,6,Anotasi taksonomi dan kualitas label
+70,Bagaimana Anda menangani objek kecil atau kabur yang jenisnya tidak dapat dipastikan?,False,6,Anotasi taksonomi dan kualitas label
+71,Apakah konsistensi antarannotator pernah diukur atau diperiksa melalui penilaian ulang?,False,6,Anotasi taksonomi dan kualitas label
+72,Bagaimana memastikan indeks kelas model sama dengan pemetaan nama kelas dan bobot di modul SAW?,False,6,Anotasi taksonomi dan kualitas label
+73,"Berapa jumlah dan proporsi data train, validation, dan test?",True,7,Pembagian data dan pencegahan kebocoran
+74,Apakah metrik deteksi yang dilaporkan berasal dari validation set atau test set yang terpisah?,True,7,Pembagian data dan pencegahan kebocoran
+75,Apakah pembagian data dilakukan sebelum augmentasi?,False,7,Pembagian data dan pencegahan kebocoran
+76,Apakah citra asli dan versi augmentasinya selalu ditempatkan pada subset yang sama?,False,7,Pembagian data dan pencegahan kebocoran
+77,Bagaimana memastikan frame berdekatan dari video yang sama tidak tersebar ke train dan test?,False,7,Pembagian data dan pencegahan kebocoran
+78,"Apakah pembagian data dilakukan berdasarkan citra, sesi perekaman, tanggal, atau lokasi?",False,7,Pembagian data dan pencegahan kebocoran
+79,Apakah ada sumber dataset yang hanya muncul pada train atau hanya pada test?,False,7,Pembagian data dan pencegahan kebocoran
+80,Bagaimana distribusi kelas dijaga dalam setiap subset?,False,7,Pembagian data dan pencegahan kebocoran
+81,Apakah test set pernah dipakai untuk memilih hyperparameter atau checkpoint terbaik?,False,7,Pembagian data dan pencegahan kebocoran
+82,Apa hubungan antara 36 sampel validasi SAW dan data pelatihan atau evaluasi YOLOv8?,True,7,Pembagian data dan pencegahan kebocoran
+83,Apakah ada pengujian pada lokasi atau periode waktu yang sama sekali tidak masuk data pelatihan?,False,7,Pembagian data dan pencegahan kebocoran
+84,Bagaimana Anda memastikan hasil tidak terutama berasal dari kemiripan latar belakang antarsubset?,False,7,Pembagian data dan pencegahan kebocoran
+85,Apa saja yang dibuang atau diperbaiki pada tahap cleaning?,False,8,Preprocessing augmentasi dan resolusi
+86,Bagaimana gambar diubah ke imgsz 512 tanpa merusak rasio aspek objek?,False,8,Preprocessing augmentasi dan resolusi
+87,"Apakah proses resize memakai letterbox, peregangan langsung, atau metode lain?",False,8,Preprocessing augmentasi dan resolusi
+88,Bagaimana nilai piksel dinormalisasi dan komponen mana yang melakukan normalisasi tersebut?,False,8,Preprocessing augmentasi dan resolusi
+89,Bagaimana mencegah normalisasi piksel dilakukan dua kali oleh preprocessing dan framework?,False,8,Preprocessing augmentasi dan resolusi
+90,"Mengapa memilih horizontal flip, rotasi, brightness, dan random cropping?",False,8,Preprocessing augmentasi dan resolusi
+91,Berapa rentang dan probabilitas setiap augmentasi yang benar-benar digunakan?,False,8,Preprocessing augmentasi dan resolusi
+92,Bagaimana bounding box diperbarui ketika gambar dirotasi atau dipotong?,False,8,Preprocessing augmentasi dan resolusi
+93,Apakah augmentasi berpotensi menciptakan kondisi sungai atau orientasi objek yang tidak realistis?,False,8,Preprocessing augmentasi dan resolusi
+94,Apakah augmentasi hanya diterapkan pada data training?,False,8,Preprocessing augmentasi dan resolusi
+95,Bagaimana pengaruh resize ke 512 terhadap sampah berukuran kecil?,False,8,Preprocessing augmentasi dan resolusi
+96,Adakah eksperimen yang menunjukkan kontribusi augmentasi terhadap hasil deteksi?,False,8,Preprocessing augmentasi dan resolusi
+97,Mengapa memilih YOLOv8 untuk tugas deteksi sampah sungai?,False,9,Pemilihan model dan arsitektur
+98,Mengapa memilih varian nano dibandingkan varian YOLOv8 yang lebih besar?,False,9,Pemilihan model dan arsitektur
+99,"Apa hubungan sekitar 3 juta parameter dan 8,1 GFLOPs dengan kebutuhan deployment Anda?",False,9,Pemilihan model dan arsitektur
+100,"Pada ukuran input apa angka 8,1 GFLOPs dihitung, dan apakah sesuai dengan imgsz 512 yang digunakan?",False,9,Pemilihan model dan arsitektur
+101,Apakah arsitektur YOLOv8 dimodifikasi atau digunakan sebagaimana tersedia pada framework?,False,9,Pemilihan model dan arsitektur
+102,Bagian mana yang menjadi pengembangan Anda jika arsitektur model tidak diubah?,False,9,Pemilihan model dan arsitektur
+103,"Bagaimana Anda menjelaskan backbone, neck, dan detection head pada konfigurasi yang digunakan?",False,9,Pemilihan model dan arsitektur
+104,"Bagaimana detektor menghasilkan bounding box, label kelas, dan confidence?",False,9,Pemilihan model dan arsitektur
+105,Mengapa memakai bobot pra-latih COCO dan bukan training dari awal?,False,9,Pemilihan model dan arsitektur
+106,Apa keuntungan dan keterbatasan transfer learning dari COCO untuk objek sampah sungai?,False,9,Pemilihan model dan arsitektur
+107,"Bagaimana membuktikan trade-off ukuran model, akurasi, dan kecepatan sesuai kebutuhan sistem?",False,9,Pemilihan model dan arsitektur
+108,Apa perbedaan peran Roboflow dan framework Ultralytics dalam penelitian Anda?,False,9,Pemilihan model dan arsitektur
+109,Mengapa pelatihan dijalankan selama 150 epoch?,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+110,Apakah model telah konvergen sebelum epoch terakhir?,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+111,"Berapa batch size, optimizer, learning rate, dan scheduler yang digunakan?",False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+112,Berapa random seed yang digunakan dan apakah training pernah diulang dengan seed berbeda?,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+113,Apakah seluruh layer dilatih ulang atau ada layer yang dibekukan?,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+114,Apakah early stopping digunakan dan apa kriterianya?,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+115,Apakah hasil berasal dari best checkpoint atau checkpoint epoch terakhir?,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+116,Metrik apa yang digunakan untuk memilih checkpoint terbaik?,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+117,Bagaimana kurva training dan validation digunakan untuk memeriksa overfitting?,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+118,Mengapa penurunan box_loss dan dfl_loss saja belum cukup untuk menyimpulkan kemampuan generalisasi?,False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+119,"Apa versi Ultralytics, PyTorch, CUDA, dan konfigurasi Tesla T4 yang digunakan?",False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+120,"Apakah bobot model, konfigurasi, log, dan daftar pembagian data tersedia untuk reproduksi?",False,10,Pelatihan pemilihan checkpoint dan reproduksibilitas
+121,"Apa arti precision 0,788 dan recall 0,773 dalam konteks deteksi sampah?",False,11,Metrik deteksi dan interpretasi hasil
+122,"Apa arti mAP50 0,789 dan mengapa tidak boleh disebut akurasi sistem potensi banjir?",True,11,Metrik deteksi dan interpretasi hasil
+123,Apa perbedaan mAP50 dan mAP50-95?,False,11,Metrik deteksi dan interpretasi hasil
+124,Apa peran intersection over union dalam penilaian bounding box?,False,11,Metrik deteksi dan interpretasi hasil
+125,"Mengapa mAP50-95 sebesar 0,445 lebih rendah daripada mAP50 sebesar 0,789?",False,11,Metrik deteksi dan interpretasi hasil
+126,Bagaimana angka keseluruhan dihitung dari metrik per kelas?,False,11,Metrik deteksi dan interpretasi hasil
+127,Pada confidence threshold dan pengaturan evaluasi apa precision dan recall tersebut diperoleh?,False,11,Metrik deteksi dan interpretasi hasil
+128,Bagaimana precision-recall curve membantu memilih threshold untuk penggunaan operasional?,False,11,Metrik deteksi dan interpretasi hasil
+129,Apakah confidence threshold saat validasi sama dengan yang dipakai pada CCTV dan perhitungan SAW?,False,11,Metrik deteksi dan interpretasi hasil
+130,Apa dampak perubahan threshold deteksi terhadap jumlah objek dan skor SAW?,False,11,Metrik deteksi dan interpretasi hasil
+131,Apakah confusion matrix deteksi memperlihatkan kelas yang sering tertukar?,False,11,Metrik deteksi dan interpretasi hasil
+132,"Apakah kualitas hitungan objek juga dievaluasi secara langsung, bukan hanya melalui mAP?",False,11,Metrik deteksi dan interpretasi hasil
+133,"Mengapa wood memiliki mAP50 0,926 sedangkan other hanya 0,645?",False,12,Hasil per kelas dan kegagalan deteksi
+134,Seberapa kuat kesimpulan tentang kelas wood dengan hanya 25 instance pada tabel evaluasi?,False,12,Hasil per kelas dan kegagalan deteksi
+135,Apakah hasil plastic dipengaruhi oleh dukungan evaluasi sebanyak 394 instance?,False,12,Hasil per kelas dan kegagalan deteksi
+136,"Apa arti kolom Img dan Ins, dan mengapa jumlah Img per kelas tidak otomatis sama dengan jumlah citra unik?",False,12,Hasil per kelas dan kegagalan deteksi
+137,"Mengapa bottle memiliki mAP50-95 0,263 meskipun mAP50-nya 0,751?",False,12,Hasil per kelas dan kegagalan deteksi
+138,"Mengapa paper memiliki precision 0,876 tetapi recall 0,705?",False,12,Hasil per kelas dan kegagalan deteksi
+139,Apa jenis false positive dan false negative yang paling sering muncul?,False,12,Hasil per kelas dan kegagalan deteksi
+140,"Bagaimana pantulan air, busa, daun, atau bayangan dapat memengaruhi deteksi?",False,12,Hasil per kelas dan kegagalan deteksi
+141,Bagaimana kinerja berubah ketika sampah saling menutup atau menumpuk rapat?,False,12,Hasil per kelas dan kegagalan deteksi
+142,"Apakah model pernah diuji khusus pada malam hari, hujan lebat, atau citra dengan visibilitas rendah?",False,12,Hasil per kelas dan kegagalan deteksi
+143,Bagaimana membedakan penjelasan yang didukung analisis kesalahan dari dugaan tentang penyebab perbedaan antar kelas?,False,12,Hasil per kelas dan kegagalan deteksi
+144,Kesalahan kelas mana yang paling besar dampaknya terhadap skor SAW berbobot?,False,12,Hasil per kelas dan kegagalan deteksi
+145,"Bagaimana angka 89,3 FPS dihitung dari total waktu 11,2 ms per citra?",False,13,Kecepatan komputasi dan cakupan pengukuran
+146,"Mengapa angka yang dilaporkan menggunakan total preprocess, inference, dan postprocess?",False,13,Kecepatan komputasi dan cakupan pengukuran
+147,"Apakah istilah end-to-end merujuk pada detektor saja atau seluruh CCTV, API BMKG, SAW, dan dashboard?",True,13,Kecepatan komputasi dan cakupan pengukuran
+148,"Apakah waktu pengambilan frame, decoding video, jaringan, dan pembaruan dashboard termasuk pengukuran?",False,13,Kecepatan komputasi dan cakupan pengukuran
+149,"Apakah 89,3 FPS merupakan throughput yang diamati atau konversi dari rata-rata latensi per citra?",False,13,Kecepatan komputasi dan cakupan pengukuran
+150,"Pada ukuran gambar, batch size, dan tingkat presisi komputasi apa pengukuran dilakukan?",False,13,Kecepatan komputasi dan cakupan pengukuran
+151,Apakah warm-up dan sinkronisasi GPU diperhitungkan dalam pengukuran waktu?,False,13,Kecepatan komputasi dan cakupan pengukuran
+152,"Apakah angka latensi dilaporkan sebagai rata-rata, dan bagaimana variasinya antarcitra?",False,13,Kecepatan komputasi dan cakupan pengukuran
+153,"Mengapa postprocess 7,3 ms lebih lama daripada inference 3,2 ms?",False,13,Kecepatan komputasi dan cakupan pengukuran
+154,Bagaimana jumlah objek dan pengaturan NMS memengaruhi waktu postprocess?,False,13,Kecepatan komputasi dan cakupan pengukuran
+155,Bagaimana hasil Tesla T4 dapat diterjemahkan ke perangkat yang benar-benar dipakai untuk deployment?,False,13,Kecepatan komputasi dan cakupan pengukuran
+156,"Berapa laju pembaruan yang benar-benar dibutuhkan operator, dan apakah seluruh frame harus dianalisis?",False,13,Kecepatan komputasi dan cakupan pengukuran
+157,"Mengapa tabel memasukkan YOLOv7, YOLOv7 dengan CBAM, YOLOv8-SST, dan A2ANet?",False,14,Perbandingan dengan penelitian sebelumnya
+158,"Apakah semua penelitian pembanding menggunakan dataset, kelas, dan jenis lingkungan yang sama?",False,14,Perbandingan dengan penelitian sebelumnya
+159,Bagaimana perbedaan perangkat keras membatasi perbandingan FPS?,False,14,Perbandingan dengan penelitian sebelumnya
+160,"Apakah FPS pada paper pembanding mencakup tahapan pemrosesan yang sama dengan angka 89,3 Anda?",False,14,Perbandingan dengan penelitian sebelumnya
+161,Apakah ukuran input dan batch size pada seluruh penelitian pembanding setara?,False,14,Perbandingan dengan penelitian sebelumnya
+162,Apa kesimpulan yang sah dari tabel jika perbandingannya hanya bersifat indikatif?,False,14,Perbandingan dengan penelitian sebelumnya
+163,Mengapa memilih sistem ini ketika beberapa model pembanding memiliki mAP50 lebih tinggi?,False,14,Perbandingan dengan penelitian sebelumnya
+164,"Bagaimana Anda menjelaskan mAP50 usulan 0,789 dibandingkan YOLOv7 sebesar 0,800?",False,14,Perbandingan dengan penelitian sebelumnya
+165,"Apa nilai tambah sistem ketika YOLOv8-SST melaporkan mAP50 0,912 dan FPS 86 pada kondisi pengujiannya?",False,14,Perbandingan dengan penelitian sebelumnya
+166,Apakah Anda telah menjalankan baseline pembanding pada dataset dan perangkat keras yang sama?,False,14,Perbandingan dengan penelitian sebelumnya
+167,Bagaimana memastikan angka mAP50 dan FPS yang diambil dari paper lain memakai definisi yang tepat?,False,14,Perbandingan dengan penelitian sebelumnya
+168,Apakah ada bukti terkontrol untuk menyatakan sistem lebih efisien atau lebih unggul dari penelitian pembanding?,False,14,Perbandingan dengan penelitian sebelumnya
+169,Bagaimana sistem mengakses aliran CCTV dan menangani format atau protokol videonya?,False,15,Integrasi CCTV dan arsitektur sistem
+170,Di mana model dijalankan dalam prototipe dan apakah lingkungan itu sama dengan lingkungan training?,False,15,Integrasi CCTV dan arsitektur sistem
+171,Bagaimana frame dipilih untuk dianalisis ketika video berjalan terus-menerus?,False,15,Integrasi CCTV dan arsitektur sistem
+172,Apakah region of interest digunakan agar benda di tepi sungai atau di jalan tidak ikut dihitung?,False,15,Integrasi CCTV dan arsitektur sistem
+173,Bagaimana sistem mencegah objek yang sama dihitung berulang kali jika hitungan dijumlahkan sepanjang waktu?,False,15,Integrasi CCTV dan arsitektur sistem
+174,"Apakah C1 merupakan hitungan per frame, rata-rata jendela waktu, atau akumulasi lintas frame?",False,15,Integrasi CCTV dan arsitektur sistem
+175,Apakah tracking diperlukan untuk membedakan arus sampah dari penumpukan sampah?,False,15,Integrasi CCTV dan arsitektur sistem
+176,"Bagaimana timestamp frame, hasil deteksi, dan data meteorologi dicatat serta diselaraskan?",False,15,Integrasi CCTV dan arsitektur sistem
+177,"Bagaimana sistem menangani frame hilang, video macet, atau kamera yang berubah arah?",False,15,Integrasi CCTV dan arsitektur sistem
+178,Apa yang terjadi pada indikator jika sambungan CCTV atau API BMKG terputus?,False,15,Integrasi CCTV dan arsitektur sistem
+179,Apakah pembacaan cuaca dilakukan pada setiap frame atau diperbarui secara terpisah?,False,15,Integrasi CCTV dan arsitektur sistem
+180,Apakah sistem pernah diuji berjalan terus-menerus dan kegagalan apa yang ditemukan?,False,15,Integrasi CCTV dan arsitektur sistem
+181,"Endpoint, variabel, dan lokasi BMKG mana yang digunakan sebagai input curah hujan?",True,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+182,"Apakah data tersebut berupa observasi hujan, prakiraan hujan, atau kategori kondisi cuaca?",False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+183,"Jika sumbernya kategori cuaca, bagaimana kategori tersebut diubah menjadi nilai mm dan apa dasar konversinya?",False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+184,Nilai curah hujan dalam mm itu berlaku untuk interval waktu berapa lama?,True,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+185,"Apa perbedaan waktu permintaan API, waktu publikasi data, dan waktu berlakunya data meteorologi?",False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+186,Bagaimana Anda menjelaskan pernyataan mengambil cuaca real-time sekaligus keterbatasan data BMKG yang belum real-time?,True,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+187,Bagaimana lokasi cuaca dipilih agar relevan dengan area kamera dan daerah aliran sungai?,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+188,"Mengapa tidak memasukkan curah hujan di hulu, akumulasi hujan sebelumnya, atau jeda waktu aliran?",False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+189,"Bagaimana membedakan 0,0 mm yang valid dari data hilang, kegagalan parsing, atau nilai bawaan?",True,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+190,Apakah respons API mentah dan timestamp disimpan agar penyebab nilai nol dapat diperiksa?,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+191,Bagaimana mengetahui kapan data meteorologi sudah terlalu lama untuk digunakan?,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+192,Bagaimana memperoleh pasangan data hujan historis dan citra dengan waktu yang sesuai untuk validasi ulang?,False,16,Sumber cuaca makna curah hujan dan keselarasan waktu
+193,Mengapa memilih Simple Additive Weighting untuk menggabungkan dua indikator ini?,False,17,Dasar SAW dan bobot jenis sampah
+194,Apa kriteria dan alternatif yang dimaksud dalam penerapan SAW Anda?,False,17,Dasar SAW dan bobot jenis sampah
+195,Bagaimana implementasi dengan batas normalisasi tetap ini berhubungan dengan formulasi SAW yang Anda rujuk?,False,17,Dasar SAW dan bobot jenis sampah
+196,"Apa dasar penetapan bobot sampah 0,40 dan bobot hujan 0,60?",True,17,Dasar SAW dan bobot jenis sampah
+197,"Apakah bobot ditentukan pakar, literatur, kalibrasi data, atau pertimbangan peneliti?",False,17,Dasar SAW dan bobot jenis sampah
+198,"Mengapa wood diberi bobot 0,8 dan plastic 0,6?",False,17,Dasar SAW dan bobot jenis sampah
+199,"Mengapa bottle dan other memiliki bobot sama, yaitu 0,5?",False,17,Dasar SAW dan bobot jenis sampah
+200,Apa makna satuan C1 sebagai jumlah objek yang diberi bobot?,False,17,Dasar SAW dan bobot jenis sampah
+201,Mengapa setiap benda dalam kelas yang sama menerima bobot identik tanpa mempertimbangkan ukurannya?,False,17,Dasar SAW dan bobot jenis sampah
+202,Apakah banyak potongan kecil dapat menghasilkan skor lebih tinggi daripada satu benda besar yang menyumbat aliran?,False,17,Dasar SAW dan bobot jenis sampah
+203,Apakah asumsi penjumlahan linear memadai jika pengaruh hujan dan sampah saling berinteraksi?,False,17,Dasar SAW dan bobot jenis sampah
+204,"Bagaimana Anda menguji sensitivitas skor terhadap bobot kelas, bobot kriteria, dan kesalahan deteksi?",False,17,Dasar SAW dan bobot jenis sampah
+205,"Mengapa paper menyebut cross-sectional area atau depth profile, sedangkan implementasi memakai luas frame dalam piksel?",True,18,Normalisasi luas frame dan ketidaksesuaian naskah
+206,Apakah kedalaman atau penampang sungai pernah benar-benar diukur dan digunakan dalam perhitungan?,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+207,Apa peran fungsi get_max_kedalaman_sungai jika tidak dipanggil oleh hitung_saw_dinamis?,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+208,"Bagian novelty, pertanyaan penelitian, kontribusi, metode, dan kesimpulan mana yang perlu dikoreksi?",False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+209,"Apakah istilah kepadatan sampah tepat jika pembaginya luas seluruh frame, bukan luas sungai secara fisik?",False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+210,Apa alasan menggunakan 262144 sebagai luas acuan dan apa hubungannya dengan 512 kali 512 piksel?,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+211,"Bagaimana nilai kapasitas dasar 24,0 ditentukan dan divalidasi?",True,18,Normalisasi luas frame dan ketidaksesuaian naskah
+212,"Apakah lebar dan tinggi yang dipakai berasal dari frame asli, area sungai, atau input model setelah resize?",False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+213,"Jika gambar pemandangan yang sama diubah resolusinya dan jumlah deteksi tetap, mengapa skor bisa berubah?",True,18,Normalisasi luas frame dan ketidaksesuaian naskah
+214,"Bagaimana zoom, kemiringan kamera, perspektif, dan proporsi sungai di dalam frame memengaruhi skor?",False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+215,Bagaimana Anda membedakan banyaknya piksel dari luas fisik atau kapasitas hidraulis sungai?,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+216,Apa pengukuran atau kalibrasi tambahan yang diperlukan agar indikator dapat dibandingkan antarkamera?,False,18,Normalisasi luas frame dan ketidaksesuaian naskah
+217,"Apa dasar pembagi hujan 10,0 dan apakah sesuai dengan interval waktu variabel hujan yang digunakan?",False,19,Ambang SAW dan pertanyaan matematika
+218,"Mengapa R1 dan R2 dibatasi pada nilai maksimum 1,0?",False,19,Ambang SAW dan pertanyaan matematika
+219,"Apa dasar empiris ambang WASPADA 0,40 dan BAHAYA 0,70?",True,19,Ambang SAW dan pertanyaan matematika
+220,"Apakah S sebesar 0,70 dapat ditafsirkan sebagai peluang banjir 70 persen, dan apa dasar penafsiran Anda?",False,19,Ambang SAW dan pertanyaan matematika
+221,"Ketika hujan nol, mengapa skor maksimum hanya 0,40 sehingga BAHAYA tidak mungkin tercapai?",True,19,Ambang SAW dan pertanyaan matematika
+222,"Ketika hujan nol dan R1 mencapai 1,0, apakah hasil tepat pada ambang menjadi WASPADA?",False,19,Ambang SAW dan pertanyaan matematika
+223,"Jika tidak ada sampah terdeteksi dan R1 nol, mengapa hujan maksimum hanya menghasilkan skor 0,60?",True,19,Ambang SAW dan pertanyaan matematika
+224,Apakah keputusan bahwa hujan saja tidak dapat memicu BAHAYA sesuai dengan tujuan indikator?,False,19,Ambang SAW dan pertanyaan matematika
+225,"Jika input hujan melebihi 10,0 mm, informasi tambahan apa yang hilang akibat saturasi R2?",False,19,Ambang SAW dan pertanyaan matematika
+226,Bagaimana skor merespons banyaknya sampah setelah C1 mencapai max_dinamis?,False,19,Ambang SAW dan pertanyaan matematika
+227,"Dapatkah Anda menghitung ulang contoh other 3, paper 6, plastic 23, resolusi 800 kali 534, dan hujan nol?",False,19,Ambang SAW dan pertanyaan matematika
+228,"Bagaimana sistem menangani input negatif, data kosong, resolusi tidak valid, dan skor tepat di batas kategori?",False,19,Ambang SAW dan pertanyaan matematika
+229,Bagaimana 36 sampel validasi SAW dipilih dan apa unit pengamatannya?,False,20,Desain validasi SAW dan penyebab kegagalan
+230,"Mengapa komposisinya terdiri dari 20 AMAN, 5 WASPADA, dan 11 BAHAYA?",False,20,Desain validasi SAW dan penyebab kegagalan
+231,Siapa yang menentukan label referensi dan bukti apa yang digunakan?,True,20,Desain validasi SAW dan penyebab kegagalan
+232,Apakah label referensi ditentukan secara independen dari rumus dan ambang SAW yang diuji?,True,20,Desain validasi SAW dan penyebab kegagalan
+233,Mengapa semua 36 sampel diprediksi AMAN?,True,20,Desain validasi SAW dan penyebab kegagalan
+234,Mengapa citra historis dipasangkan dengan cuaca saat skrip validasi dijalankan?,True,20,Desain validasi SAW dan penyebab kegagalan
+235,"Apa bukti bahwa seluruh hujan nol berasal dari ketidakselarasan waktu, bukan masalah variabel API atau parsing?",True,20,Desain validasi SAW dan penyebab kegagalan
+236,Apakah masalah pengambilan hujan dan plafon matematis skor merupakan dua masalah yang berbeda?,False,20,Desain validasi SAW dan penyebab kegagalan
+237,"Mengapa skor tertinggi pada sampel berlabel BAHAYA hanya sekitar 0,181?",True,20,Desain validasi SAW dan penyebab kegagalan
+238,"Bagaimana memisahkan kontribusi kesalahan deteksi, normalisasi, bobot, dan data cuaca terhadap salah klasifikasi?",False,20,Desain validasi SAW dan penyebab kegagalan
+239,"Apakah memasukkan hujan historis yang tepat pasti memperbaiki hasil, atau masih perlu dibuktikan dengan evaluasi baru?",True,20,Desain validasi SAW dan penyebab kegagalan
+240,Apa batas kesimpulan yang dapat ditarik dari validasi yang input meteorologinya tidak selaras dengan waktu citra?,False,20,Desain validasi SAW dan penyebab kegagalan
+241,Bagaimana confusion matrix untuk 36 sampel tersebut?,False,21,Metrik SAW baseline dan ketidakpastian
+242,"Bagaimana accuracy 0,5556 diperoleh dari 20 prediksi benar di antara 36 sampel?",False,21,Metrik SAW baseline dan ketidakpastian
+243,"Mengapa precision macro 0,1852, recall macro 0,3333, dan F1 macro 0,2381 jauh lebih rendah daripada accuracy?",False,21,Metrik SAW baseline dan ketidakpastian
+244,Bagaimana metrik per kelas dihitung ketika tidak ada prediksi WASPADA maupun BAHAYA?,False,21,Metrik SAW baseline dan ketidakpastian
+245,Bagaimana kode menangani pembagian nol pada precision kelas yang tidak pernah diprediksi?,False,21,Metrik SAW baseline dan ketidakpastian
+246,Mengapa memilih macro-average dibandingkan weighted-average atau micro-average?,False,21,Metrik SAW baseline dan ketidakpastian
+247,Apakah accuracy yang sama akan diperoleh oleh baseline yang selalu menjawab AMAN?,True,21,Metrik SAW baseline dan ketidakpastian
+248,Apakah sistem berhasil mengenali satu pun dari 5 sampel WASPADA dan 11 sampel BAHAYA?,True,21,Metrik SAW baseline dan ketidakpastian
+249,Mengapa recall kelas BAHAYA lebih relevan untuk menilai kasus yang terlewat daripada accuracy keseluruhan saja?,False,21,Metrik SAW baseline dan ketidakpastian
+250,Bagaimana ukuran sampel yang kecil memengaruhi kepastian estimasi metrik?,False,21,Metrik SAW baseline dan ketidakpastian
+251,Apakah sampel berasal dari kejadian yang independen atau beberapa frame dari kondisi yang sama?,False,21,Metrik SAW baseline dan ketidakpastian
+252,Bagaimana Anda akan melaporkan ketidakpastian dan biaya kesalahan tanpa menyembunyikan kegagalan kelas berisiko?,False,21,Metrik SAW baseline dan ketidakpastian
+253,Bagian kesimpulan mana yang masih didukung hasil setelah kegagalan klasifikasi SAW diakui?,False,22,Konsistensi klaim naskah dan batas bukti
+254,Bagaimana memastikan hasil deteksi objek tidak dipakai sebagai bukti keberhasilan indikator potensi banjir?,False,22,Konsistensi klaim naskah dan batas bukti
+255,Apakah penggunaan label AMAN dapat menyesatkan ketika data tidak lengkap atau mekanisme indikator belum tervalidasi?,True,22,Konsistensi klaim naskah dan batas bukti
+256,"Apakah ada pernyataan sukses, akurat, andal, real-time, atau siap operasional yang perlu dibatasi?",False,22,Konsistensi klaim naskah dan batas bukti
+257,"Bagaimana Anda membedakan desain yang direncanakan, fungsi yang sudah diimplementasikan, dan fungsi yang telah diuji?",False,22,Konsistensi klaim naskah dan batas bukti
+258,"Jika reviewer menemukan ketidaksesuaian teks dan kode, bagaimana Anda menjelaskan serta memperbaikinya?",False,22,Konsistensi klaim naskah dan batas bukti
+259,"Apakah slide, tabel, abstrak, dan kesimpulan menyatakan varian model nano secara konsisten?",False,22,Konsistensi klaim naskah dan batas bukti
+260,Apakah seluruh angka deteksi dan kecepatan berasal dari checkpoint serta konfigurasi evaluasi yang sama?,False,22,Konsistensi klaim naskah dan batas bukti
+261,Bagaimana memastikan label macro-average ditulis dengan benar pada seluruh pelaporan SAW?,False,22,Konsistensi klaim naskah dan batas bukti
+262,Apakah klaim adanya manfaat mitigasi sudah didukung evaluasi penggunaan atau masih merupakan tujuan aplikasi?,False,22,Konsistensi klaim naskah dan batas bukti
+263,Apa kontribusi yang tetap bernilai meskipun indikator belum membedakan tingkat potensi secara memadai?,False,22,Konsistensi klaim naskah dan batas bukti
+264,Apa yang secara tegas belum dapat Anda simpulkan dari eksperimen sekarang?,False,22,Konsistensi klaim naskah dan batas bukti
+265,Apa perbaikan pertama yang akan dilakukan sebelum validasi SAW diulang?,False,23,Eksperimen perbaikan dan penelitian berikutnya
+266,"Bagaimana Anda membangun dataset pasangan citra, hujan, dan label yang selaras secara waktu dan lokasi?",False,23,Eksperimen perbaikan dan penelitian berikutnya
+267,Bagaimana bobot dan ambang dikalibrasi tanpa memakai test set untuk tuning?,False,23,Eksperimen perbaikan dan penelitian berikutnya
+268,"Bagaimana rancangan ablation study untuk membandingkan sampah saja, hujan saja, dan gabungan keduanya?",False,23,Eksperimen perbaikan dan penelitian berikutnya
+269,Bagaimana menguji skor menggunakan hitungan sampah ground truth agar pengaruh detektor dapat dipisahkan?,False,23,Eksperimen perbaikan dan penelitian berikutnya
+270,Apa baseline indikator paling sederhana yang harus dikalahkan oleh sistem gabungan?,False,23,Eksperimen perbaikan dan penelitian berikutnya
+271,Bagaimana ketinggian air atau kecepatan aliran akan dimasukkan dan divalidasi jika sensor tersedia?,False,23,Eksperimen perbaikan dan penelitian berikutnya
+272,Apakah luas penutupan permukaan melalui segmentasi layak dibandingkan dengan hitungan bounding box?,False,23,Eksperimen perbaikan dan penelitian berikutnya
+273,"Bagaimana Anda menguji generalisasi di sungai, kamera, musim, dan kondisi malam yang berbeda?",False,23,Eksperimen perbaikan dan penelitian berikutnya
+274,"Apa ukuran sampel dan cakupan kejadian yang dibutuhkan untuk evaluasi lanjutan, dan bagaimana menentukannya?",False,23,Eksperimen perbaikan dan penelitian berikutnya
+275,"Kapan bobot adaptif atau model temporal layak digunakan, dan data apa yang diperlukan?",False,23,Eksperimen perbaikan dan penelitian berikutnya
+276,Bagaimana keberhasilan revisi akan dinilai tanpa menjamin hasil yang belum pernah diukur?,False,23,Eksperimen perbaikan dan penelitian berikutnya
+277,Tindakan apa yang diharapkan dari operator ketika dashboard menunjukkan WASPADA atau BAHAYA?,False,24,Penggunaan operasional biaya dan tanggung jawab
+278,Apakah operator perlu memverifikasi hasil sebelum mengambil keputusan?,False,24,Penggunaan operasional biaya dan tanggung jawab
+279,Bagaimana status data tidak tersedia atau data kedaluwarsa ditampilkan agar tidak otomatis terbaca AMAN?,False,24,Penggunaan operasional biaya dan tanggung jawab
+280,Bagaimana mencegah indikator berubah bolak-balik di dekat ambang dan memicu alarm berulang?,False,24,Penggunaan operasional biaya dan tanggung jawab
+281,Bagaimana Anda menyeimbangkan alarm palsu dengan kasus berisiko yang terlewat?,False,24,Penggunaan operasional biaya dan tanggung jawab
+282,"Berapa kebutuhan perangkat, jaringan, penyimpanan, dan pemeliharaan untuk satu lokasi?",False,24,Penggunaan operasional biaya dan tanggung jawab
+283,Apakah biaya deployment sudah dihitung berdasarkan perangkat yang benar-benar diuji?,False,24,Penggunaan operasional biaya dan tanggung jawab
+284,Bagaimana sistem diperluas untuk beberapa kamera dan beberapa sungai?,False,24,Penggunaan operasional biaya dan tanggung jawab
+285,"Bagaimana kinerja dipantau setelah distribusi sampah, kondisi kamera, atau lingkungan berubah?",False,24,Penggunaan operasional biaya dan tanggung jawab
+286,"Bagaimana akses CCTV, rekaman yang memuat orang, dan kredensial API dikelola?",False,24,Penggunaan operasional biaya dan tanggung jawab
+287,"Apa yang terjadi ketika listrik, jaringan, kamera, atau perangkat komputasi gagal?",False,24,Penggunaan operasional biaya dan tanggung jawab
+288,Pengujian lapangan apa yang harus selesai sebelum indikator digunakan dalam keputusan operasional?,False,24,Penggunaan operasional biaya dan tanggung jawab
+289,"Apa kontribusi pribadi Anda sebagai presenter dalam eksperimen, dataset, YOLOv8, SAW, CCTV, dan validasi?",False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+290,Bagaimana pembagian peran penulis dan siapa yang memeriksa konsistensi naskah dengan implementasi?,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+291,"Jika hanya diberi waktu singkat, temuan apa yang paling penting Anda pertahankan?",False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+292,"Jika harus mengulang penelitian dari awal, keputusan metodologis apa yang akan Anda ubah terlebih dahulu?",False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+293,Mengapa penelitian ini tetap layak dibahas ketika seluruh keluaran SAW pada validasi adalah AMAN?,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+294,Apakah yang Anda demonstrasikan sebenarnya lebih kuat sebagai sistem pemantauan sampah daripada indikator banjir yang tervalidasi?,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+295,Apa bukti yang akan membuat Anda menyimpulkan bahwa pendekatan gabungan ini tidak memadai?,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+296,Mengapa memilih menambah komponen jika manfaat tambahannya belum dibuktikan melalui ablation study?,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+297,"Jika anggaran terbatas, mengapa memprioritaskan deteksi jenis sampah dibandingkan pengukuran muka air?",False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+298,"Apa jawaban Anda jika reviewer meminta kode, log training, respons API, dan contoh salah klasifikasi?",False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+299,Apa yang dapat diuji langsung melalui demo dan apa yang hanya didukung hasil eksperimen offline?,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam
+300,Apa satu komitmen perbaikan yang konkret dan dapat diperiksa setelah konferensi?,False,25,Pertanyaan penutup kontribusi penulis dan kritik tajam

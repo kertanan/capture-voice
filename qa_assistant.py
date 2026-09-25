@@ -77,22 +77,36 @@ _register_cuda_dlls()
 GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")          # primer
 GROQ_MODEL_2 = os.getenv("GROQ_MODEL_2", "openai/gpt-oss-20b")       # fallback (kuota terpisah)
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")         # cadangan
+CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-4-20250514")  # Anthropic (opsional)
+# API key organisasi Anthropic yang tidak di-scope ke workspace WAJIB menyertakan
+# header anthropic-workspace-id. Isi ANTHROPIC_WORKSPACE_ID di .env bila key Anda
+# tidak scoped (lihat error 400 "not scoped to a workspace"). Kosongkan bila key
+# sudah scoped ke sebuah workspace.
+ANTHROPIC_WORKSPACE_ID = os.getenv("ANTHROPIC_WORKSPACE_ID", "")
 LOCAL_BASE_URL = os.getenv("LOCAL_BASE_URL", "http://localhost:1234/v1")
 LOCAL_MODEL = os.getenv("LOCAL_MODEL", "granite-4.0-micro")  # nama model persis di LM Studio
 WHISPER_MODEL = os.getenv("WHISPER_MODEL", "small.en")      # base.en kalau pakai CPU
 WHISPER_DEVICE = os.getenv("WHISPER_DEVICE", "cuda")         # "cpu" kalau tanpa GPU NVIDIA
 CONTEXT_DIR = os.getenv("CONTEXT_DIR", "konteks")
-MAX_CONTEXT_CHARS = int(os.getenv("MAX_CONTEXT_CHARS", "12000"))  # ~3k token, hemat kuota
-# Batas karakter konteks yang benar-benar dikirim ke LLM per pertanyaan
-# (~2000 token total request; 4 char ~= 1 token). Hemat kuota Groq 8k token/menit.
-CONTEXT_BUDGET_CHARS = int(os.getenv("CONTEXT_BUDGET_CHARS", "6000"))
+MAX_CONTEXT_CHARS = int(os.getenv("MAX_CONTEXT_CHARS", "60000"))  # muat paper penuh + ringkasan
+# Batas karakter konteks yang benar-benar dikirim ke LLM per pertanyaan.
+# ~5000 char (~1300 token) berisi bagian paling relevan; aman dari batas
+# per-request Groq (HTTP 413) & kuota 8k token/menit, tapi jauh lebih kaya
+# dari sebelumnya sehingga jawaban tetap detail.
+CONTEXT_BUDGET_CHARS = int(os.getenv("CONTEXT_BUDGET_CHARS", "5000"))
 
-# Kosakata khusus agar Whisper tidak salah dengar istilah teknis
+# Kosakata khusus agar Whisper tidak salah dengar istilah teknis.
+# Sertakan istilah yang SERING salah dengar (proposed, monocular, CCTV,
+# cross-section) supaya transkripsi pertanyaan audiens lebih akurat.
 ASR_VOCAB = os.getenv(
     "ASR_VOCAB",
-    "YOLOv8, YOLOv8n, SAW, Simple Additive Weighting, BMKG, debris, "
-    "flood mitigation, rainfall, SAFE, WARNING, DANGER, mAP, precision, recall, "
-    "river debris, meteorological data, bounding box, dataset, inference, IoU",
+    "This is a Q&A about our proposed YOLOv8 river debris monitoring system. "
+    "Terms: YOLOv8, YOLOv8-SST, YOLOv7, A2ANet, proposed system, monocular, "
+    "CCTV camera, cross-section, flow capacity, river depth profile, debris density, "
+    "SAW, Simple Additive Weighting, BMKG, rainfall, precipitation, flood mitigation, "
+    "SAFE, WARNING, DANGER, mAP, mAP50, precision, recall, F1 score, bounding box, "
+    "dataset, Roboflow, transfer learning, COCO, inference speed, FPS, IoU, "
+    "confusion matrix, overfitting, augmentation, Ciliwung, Manggarai.",
 )
 
 REC_RATE = 48000          # sample rate rekaman loopback
@@ -107,14 +121,25 @@ MAX_UTTER_SEC = 30
 
 SYSTEM_PROMPT = """You are a live Q&A helper for Ferdy, who is presenting the paper
 "YOLOv8-Based River Debris Monitoring System With Meteorological Data for
-Flood Mitigation" at ICORIS 2026. The question comes from speech recognition
-and may contain transcription errors; infer the most likely intended question.
-Answer ONLY from the provided context files (folder `konteks`). If the context
-does not cover the question, say so briefly and suggest an honest answer such as
-"That is a limitation we plan to address in future work." Never invent numbers,
-metrics, or results.
-Format: at most 3 bullet points, each max 20 words, in English, plain text only.
-No markdown, no bold, no headings. Start each bullet with "\u2022 ".
+Flood Mitigation" at ICORIS 2026.
+
+The question is produced by speech recognition and often contains transcription
+errors. Silently correct likely mis-hearings to the intended technical term, for
+example: "proper system" -> "proposed system"; "monoclonal" / "monocular
+sensitive" -> "monocular CCTV camera"; "CT-3" -> "CCTV"; "cross section
+capacity" stays "cross-section capacity". Infer the single most likely intended
+question, then answer it.
+
+STRICT OUTPUT RULES:
+- Answer ONLY from the PAPER CONTEXT below. Never invent numbers, metrics, or results.
+- If the context lacks the answer, say so briefly and give one honest sentence such as
+  "That is a limitation we plan to address in future work."
+- Do NOT repeat, quote, or rephrase the question. Do NOT list candidate words or
+  transcription guesses. Output ONLY the answer.
+- Give the answer directly as at most 3 bullet points, each a complete sentence of
+  max 22 words, in English, plain text only. No markdown, no bold, no headings.
+- Every line must start with "\u2022 ". Never output anything before the first "\u2022 ".
+- Include concrete numbers from the context when relevant (e.g., mAP50 0.789, 89.3 FPS).
 
 === PAPER CONTEXT ===
 {context}"""
@@ -150,12 +175,119 @@ def clean_md(text):
     return "\n".join(lines).strip()
 
 
+def _display_answer(text):
+    """Bersihkan markdown lalu buang teks apa pun SEBELUM bullet pertama.
+    Ini mencegah bocoran 'reasoning'/tebakan kata (mis. 'ocular", "CCTV", ...')
+    ikut tampil. Kalau bullet belum muncul saat streaming, tampilkan '...'.
+    Juga menyaring baris yang jelas mengutip/mengulang pertanyaan."""
+    cleaned = clean_md(text)
+    if not cleaned:
+        return ""
+    idx = cleaned.find("\u2022")
+    if idx == -1:
+        # bullet belum muncul: jangan tampilkan token mentah, beri isyarat menunggu
+        return "..."
+    body = cleaned[idx:]
+    # buang baris kosong & baris yang tak diawali bullet (mis. kalimat pembuka)
+    out = []
+    for ln in body.splitlines():
+        s = ln.strip()
+        if s.startswith("\u2022"):
+            out.append(s)
+        elif out:
+            # lanjutan baris dari bullet sebelumnya (wrap) -> gabungkan
+            out[-1] += " " + s
+    return "\n".join(out).strip() or "..."
+
+
 # ================== KONTEKS ==================
+def _docx_local_tag(tag):
+    """Ambil nama tag tanpa namespace (agar Transitional & Strict OOXML sama)."""
+    return tag.split("}", 1)[-1] if "}" in tag else tag
+
+
+def _docx_para_text(el):
+    """Gabungkan seluruh teks (w:t), tab (w:tab), dan break (w:br/w:cr)
+    di dalam sebuah elemen paragraf atau sel tabel."""
+    parts = []
+    for node in el.iter():
+        ln = _docx_local_tag(node.tag)
+        if ln == "t":
+            parts.append(node.text or "")
+        elif ln == "tab":
+            parts.append("\t")
+        elif ln in ("br", "cr"):
+            parts.append(" ")
+    return "".join(parts)
+
+
+def _read_docx(path):
+    """Ekstrak teks dari .docx. Menangani DUA hal yang membuat python-docx gagal:
+      1) python-docx tidak terpasang.
+      2) File berformat *Strict OOXML* (namespace purl.oclc.org/ooxml/...),
+         mis. hasil ekspor Word "Strict Open XML Document" atau Google Docs.
+    Strategi: parse langsung word/document.xml (robust untuk Transitional & Strict),
+    dan pakai python-docx sebagai cadangan bila parsing XML gagal."""
+    from xml.etree import ElementTree as ET
+    import zipfile
+
+    # --- Cara utama: baca langsung XML (tahan Strict OOXML) ---
+    try:
+        with zipfile.ZipFile(path) as z:
+            xml = z.read("word/document.xml")
+        root = ET.fromstring(xml)
+        body = next((c for c in root if _docx_local_tag(c.tag) == "body"), root)
+        lines = []
+        for child in body:
+            ln = _docx_local_tag(child.tag)
+            if ln == "p":
+                txt = _docx_para_text(child).strip()
+                if txt:
+                    lines.append(txt)
+            elif ln == "tbl":
+                for tr in child.iter():
+                    if _docx_local_tag(tr.tag) != "tr":
+                        continue
+                    cells = [
+                        _docx_para_text(tc).strip()
+                        for tc in tr
+                        if _docx_local_tag(tc.tag) == "tc"
+                    ]
+                    row = " | ".join(c for c in cells if c)
+                    if row:
+                        lines.append(row)
+        text = "\n".join(lines).strip()
+        if text:
+            return text
+    except Exception as e:
+        print(f"[!] Baca XML {os.path.basename(path)} gagal ({e}); coba python-docx")
+
+    # --- Cadangan: python-docx (hanya jalan untuk Transitional OOXML) ---
+    try:
+        import docx
+        d = docx.Document(path)
+        parts = [p.text for p in d.paragraphs if p.text.strip()]
+        for tbl in d.tables:
+            for row in tbl.rows:
+                cells = [c.text.strip() for c in row.cells]
+                line = " | ".join(c for c in cells if c)
+                if line:
+                    parts.append(line)
+        return "\n".join(parts).strip()
+    except ImportError:
+        print(f"[!] python-docx belum terpasang, {os.path.basename(path)} dilewati")
+    except Exception as e:
+        print(f"[!] Gagal membaca {os.path.basename(path)}: {e}")
+    return ""
+
+
 def load_context():
-    """Baca semua .md/.txt/.pdf di folder konteks/ (urut nama file)."""
+    """Baca semua .md/.txt/.pdf/.docx di folder konteks/ (urut nama file)."""
     parts = []
     for path in sorted(glob.glob(os.path.join(CONTEXT_DIR, "*"))):
         name = os.path.basename(path)
+        if name.startswith("~$"):
+            continue  # lewati file lock sementara Word
         if path.lower().endswith((".txt", ".md")):
             with open(path, encoding="utf-8") as f:
                 parts.append(f"### {name}\n{f.read()}")
@@ -166,6 +298,10 @@ def load_context():
                 parts.append(f"### {name}\n{text}")
             except ImportError:
                 print(f"[!] pypdf belum terpasang, {name} dilewati")
+        elif path.lower().endswith(".docx"):
+            text = _read_docx(path)
+            if text:
+                parts.append(f"### {name}\n{text}")
     context = "\n\n".join(parts)
     if len(context) > MAX_CONTEXT_CHARS:
         print(f"[!] Konteks {len(context)} karakter dipotong ke {MAX_CONTEXT_CHARS}")
@@ -196,36 +332,52 @@ def trim_context(context, question, budget=CONTEXT_BUDGET_CHARS):
     if len(context) <= budget:
         return context
     kws = _keywords(question)
-    # pecah per paragraf (baris kosong sebagai pemisah)
-    paras = [p.strip() for p in re.split(r"\n\s*\n", context) if p.strip()]
+
+    # Pecah jadi unit kecil. Konteks dari .docx sering tanpa baris kosong,
+    # jadi paragraf bisa sangat besar -> pecah per baris, lalu untuk baris yang
+    # masih panjang, pecah lagi per kalimat agar granular & tepat budget.
+    units = []
+    for block in re.split(r"\n\s*\n", context):
+        for line in block.split("\n"):
+            line = line.strip()
+            if not line:
+                continue
+            if len(line) > 600:  # baris/paragraf raksasa -> pecah per kalimat
+                for sent in re.split(r"(?<=[.!?])\s+", line):
+                    sent = sent.strip()
+                    if sent:
+                        units.append(sent)
+            else:
+                units.append(line)
+
     if not kws:
-        # tak ada kata kunci berarti: ambil bagian awal saja
         return context[:budget]
 
     scored = []
-    for i, p in enumerate(paras):
+    for i, p in enumerate(units):
         pk = _keywords(p)
         overlap = len(kws & pk)
-        # sedikit bonus untuk paragraf yang mengandung angka (metrik/hasil)
-        score = overlap + (0.5 if re.search(r"\d", p) else 0)
+        score = overlap + (0.5 if re.search(r"\d", p) else 0)  # bonus angka/metrik
         scored.append((score, i, p))
 
-    # urutkan berdasarkan skor (tinggi dulu), tetapi jaga urutan asli saat merakit
     ranked = sorted(scored, key=lambda x: (-x[0], x[1]))
     chosen, total = [], 0
     for score, i, p in ranked:
         if score <= 0 and chosen:
-            break  # sudah tak relevan, hentikan
-        if total + len(p) > budget and chosen:
-            continue
+            break  # sudah tak relevan
+        if total + len(p) + 1 > budget:
+            if chosen:
+                continue  # coba unit lain yang lebih kecil
+            p = p[:budget]  # unit pertama terlalu besar -> potong
         chosen.append((i, p))
-        total += len(p)
+        total += len(p) + 1
         if total >= budget:
             break
-    if not chosen:  # fallback: tidak ada yang cocok -> potong awal
+    if not chosen:
         return context[:budget]
-    chosen.sort(key=lambda x: x[0])  # kembalikan ke urutan asli dokumen
-    return "\n\n".join(p for _, p in chosen)
+    chosen.sort(key=lambda x: x[0])  # urutan asli dokumen
+    result = "\n".join(p for _, p in chosen)
+    return result[:budget]  # cap keras: jangan pernah lewati budget
 
 
 # ================== LLM ROUTER (Groq-120b -> Groq-20b -> Gemini) ==================
@@ -284,6 +436,8 @@ class LLM:
                 return f"Groq-{m.group(1)}b" if m else "Groq"
             if key == "gemini":
                 return "Gemini"
+            if key == "claude":
+                return "Claude"
             return "Lokal"
 
         # (key, display_env, base_url, env_prefix, model)
@@ -292,6 +446,7 @@ class LLM:
             "groq2": ("https://api.groq.com/openai/v1", "GROQ", GROQ_MODEL_2),
             "gemini": ("https://generativelanguage.googleapis.com/v1beta/openai/",
                        "GEMINI", GEMINI_MODEL),
+            "claude": ("https://api.anthropic.com/v1", "ANTHROPIC", CLAUDE_MODEL),
         }
         order = [b.strip().lower() for b in
                  os.getenv("BACKEND_ORDER", "groq,groq2,gemini").split(",") if b.strip()]
@@ -308,7 +463,21 @@ class LLM:
                     effort = "low"  # model reasoning: pakai usaha rendah agar cepat
                 if effort and effort.lower() != "none":
                     extra["reasoning_effort"] = effort
-                client = OpenAI(base_url=url, api_key=api_key, timeout=8, max_retries=0)
+                # temperature: sebagian model Claude terbaru menolak parameter ini
+                # ("temperature is deprecated for this model"). Kirim hanya untuk
+                # backend selain claude agar tidak memicu HTTP 400.
+                if b != "claude":
+                    extra["temperature"] = 0.3
+                # Anthropic: cara paling andal adalah memakai API key yang
+                # workspace-scoped (endpoint OpenAI-compat menolak key organisasi
+                # tak-scoped dengan HTTP 400). Header anthropic-workspace-id di
+                # bawah hanya berpengaruh pada endpoint native Messages; disertakan
+                # bila diisi, tapi tidak wajib jika key sudah scoped.
+                default_headers = None
+                if b == "claude" and ANTHROPIC_WORKSPACE_ID:
+                    default_headers = {"anthropic-workspace-id": ANTHROPIC_WORKSPACE_ID}
+                client = OpenAI(base_url=url, api_key=api_key, timeout=20,
+                                max_retries=0, default_headers=default_headers)
                 self.backends.append(Backend(b, label_for(b, model), client, model, extra))
             elif b == "local":
                 client = OpenAI(base_url=LOCAL_BASE_URL, api_key="lm-studio",
@@ -325,7 +494,7 @@ class LLM:
             try:
                 resp = be.client.chat.completions.create(
                     model=be.model, messages=messages, stream=True,
-                    max_tokens=MAX_TOKENS, temperature=0.3, **be.extra,
+                    max_tokens=MAX_TOKENS, **be.extra,
                 )
                 return resp
             except RateLimitError as e:
@@ -390,10 +559,26 @@ class Assistant:
         self.ui_q = ui_q
         self.llm = LLM()
         self.context = load_context()  # konteks penuh; di-trim per pertanyaan
+        self.retriever = self._load_retriever()  # FAISS opsional (jawaban instan)
         self.asr = self._load_asr()
         self.audio_q = queue.Queue()
         self.gen_id = 0
         self.lock = threading.Lock()
+
+    def _load_retriever(self):
+        """Muat index FAISS dari dataset Q&A bila tersedia. Bila gagal (paket
+        belum ada / dataset kosong), kembalikan None dan sistem tetap jalan
+        dengan LLM live seperti biasa."""
+        if os.getenv("USE_FAISS", "1").lower() in ("0", "false", "no"):
+            return None
+        try:
+            from retriever import QARetriever
+            r = QARetriever()
+            self.ui_q.put(("info", f"FAISS siap: {len(r.indexable)} Q&A ter-index"))
+            return r
+        except Exception as e:
+            self.ui_q.put(("info", f"FAISS tidak aktif ({type(e).__name__}); pakai LLM live"))
+            return None
 
     def _load_asr(self):
         """Muat model Whisper. Coba GPU (CUDA) dulu, jika library CUDA
@@ -426,6 +611,24 @@ class Assistant:
         return system, ctx
 
     def _run_llm(self, question, final, my_id):
+        # --- Jalur cepat FAISS: untuk pertanyaan FINAL, coba temukan Q&A yang
+        #     sangat mirip di dataset. Bila cocok kuat, tampilkan langsung
+        #     (hemat token & instan) tanpa memanggil LLM. Bila tidak, lanjut LLM. ---
+        if final and self.retriever is not None:
+            try:
+                hits = self.retriever.search(question, k=1)
+            except Exception:
+                hits = []
+            min_score = float(os.getenv("FAISS_MIN_SCORE", "0.72"))
+            if hits and hits[0]["score"] >= min_score:
+                hit = hits[0]
+                if my_id != self.gen_id:
+                    return
+                self.ui_q.put(("answer_reset",
+                               f"FINAL  |  Dataset #{hit['id']:03d} (sim {hit['score']:.2f})"))
+                self.ui_q.put(("answer_set", _display_answer(hit["answer"])))
+                return
+
         prefix = "Complete question: " if final else "Partial question (still being asked): "
         system, _ = self._build_messages(question)
         messages = [
@@ -445,20 +648,29 @@ class Assistant:
                 self.ui_q.put(("answer_reset", f"{label}  |  {val}"))
             elif kind == "token":
                 buf.append(val)
-                # tampilkan versi bersih secara bertahap (tanpa markdown)
-                self.ui_q.put(("answer_set", clean_md("".join(buf))))
+                # tampilkan versi bersih & terfilter secara bertahap
+                self.ui_q.put(("answer_set", _display_answer("".join(buf))))
             elif kind == "error":
                 if not got_backend:  # error sebelum ada jawaban -> tampil di status
                     self.ui_q.put(("info", val))
-        # finalisasi: pastikan yang tampil adalah teks bersih utuh
+        # finalisasi: pastikan yang tampil adalah teks bersih & terfilter utuh
         if got_backend and my_id == self.gen_id:
-            self.ui_q.put(("answer_set", clean_md("".join(buf))))
+            self.ui_q.put(("answer_set", _display_answer("".join(buf))))
 
     # ---------- ASR ----------
-    def transcribe(self, audio):
+    def transcribe(self, audio, final=False):
+        """Transkripsi audio. Untuk pertanyaan final pakai beam_size lebih besar
+        (lebih akurat); untuk transkrip parsial pakai beam_size 1 (lebih cepat)."""
         segments, _ = self.asr.transcribe(
-            audio, language="en", beam_size=1, vad_filter=True,
-            condition_on_previous_text=False, initial_prompt=ASR_VOCAB,
+            audio, language="en",
+            beam_size=5 if final else 1,
+            best_of=5 if final else 1,
+            vad_filter=True,
+            condition_on_previous_text=False,
+            initial_prompt=ASR_VOCAB,
+            temperature=0.0,                 # deterministik, kurangi halusinasi
+            no_speech_threshold=0.6,
+            log_prob_threshold=-1.0,
         )
         return " ".join(s.text.strip() for s in segments).strip()
 
@@ -497,14 +709,14 @@ class Assistant:
             ended = silence >= END_SILENCE_SEC or len(audio) / ASR_RATE > MAX_UTTER_SEC
 
             if ended:
-                text = self.transcribe(audio)
+                text = self.transcribe(audio, final=True)
                 if len(text.split()) >= 3:
                     self.ui_q.put(("question", text + "  [selesai]"))
                     self.ask(text, final=True)
                 buf, voiced, silence, last_draft_words = [], False, 0.0, 0
             elif now - last_partial >= PARTIAL_EVERY_SEC:
                 last_partial = now
-                text = self.transcribe(audio)
+                text = self.transcribe(audio, final=False)
                 if text:
                     self.ui_q.put(("question", text + " ..."))
                 n = len(text.split())
